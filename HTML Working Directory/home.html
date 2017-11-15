@@ -2,14 +2,11 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="Humane-CSS/humane.css">
-    <link rel="stylesheet" href="assets/css/navigation-bar.css">
-    <link rel="stylesheet" href="assets/css/notifcation-bar.css">
-    <script src="assets/js/jquery-1.11.1.min.js"></script>
-    <script src="Humane-JS/humane.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="CSS/humane.css">
+    <script src="JS/humane.js"></script>
     <style>
         .progress-bar {
             height: auto
@@ -25,7 +22,6 @@
             background: url('https://loading.io/assets/img/landing/curved-bars.svg') 50% 50% no-repeat rgb(249, 249, 249);
             opacity: .8;
         }
-
     </style>
 </head>
 
@@ -271,76 +267,341 @@
 </body>
 <script type="text/javascript">
     $(document).ready(function() {
-        var serviceData = `{  
-   "count":4,
-   "next":null,
-   "previous":null,
-   "results":[  
-      {  
-         "service_id":313,
-         "service_org_detail":{  },
-         "service_interest_expressed":[  ],
-         "posted_date":"2017-11-14T16:54:15.378639Z",
-         "service_requested_day":[  ],
-         "service_requested_time":[  ],
-         "main_service":5,
-         "main_service_icon":"https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Music-thumbnail-100x100-70.jpg",
-         "sub_service_category_one":10,
-         "sub_service_category_two":null,
-         "service_text_description":"need the service very urgent",
-         "service_start_date":"2017-11-25",
-         "service_end_date":"2017-11-30",
-         "is_service_satisfied":false
-      },
-      {  
-         "service_id":312,
-         "service_org_detail":{  },
-         "service_interest_expressed":[  ],
-         "posted_date":"2017-11-14T05:30:30.162093Z",
-         "service_requested_day":[  ],
-         "service_requested_time":[  ],
-         "main_service":5,
-         "main_service_icon":"https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Music-thumbnail-100x100-70.jpg",
-         "sub_service_category_one":10,
-         "sub_service_category_two":null,
-         "service_text_description":"required urgently",
-         "service_start_date":"2017-11-25",
-         "service_end_date":"2017-12-06",
-         "is_service_satisfied":false
-      },
-      {  
-         "service_id":311,
-         "service_org_detail":{  },
-         "service_interest_expressed":[  ],
-         "posted_date":"2017-11-14T05:29:29.867504Z",
-         "service_requested_day":[  ],
-         "service_requested_time":[  ],
-         "main_service":2,
-         "main_service_icon":"https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Education-thumbnail-100x100-70.jpg",
-         "sub_service_category_one":8,
-         "sub_service_category_two":15,
-         "service_text_description":"required urgently",
-         "service_start_date":"2017-11-14",
-         "service_end_date":"2017-11-30",
-         "is_service_satisfied":false
-      },
-      {  
-         "service_id":310,
-         "service_org_detail":{  },
-         "service_interest_expressed":[  ],
-         "posted_date":"2017-11-13T17:56:30.094239Z",
-         "service_requested_day":[  ],
-         "service_requested_time":[  ],
-         "main_service":4,
-         "main_service_icon":"https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Medical-thumbnail-100x100-70.jpg",
-         "sub_service_category_one":9,
-         "sub_service_category_two":17,
-         "service_text_description":"we don't have medical facilities",
-         "service_start_date":"2017-11-25",
-         "service_end_date":"2017-12-22",
-         "is_service_satisfied":false
-      }
-   ]
+        var serviceData = `{
+    "count": 4,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "service_id": 313,
+            "service_org_detail": {
+                "org_id": 10,
+                "bank_details": [
+                    {
+                        "bank_details_id": 10,
+                        "account_number": "345612459078",
+                        "ifsc_code": "ICICI120053",
+                        "bank_name": "AXIS",
+                        "branch_name": "Saligramam",
+                        "branch_code": "5985478",
+                        "merchant_id": "512456",
+                        "salt": "214526",
+                        "key": "325254",
+                        "org_id": 10
+                    }
+                ],
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "org_reg_no": "36456",
+                "org_name": "Alayam",
+                "latitude": 13.0483,
+                "longitude": 80.1984,
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "street": "15th cross street",
+                "postal_code": "600093",
+                "org_desc": "very good",
+                "is_active": true,
+                "state": 2,
+                "city": "Chennai",
+                "country": 1,
+                "org_type": 1,
+                "people_count": 1
+            },
+            "service_interest_expressed": [
+                {
+                    "service_interested_id": 374,
+                    "service_user_detail": {
+                        "id": 282,
+                        "first_name": "Venky R",
+                        "email": "venky@gmail.com",
+                        "country_code": 1,
+                        "dob": "2017-10-19",
+                        "mobile": "8110803987",
+                        "role": 2,
+                        "is_mobile_verified": false,
+                        "is_email_verified": true,
+                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                        "profile_video_exists": true
+                    },
+                    "service_interest_expressed_date": "2017-11-30",
+                    "service_interest_action_performed_date": "2017-11-14T16:55:40.000404Z",
+                    "is_interest_expressed_satisfied": false,
+                    "is_thank_you_video_posted": false,
+                    "service": 313,
+                    "service_interest_expressed_start_time": 13,
+                    "service_interest_expressed_end_time": 14,
+                    "user": 282
+                }
+            ],
+            "posted_date": "2017-11-14T16:54:15.378639Z",
+            "service_requested_day": [],
+            "service_requested_time": [
+                {
+                    "service_requested_time_id": 365,
+                    "start_time": 13,
+                    "end_time": 14
+                }
+            ],
+            "main_service": 5,
+            "main_service_icon" :"https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Music-thumbnail-100x100-70.jpg",
+            "sub_service_category_one": 10,
+            "sub_service_category_two": null,
+            "service_text_description": "need the service very urgent",
+            "service_start_date": "2017-11-25",
+            "service_end_date": "2017-11-30",
+            "is_service_satisfied": false
+        },
+        {
+            "service_id": 312,
+            "service_org_detail": {
+                "org_id": 10,
+                "bank_details": [
+                    {
+                        "bank_details_id": 10,
+                        "account_number": "345612459078",
+                        "ifsc_code": "ICICI120053",
+                        "bank_name": "AXIS",
+                        "branch_name": "Saligramam",
+                        "branch_code": "5985478",
+                        "merchant_id": "512456",
+                        "salt": "214526",
+                        "key": "325254",
+                        "org_id": 10
+                    }
+                ],
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "org_reg_no": "36456",
+                "org_name": "Alayam",
+                "latitude": 13.0483,
+                "longitude": 80.1984,
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "street": "15th cross street",
+                "postal_code": "600093",
+                "org_desc": "very good",
+                "is_active": true,
+                "state": 2,
+                "city": "Chennai",
+                "country": 1,
+                "org_type": 1,
+                "people_count": 1
+            },
+            "service_interest_expressed": [
+                {
+                    "service_interested_id": 373,
+                    "service_user_detail": {
+                        "id": 282,
+                        "first_name": "Venky R",
+                        "email": "venky@gmail.com",
+                        "country_code": 1,
+                        "dob": "2017-10-19",
+                        "mobile": "8110803987",
+                        "role": 2,
+                        "is_mobile_verified": false,
+                        "is_email_verified": true,
+                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                        "profile_video_exists": true
+                    },
+                    "service_interest_expressed_date": "2017-11-29",
+                    "service_interest_action_performed_date": "2017-11-14T05:57:29.240350Z",
+                    "is_interest_expressed_satisfied": false,
+                    "is_thank_you_video_posted": false,
+                    "service": 312,
+                    "service_interest_expressed_start_time": 10,
+                    "service_interest_expressed_end_time": 20,
+                    "user": 282
+                }
+            ],
+            "posted_date": "2017-11-14T05:30:30.162093Z",
+            "service_requested_day": [
+                {
+                    "service_requested_day_id": 509,
+                    "day": 1
+                },
+                {
+                    "service_requested_day_id": 510,
+                    "day": 4
+                },
+                {
+                    "service_requested_day_id": 511,
+                    "day": 5
+                }
+            ],
+            "service_requested_time": [
+                {
+                    "service_requested_time_id": 364,
+                    "start_time": 10,
+                    "end_time": 20
+                }
+            ],
+            "main_service": 5,
+            "main_service_icon" :"https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Music-thumbnail-100x100-70.jpg",
+            "sub_service_category_one": 10,
+            "sub_service_category_two": null,
+            "service_text_description": "required urgently",
+            "service_start_date": "2017-11-25",
+            "service_end_date": "2017-12-06",
+            "is_service_satisfied": false
+        },
+        {
+            "service_id": 311,
+            "service_org_detail": {
+                "org_id": 10,
+                "bank_details": [
+                    {
+                        "bank_details_id": 10,
+                        "account_number": "345612459078",
+                        "ifsc_code": "ICICI120053",
+                        "bank_name": "AXIS",
+                        "branch_name": "Saligramam",
+                        "branch_code": "5985478",
+                        "merchant_id": "512456",
+                        "salt": "214526",
+                        "key": "325254",
+                        "org_id": 10
+                    }
+                ],
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "org_reg_no": "36456",
+                "org_name": "Alayam",
+                "latitude": 13.0483,
+                "longitude": 80.1984,
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "street": "15th cross street",
+                "postal_code": "600093",
+                "org_desc": "very good",
+                "is_active": true,
+                "state": 2,
+                "city": "Chennai",
+                "country": 1,
+                "org_type": 1,
+                "people_count": 1
+            },
+            "service_interest_expressed": [],
+            "posted_date": "2017-11-14T05:29:29.867504Z",
+            "service_requested_day": [
+                {
+                    "service_requested_day_id": 502,
+                    "day": 1
+                },
+                {
+                    "service_requested_day_id": 503,
+                    "day": 2
+                },
+                {
+                    "service_requested_day_id": 504,
+                    "day": 3
+                },
+                {
+                    "service_requested_day_id": 505,
+                    "day": 4
+                },
+                {
+                    "service_requested_day_id": 506,
+                    "day": 5
+                },
+                {
+                    "service_requested_day_id": 507,
+                    "day": 6
+                },
+                {
+                    "service_requested_day_id": 508,
+                    "day": 7
+                }
+            ],
+            "service_requested_time": [
+                {
+                    "service_requested_time_id": 363,
+                    "start_time": 10,
+                    "end_time": 20
+                }
+            ],
+            "main_service": 2,
+            "main_service_icon" : "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Education-thumbnail-100x100-70.jpg",
+            "sub_service_category_one": 8,
+            "sub_service_category_two": 15,
+            "service_text_description": "required urgently",
+            "service_start_date": "2017-11-14",
+            "service_end_date": "2017-11-30",
+            "is_service_satisfied": false
+        },
+        {
+            "service_id": 310,
+            "service_org_detail": {
+                "org_id": 10,
+                "bank_details": [
+                    {
+                        "bank_details_id": 10,
+                        "account_number": "345612459078",
+                        "ifsc_code": "ICICI120053",
+                        "bank_name": "AXIS",
+                        "branch_name": "Saligramam",
+                        "branch_code": "5985478",
+                        "merchant_id": "512456",
+                        "salt": "214526",
+                        "key": "325254",
+                        "org_id": 10
+                    }
+                ],
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "org_reg_no": "36456",
+                "org_name": "Alayam",
+                "latitude": 13.0483,
+                "longitude": 80.1984,
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "street": "15th cross street",
+                "postal_code": "600093",
+                "org_desc": "very good",
+                "is_active": true,
+                "state": 2,
+                "city": "Chennai",
+                "country": 1,
+                "org_type": 1,
+                "people_count": 1
+            },
+            "service_interest_expressed": [],
+            "posted_date": "2017-11-13T17:56:30.094239Z",
+            "service_requested_day": [
+                {
+                    "service_requested_day_id": 497,
+                    "day": 1
+                },
+                {
+                    "service_requested_day_id": 498,
+                    "day": 2
+                },
+                {
+                    "service_requested_day_id": 499,
+                    "day": 3
+                },
+                {
+                    "service_requested_day_id": 500,
+                    "day": 4
+                },
+                {
+                    "service_requested_day_id": 501,
+                    "day": 5
+                }
+            ],
+            "service_requested_time": [
+                {
+                    "service_requested_time_id": 362,
+                    "start_time": 13,
+                    "end_time": 18
+                }
+            ],
+            "main_service": 4,
+            "main_service_icon" : "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Medical-thumbnail-100x100-70.jpg",
+            "sub_service_category_one": 9,
+            "sub_service_category_two": 17,
+            "service_text_description": "we don't have medical facilities",
+            "service_start_date": "2017-11-25",
+            "service_end_date": "2017-12-22",
+            "is_service_satisfied": false
+        }
+    ]
 }`;
 
         function getGoodsdetail(data) {
@@ -360,6 +621,7 @@
             //            $('.loader').hide();
             $.each(t, function(key, value) {
                 //    alert(key);
+                console.log("called service card")
                 create_single_service_card(value);
 
             });
@@ -371,7 +633,6 @@
 
         getServiceDetail(serviceData)
     });
-
 </script>
 
 </html>

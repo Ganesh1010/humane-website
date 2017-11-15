@@ -160,6 +160,10 @@ img { max-width: 100%; }
     padding-top:5px;
     margin-top:5px;
 }
+.card-panel-heading{
+    height: 5px;
+    padding:0;
+}
 
 .promised-date-padding{
     margin-bottom: 0px;
