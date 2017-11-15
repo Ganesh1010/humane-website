@@ -10,7 +10,7 @@ function create_single_goods_card(item) {
         return promisedDonationProgressBar;
     }
 
-    function getMainIconImaga(src) {
+    function getMainIconImage(src) {
         var icon = document.createElement("img");
         icon.setAttribute("src", src);
         icon.className = "main-item-image";
@@ -29,12 +29,13 @@ function create_single_goods_card(item) {
     goodsCardParentDiv.classList.add('goods-box');
 
     var goodsPanelHeading = document.createElement("div");
-    goodsPanelHeading.className = "panel-heading";
+    goodsPanelHeading.classList.add("panel-heading");
+    goodsPanelHeading.classList.add("card-panel-heading");
 
     var goodsPanelBody = document.createElement("div");
     goodsPanelBody.className = "panel-body";
 
-    var mainItemIcon = getMainIconImaga(item.main_item_image); // indicates the main item icon
+    var mainItemIcon = getMainIconImage(item.main_item_image); // indicates the main item icon
 
     var orgName = document.createElement("h5");
     orgName.innerHTML = item.organisation_detail.org_name;
@@ -65,9 +66,9 @@ function create_single_goods_card(item) {
 }
 
 function create_single_service_card(service) {
-    
 
-    function getMainIconImaga(src) {
+
+    function getMainIconImage(src) {
         var icon = document.createElement("img");
         icon.setAttribute("src", src);
         icon.className = "main-item-image";
@@ -75,23 +76,24 @@ function create_single_service_card(service) {
         return icon;
     }
 
-    var goodsCard = document.createDocumentFragment();
+    var serviceCard = document.createDocumentFragment();
 
-    var outtertDiv = document.createElement("div");
-    outtertDiv.className = "col-sm-3";
+    var serviceCardOuttertDiv = document.createElement("div");
+    serviceCardOuttertDiv.className = "col-sm-3";
 
-    var parentDiv = document.createElement("div");
-    parentDiv.classList.add('panel');
-    parentDiv.classList.add('panel-primary');
-    parentDiv.classList.add('goods-box');
+    var serviceCardParentDiv = document.createElement("div");
+    serviceCardParentDiv.classList.add('panel');
+    serviceCardParentDiv.classList.add('panel-primary');
+    serviceCardParentDiv.classList.add('goods-box');
 
-    var panelHeading = document.createElement("div");
-    panelHeading.className = "panel-heading";
+    var servicePanelHeading = document.createElement("div");
+    servicePanelHeading.className = "panel-heading";
+    servicePanelHeading.classList.add("card-panel-heading");
 
-    var panelBody = document.createElement("div");
-    panelBody.className = "panel-body";
+    var servicePanelBody = document.createElement("div");
+    servicePanelBody.className = "panel-body";
 
-    var mainItemIcon = getMainIconImaga(service.main_service_icon); // indicates the main item icon
+    var mainItemIcon = getMainIconImage(service.main_service_icon); // indicates the main item icon
 
     var orgName = document.createElement("h5");
     orgName.innerHTML = service.service_org_detail.org_name;
@@ -99,25 +101,25 @@ function create_single_service_card(service) {
     var orgCity = document.createElement('h6');
     orgCity.innerHTML = service.service_org_detail.city + " - 600001";
 
-    var serviceInterestedUserCount = document.createElement("h5"); 
-    serviceInterestedUserCount.innerHTML = service.service_org_detail.org_name;
+    var serviceInterestedUserCount = document.createElement("h5");
+    serviceInterestedUserCount.innerHTML = "No. of People Interested : "+5;
 
-    var donateButton = document.createElement("button");
-    donateButton.classList.add('btn');
-    donateButton.classList.add('btn-donor');
-    donateButton.classList.add('pull-right');
-    donateButton.classList.add("donate-button");
-    donateButton.innerHTML = "Donate";;l
+    var serveButton = document.createElement("button");
+    serveButton.classList.add('btn');
+    serveButton.classList.add('btn-donor');
+    serveButton.classList.add('pull-right');
+    serveButton.classList.add("serve-button");
+    serveButton.innerHTML = "Serve";
 
-    panelBody.appendChild(mainItemIcon);
-    panelBody.appendChild(orgName);
-    panelBody.appendChild(orgCity);
-    panelBody.appendChild(donateButton);
-    parentDiv.appendChild(panelHeading);
-    parentDiv.appendChild(panelBody);
-    outtertDiv.appendChild(parentDiv);
-    goodsCard.appendChild(outtertDiv);
+    servicePanelBody.appendChild(mainItemIcon);
+    servicePanelBody.appendChild(orgName);
+    servicePanelBody.appendChild(orgCity);
+    servicePanelBody.appendChild(serviceInterestedUserCount);
+    servicePanelBody.appendChild(serveButton);
+    serviceCardParentDiv.appendChild(servicePanelHeading);
+    serviceCardParentDiv.appendChild(servicePanelBody);
+    serviceCardOuttertDiv.appendChild(serviceCardParentDiv);
+    serviceCard.appendChild(serviceCardOuttertDiv);
 
-    document.getElementById("servicetab").appendChild(goodsCard);
+    document.getElementById("servicetab").appendChild(serviceCard);
 }
-
