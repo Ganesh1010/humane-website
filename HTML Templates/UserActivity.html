@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Humane - User Activity</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js">    
+  </script>
+
+    <style>
+        .card{
+        margin-top: 1%;
+       box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+       transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+        
+        .card:hover{
+              box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        }
+        
+        .row{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        hr{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .donation-item-table-padding{
+           margin-bottom: 0px;
+        }
+        
+        .button-more-promised-donation-items{
+                padding-bottom: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;
+        }
+
+    </style>
+    </head>
+    <body>
+    
+    <div class="container">
+        
+    <h3>Promised Donations</h3>
+        <div class="row">
+        <div class="card col-md-6">
+        <div class="  media padding"> <hr>
+            <div class="media-left media-top">
+                <img src="Images/alayamlogo.jfif" class="media-object thumbnail"  style="width:80px;margin-bottom: 5px;"> 
+            </div>
+             <div class="media-body ">
+                
+                 <h4 class="media-heading">Alayam</h4>
+                 <h5>Groceries</h5>
+                 <h5>10 Nov 2017</h5>
+                 
+               
+            </div>
+            
+            <div class=" media-right media-top">
+                <img src="Images/thank-you-video-icon.png" class="media-object img-circle" data-toggle="tooltip" title="click to see the thank you video" style="width:40px" >
+             </div>
+            <div class=" media-right media-top">
+                <img src="Images/volunteer.png" class="media-object img-circle" data-toggle="tooltip" title="You have asked for the volunteer" style="width:40px" >
+             </div>
+              <table class="table donation-item-table-padding table-hover table-responsive">
+                    <tbody >
+                        <tr>
+                            <td class="col-md-3 text-center">Item Name</td>
+                            <td class=" col-md-3 text-center ">Sub Item Name</td>
+                            <td class=" col-md-3 text-center ">Quantity(Kg)</td>
+                          
+                        </tr>
+                        <tr  >
+                            <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                            <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                            <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                        </tr>
+                         <tr  >
+                            <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                            <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                            <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                        </tr>
+                    </tbody>
+                </table>
+            <hr>
+        </div>
+       
+        </div>
+        
+            
+        <div class="card col-md-6">
+        <div class="  media padding"><hr>
+            <div class="media-left media-top">
+                <img src="Images/alayamlogo.jfif" class="media-object thumbnail"  style="width:80px;margin-bottom: 5px;"  >
+             </div>
+             <div class="media-body ">
+                
+                 <h4 class="media-heading">Alayam</h4>
+                 <h5>Groceries</h5>
+                 <h5>10 Nov 2017</h5>
+             </div>
+            
+            <div class=" media-right media-top">
+                <img src="Images/volunteer.png" class="media-object img-circle" data-toggle="tooltip" title="You have asked for the volunteer"  style="width:40px" >
+<!--
+                <script>
+                        $(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
+                </script>
+-->
+             </div> 
+                <table class="table donation-item-table-padding table-hover table-responsive">
+                    <tbody >
+                        <tr>
+                            <td class="col-md-3 text-center">Item Name</td>
+                            <td class=" col-md-3 text-center ">Sub Item Name</td>
+                            <td class=" col-md-3 text-center ">Quantity(Kg)</td>
+                          
+                        </tr>
+                        <tr  >
+                            <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                            <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                            <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                        </tr>
+                         <tr  >
+                            <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                            <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                            <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                        </tr>
+                    </tbody>
+                </table>
+                            <button type="button" class="btn button-more-promised-donation-items btn-link  pull-right" data-toggle="modal" data-target="#promised-donation-items-modal"><h6>Click to see all the promised items</h6></button>   
+                 
+                   <div id="promised-donation-items-modal" class="modal " role="dialog">
+                       <div class="modal-dialog">
+
+                           <!-- Modal content-->
+                           <div class="modal-content">
+                               <div class="modal-header">
+                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                   <h4 class="modal-title">Promised Donation Items</h4><hr>
+                                   <div class="media-left media-top">
+                                       <img src="Images/alayamlogo.jfif" class="media-object thumbnail" style="width:80px;margin-bottom: 5px;">
+                                    </div>
+                                   <div class="media-body ">
+                
+                                       <h4 class="media-heading">Alayam</h4>
+                                       <h5>Groceries</h5>
+                                       <h5>10 Nov 2017</h5>
+                                   </div>
+            
+                               </div>
+                               <div class="modal-body">
+                                   <table class="table table-hover table-responsive">
+                                       <tbody >
+                                           <tr>
+                                               <td class="col-md-3 text-center">Item Name</td>
+                                               <td class=" col-md-3 text-center ">Sub Item Name</td>
+                                               <td class=" col-md-3 text-center ">Quantity(Kg)</td>
+                          
+                                           </tr>
+                                           <tr  >
+                                               <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                                           </tr>
+                                           <tr  >
+                                               <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                                           </tr>
+                                           <tr  >
+                                               <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                                           </tr>
+                                           <tr  >
+                                               <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                                           </tr>
+                                       </tbody>
+                                    </table>
+                               </div>
+                               <div class="modal-footer">
+                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                               </div>
+                           </div>
+
+                       </div>
+                 </div>
+          
+        </div>
+       
+        </div>
+        
+                    
+        <div class="card col-md-6">
+        <div class="  media padding"><hr>
+            <div class="media-left media-top">
+                <img src="Images/alayamlogo.jfif" class="media-object thumbnail" style="width:80px;margin-bottom: 5px;">
+             </div>
+             <div class="media-body ">
+                
+                 <h4 class="media-heading">Alayam</h4>
+                 <h5>Groceries</h5>
+                 <h5>10 Nov 2017</h5>
+             </div>
+            
+<!--
+            <div class=" media-right media-top">
+                <img src="Images/grocery.jpg" class="media-object img-circle" style="width:80px" >
+             </div> 
+-->
+                <table class="table donation-item-table-padding table-hover table-responsive">
+                       <tbody>
+                        <tr>
+                         
+                            <td class="col-md-3 text-center">Item Name</td>
+                            <td class=" col-md-3 text-center ">Sub Item Name</td>
+                            <td class=" col-md-3 text-center ">Quantity(Kg)</td>
+                          
+                        </tr>
+                        <tr  >
+                            <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                            <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                            <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                        </tr>
+                         <tr  >
+                            <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                            <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                            <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                        </tr>
+                    </tbody>
+                </table>
+                           <button type="button" class="btn btn-link button-more-promised-donation-items pull-right" data-toggle="modal" data-target="#promised-donation-items-modal-1"><h6>Click to see all the promised items</h6></button>     
+                 
+                   <div id="promised-donation-items-modal-1" class="modal " role="dialog">
+                       <div class="modal-dialog">
+
+                           <!-- Modal content-->
+                           <div class="modal-content">
+                               <div class="modal-header">
+                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                   <h4 class="modal-title">Promised Donation Items</h4><hr>
+                                   <div class="media-left media-top">
+                                       <img src="Images/alayamlogo.jfif" class="media-object thumbnail" style="width:80px;margin-bottom: 5px;">
+                                    </div>
+                                   <div class="media-body ">
+                
+                                       <h4 class="media-heading">Alayam</h4>
+                                       <h5>Groceries</h5>
+                                       <h5>10 Nov 2017</h5>
+                                   </div>
+            
+                               </div>
+                               <div class="modal-body">
+                            
+                                   <table class="table  table-hover table-responsive">
+                                       <tbody >
+                                           <tr>
+                                               <td class="col-md-3 text-center">Item Name</td>
+                                               <td class=" col-md-3 text-center ">Sub Item Name</td>
+                                               <td class=" col-md-3 text-center ">Quantity(Kg)</td>
+                          
+                                           </tr>
+                                           <tr  >
+                                               <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                                           </tr>
+                                           <tr  >
+                                               <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                                           </tr>
+                                           <tr  >
+                                               <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                                           </tr>
+                                           <tr  >
+                                               <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                                               <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                                           </tr>
+                                       </tbody>
+                                    </table>
+                               </div>
+                               <div class="modal-footer">
+                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                               </div>
+                           </div>
+
+                       </div>
+                 </div>
+    
+        </div>
+       
+        </div>
+        
+        <div class="card col-md-6">
+        <div class="  media padding"><hr>
+            <div class="media-left media-top">
+                <img src="Images/alayamlogo.jfif" class="media-object thumbnail"  style="width:80px;margin-bottom: 5px;" >
+             </div>
+             <div class="media-body ">
+                
+                 <h4 class="media-heading">Alayam</h4>
+                 <h5>Groceries</h5>
+                 <h5>10 Nov 2017</h5>
+                 
+               
+            </div>
+            
+            <div class=" media-right media-top">
+                <img src="Images/thank-you-video-icon.png" class="media-object img-circle" data-toggle="tooltip" title="Click to see the thankyou video" style="width:40px" >
+             </div>
+              <table class="table donation-item-table-padding table-hover table-responsive">
+                    <tbody >
+                        <tr>
+                            <td class="col-md-3 text-center">Item Name</td>
+                            <td class=" col-md-3 text-center ">Sub Item Name</td>
+                            <td class=" col-md-3 text-center ">Quantity(Kg)</td>
+                          
+                        </tr>
+                        <tr  >
+                            <td class="col-md-3 text-center"><strong>Rice</strong></td>
+                            <td class=" col-md-3 text-center "><strong>Basmati</strong></td>
+                            <td class=" col-md-3 text-center "><strong>2</strong></td>
+                          
+                        </tr>
+                       
+                    </tbody>
+                </table>
+            
+        </div>
+       
+          <hr></div>
+        
+        </div>
+    </div>
+        
+      <div class="container">
+        
+    <h3>Service Interest expressed</h3>
+          
+     <div class="row">
+     <div class="card col-md-6">
+        <div class="  media padding"><hr>
+            <div class="media-left media-middle">
+                <img src="Images/alayamlogo.jfif" class="media-object thumbnail"  style="width:80px;margin-bottom: 5px;"  >
+             </div>
+             <div class="media-body ">
+                
+                 <h4 class="media-heading">Alayam</h4>
+                 <h5>Education</h5>
+                 <h5>Mathematics Teacher</h5>
+                 <h5>Mathematics Teacher</h5>
+                 <h5>10 Nov 2017</h5>
+                 
+                 
+            </div>
+            
+            <div class=" media-right media-top">
+                <img src="Images/thank-you-video-icon.png" class="media-object img-circle" data-toggle="tooltip" title="Click to see the thankyou video"  style="width:40px" >
+             </div>  <hr>
+        </div>
+       
+        </div>
+     <div class="card col-md-6">
+        <div class="  media padding"><hr>
+            <div class="media-left media-middle">
+                <img src="Images/alayamlogo.jfif" class="media-object thumbnail"  style="width:80px;margin-bottom: 5px;"  >
+             </div>
+             <div class="media-body ">
+                
+                 <h4 class="media-heading">Alayam</h4>
+                 <h5>Music</h5>
+                 <h5>Orchestra</h5>
+                 <h5>(5pm to 7pm)</h5>
+                 <h5>10 Nov 2017</h5>
+            </div>
+            
+            <div class=" media-right media-top">
+                <img src="Images/thank-you-video-icon.png" class="media-object img-circle" data-toggle="tooltip" title="Click to see the thankyou video" style="width:40px" >
+             </div><hr>
+        </div>
+       
+        </div>
+    </div>
+    </div>
+    </body>
+</html>

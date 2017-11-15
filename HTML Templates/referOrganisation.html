@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Humane</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+<style>
+
+/*
+    body
+    {
+        background-image: url(Images/referorg1.jpg);
+        background-repeat: no-repeat;
+        background-size:cover;
+
+    }
+    
+*/
+    body{
+        background: url(Images/referorg1.jpg) no-repeat center center fixed; 
+        background-size: cover;
+/*
+    height:100%;
+    margin: 0;
+   
+*/
+}
+    
+    .modal-header {
+ 
+    background-color: #337AB7;
+ 
+    padding:16px 16px;
+ 
+    color:#FFF;
+    }
+ 
+   .glyphicon { margin-right:5px; }
+    
+    .bg {
+    /* The image used */
+    background-image: url(Images/referorg1.jpg);
+
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+    
+    .panel-default {
+        position: absolute;
+        top: 10%;
+        left: 16%;
+        bottom:0;
+        right: 16%;
+        background-size: 100% 100%;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background: none;
+        border: none;
+        box-shadow: none;
+        
+    }
+    
+     .panel-default .panel-heading{
+        background: rgba(122, 130, 136, 0.2)!important;
+    }
+
+    .panel-default .panel-body{
+        background: rgba(46, 51, 56, 0.2)!important;
+    }
+    
+   /* .panel-default >
+    .panel-heading-custom{
+         color: #fffff;
+         background-color:#00BCD4
+            
+     }*/
+
+    .btn-custom-color{
+        border-radius: 0;
+        border-color: white;
+        background-color:rgba(46, 51, 56, 0.2)!important;
+    }
+</style>
+</head>
+<body>
+    
+  <div class="container w3-animate-top">
+
+<div class="panel panel-default " id="fade">
+    <div class="panel-heading">
+         <font color="white">
+             <h2 align="center" >Refer Organisation</h2></font>
+    </div>
+  
+    <div class="panel-body">
+      
+    <div class="form-group ">
+          <font color="white">
+              <label for="orgName" class="label-white">Organisation Name</label></font>
+      <input type="text" class="form-control center-block" id="orgName" placeholder="Enter Organisation Name" name="orgName">
+    </div>
+    
+    <div class="form-group">
+         <font color="white">
+             <label for="orgAddress">Organisation Address</label></font>
+         <textarea class="form-control" rows="3" id="orgAddress" placeholder="Enter Organisation Address" name="orgAddress"></textarea>
+     
+    </div>
+    
+    <div class="form-group">
+         <font color="white">
+             <label for="contact">Organisation Contact Number</label></font>
+      <input type="number" class="form-control" id="mobile" placeholder="Enter Organisation Contact Number" name="contact">
+    </div>
+    
+    <div class="form-group">
+         <font color="white">
+             <label for="name">Name</label></font>
+      <input type="Name" class="form-control" id="name" placeholder="Enter Your Name" name="name">
+    </div>
+    
+    </div>
+   
+    
+    <button type="button" class="btn btn-primary btn-lg btn-custom-color center-block " data-toggle="modal" data-target="#refer-organisation" >Refer</button>
+  
+    <div class="modal fade" id="refer-organisation" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Thanks!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Your Reference is Successful.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+     <button type="button" class="btn btn-lg btn-pill btn-primary " data-toggle="modal" data-target="#feedback" >Feedback Demo</button>
+  
+    <div class="modal fade" id="feedback"  tabindex="-1" role="dialog" aria-labelledby="Feedback" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title" id="feedbacktitle"><span class="glyphicon glyphicon-comment"></span>Give Your Feedback
+                <button type="button" class="close" data-dismiss="modal" >&times;</button></h4>
+    
+      </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="feedback-text" class="form-control-label">Comment:</label>
+                            <textarea class="form-control" rows="5" id="feedback-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+      <button type="button" class="btn btn-primary">Send</button>
+      </div>
+            </div>
+        </div>
+    </div>
+    
+       <button type="button" class="btn btn-lg btn-primary " data-toggle="modal" data-target="#filter" >Filter Demo</button>
+  
+        <div class="modal fade" id="filter" role="dialog" aria-labelledby="Filter" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title" id="feedbacktitle"><span class="glyphicon glyphicon-filter"></span>Filter
+                          <button type="button" class="close" data-dismiss="modal" >&times;</button></h3>
+    
+                    </div>
+                
+                    <div class="modal-body">
+                    <form >
+                        <div class="form-group">
+                            <label class="control-label col-md-4 " for="org-name-filter">Organisation Name</label>
+                            <div class="col-md-6">
+                                <select id="org-name-filter" name="org-name-filter" class="form-control">
+                                    <option value="0">All</option>
+                                    <option value="1">Alayam</option>
+                                    <option value="2">Udavum Karangal</option>
+                                </select>
+                            </div>  
+                        </div><br><br><br><br>
+    
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="location-filter">Location</label>
+                            <div class="col-md-6">
+                                <select id="location-filter" name="location-filter" class="form-control">
+                                    <option value="0">All</option>
+                                    <option value="1">Chennai</option>
+                                    <option value="2">Tirupur</option>
+                                    <option value="3">Salem</option>
+                                    <option value="4">Coimbatore</option>
+                                </select>
+                            </div>  
+                        </div><br><br><br>
+                        
+                          <div class="form-group">
+                            <label class="control-label col-md-4" for="goods-main-item-filter">Good Type</label>
+                            <div class="col-md-6">
+                                <select id="goods-main-item-filter" name="goods-main-item-filter" class="form-control">
+                                    <option value="0">All</option>
+                                    <option value="1">Clothes</option>
+                                    <option value="2">Groceries</option>
+                                    <option value="3">Stationeries</option>
+                                    <option value="4">Household Appliances</option>
+          
+                                </select>
+                            </div>  
+                        </div><br>
+                    </form>
+                </div>
+                
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Clear</button>
+                        <button type="button" class="btn btn-primary">Apply</button>
+                    </div>
+                </div>
+            </div>    
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+

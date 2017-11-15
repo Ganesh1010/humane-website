@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Humane</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="http://blazeworx.com/flags.css" rel="stylesheet">
+  <script src="http://blazeworx.com/jquery.flagstrap.min.js"></script>
+ 
+<style>
+
+    .user-detail-card{
+    background-color: rgba(214, 224, 226, 0.2);
+         
+    }
+    
+
+    
+    .img-box {
+    
+      padding-top: 2%;
+      justify-content: center
+    
+    }
+    
+    .leftpadding{
+        padding-left: 3%;
+    }
+  
+    
+    .user-video-card{
+
+    background-color: rgba(214, 224, 226, 0.2);
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+    
+</style>
+</head>
+
+<body>
+
+  <div class="container" id="user-detail-card">
+    <div class="card user-detail-card ">
+      <div class="row ">
+          <div class=" col-md-2 img-box">
+             
+                <img src="Images/referorg1.jpg" class="img-responsive img-circle">
+            
+              <h2 >User Role</h2>
+              <p>A Short Description about user role.</p>
+          </div>
+          <div class=" col-md-8">
+              <h4 class="card-title text-center">User Profile</h4>
+              <div class="container ">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" for="user-name">Name</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="user-name" id="user-name" placeholder="Enter Your Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" for="user-email">Email</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="user-email" id="user-email" placeholder="Enter Your Email">
+                            <a href ="#" align = "right"><span class="pull-right">Verify your email</span></a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" for="user-date-of-birth">Date of Birth</label>
+                        
+                        <div class="form-group">
+                            <div class='col-md-5'>
+                            <div class='input-group date' id="user-date-of-birth-date-picker">
+                                <input type='text' class="form-control"  placeholder="Pick Your Birth Date" />
+                                <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                                <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+                                <script type='text/javascript'>
+                                    $(function(){
+                                        $('#user-date-of-birth-date-picker').datepicker({
+                                            calendarWeeks: true,
+                                            todayHighlight: true,
+                                            autoclose: true
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        </div>
+       
+    
+                    </div>
+                    <div class="form-group ">
+                        <div class="row ">        
+                            
+                          <form class="form-horizontal">  
+                                <label class="col-md-1 control-label" for="user-mobile">Mobile</label>
+                        
+                              <div class="col-md-1   ">
+                                <div class="flagstrap" id="select_country" data-input-name="NewBuyer_country" data-selected-country="">     
+                                </div>
+                              </div>
+                                  <div class="col-md-4 leftpadding">
+                                 <input type="text" class="form-control" name="user-mobile" id="user-mobile" placeholder="Enter your Mobile">
+                                 <a href ="#"><span class="pull-right">Verify your Mobile Number</span></a></div>
+                                   
+                               
+                          
+                            <script>
+                                $(document).ready(function () {
+                                    $('#select_country').attr('data-selected-country','IN');
+                                    $('#select_country').flagStrap();
+                                    });
+                            </script>
+                            </form>
+                        </div>
+                    </div>
+                </form>
+              </div>
+            </div>
+      
+        </div>
+      </div>
+    </div>
+
+
+
+<div class="container" >  
+ <div class="card user-video-card"  id="user-video-card">
+            <h3 class="text-center">Profile Video</h3>
+          <div class="card">
+        <div class="embed-responsive embed-responsive-16by9">
+         <video  controls autoplay  class="embed-responsive-item">
+        <source src="http://vuramdevdb.vuram.com:8000/humane/getVideo/?type=1&usage=282&request=1&id=165830" type="video/mp4">
+    </video>
+<!--  <iframe class="embed-responsive-item" src="http://vuramdevdb.vuram.com:8000/humane/getVideo/?type=1&usage=282&request=1&id=165830" allowfullscreen ></iframe>-->
+</div>
+<div class="card-body">
+            <span class="badge-box"><i class="fa fa-check"></i></span><br>
+            <p class="card-text text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</p><br>
+    
+          </div>
+  </div>
+          
+        </div>
+</div>
+    
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Humane - New Service Post Page</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+      <style>
+         .container{
+         padding-left: 0px;
+         padding-right: 0px;
+         }
+         .checkbox {
+         padding-left: 40px;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container ">
+         <div class="panel panel-default">
+            <div class = "panel-heading text-center">New Service Post</div>
+            <div class = "panel-body">
+               <form class="form-horizontal">
+                  <div class="form-group">
+                     <label class="control-label col-sm-4" for="main_service_category">Main Service Category:</label>
+                     <div class="col-sm-4">
+                        <select id="main_service_category" name="main-service-category" class="form-control">
+                           <option value="0">Select Main Service</option>
+                           <option value="1">Education</option>
+                           <option value="2">Music</option>
+                           <option value="3">Medical</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label class="control-label col-sm-4" for="sub-service-category-one">Sub Service Category One:</label>
+                     <div class="col-sm-4">
+                        <select id="sub-service-category-one" name="sub-service-category-one" class="form-control">
+                           <option value="0">Select Sub Service Category one</option>
+                           <option value="1">Tution Teacher</option>
+                           <option value="2">Mathematics Teacher</option>
+                           <option value="3">Physics Teacher</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label class="control-label col-sm-4" for="sub-service-category-two">Sub Item Category:</label>
+                     <div class="col-sm-4">
+                        <select id="sub-service-category-two" name="sub-service-category-two" class="form-control">
+                           <option value="0">Select Sub Service Category Two</option>
+                           <option value="1">Physics</option>
+                           <option value="2">Maths</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label class="control-label col-sm-4" for="service-desc">Description:</label>
+                     <div class="col-sm-4">
+                        <textarea rows="4" cols="50" class="form-control" id="service-desc" placeholder="Enter Your Description"></textarea>
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                     <label class="control-label col-sm-4" for="service-start-date">Service Start Date:</label>
+                     <div class="col-sm-4">
+                        <div class="input-group date"  data-date-format="dd-mm-yyyy" id="service-start-date" >
+                           <input type="text" class="form-control"  placeholder="Select start date" />
+                           <span class="input-group-addon">
+                           <span class="glyphicon glyphicon-calendar"></span>
+                           </span>
+                        </div>
+                     </div>
+                     <script type="text/javascript">
+                        $(function () {
+                            $('#service-start-date').datepicker({
+                                todayHighlight: true,
+                                autoclose: true
+                            });
+                        });
+                     </script>    
+                  </div>
+                  <div class="form-group">
+                     <label class="control-label col-sm-4" for="service-end-date">Service End Date:</label>
+                     <div class="col-sm-4">
+                        <div class="input-group date"  data-date-format="dd-mm-yyyy" id="service-end-date" >
+                           <input type="text" class="form-control"  placeholder="Select end date" />
+                           <span class="input-group-addon">
+                           <span class="glyphicon glyphicon-calendar"></span>
+                           </span>
+                        </div>
+                     </div>
+                     <script type="text/javascript">
+                        $(function () {
+                            $('#service-end-date').datepicker({
+                                todayHighlight: true,
+                                autoclose: true
+                            });
+                        });
+                     </script>    
+                  </div>
+                  <div class="form-group">
+                     <label class="control-label col-sm-4" for="deadline-time">Service Requested From:</label>
+                     <div class="col-sm-4">
+                        <!--                        <input id="service-time" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/>-->
+                        <div class="checkbox text-center"  >
+                           <label class="control-label "  >
+                           <input type="checkbox"  data-toggle="collapse" data-target="#service-days"  />click to select the service days</label>
+                        </div>
+                     </div>
+                  </div>
+                  <div  class="collapse" id="service-days">
+                     <div class="form-group">
+                        <label class="control-label col-sm-4" for="deadline-time">Service Required Days:</label>
+                        <div class="col-sm-4" >
+                           <div id="accordion">
+                              <div class="radio">
+                                 <label><input type="radio" name="optradio" data-toggle="collapse" data-target="#all-days" data-parent="#accordion">All Days</label>
+                                 <div class="collapse" id="all-days">
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Monday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Tuesday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Wednesday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Thursday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Friday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Saturday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Sunday</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="radio">
+                                 <label><input type="radio" name="optradio" data-toggle="collapse" data-target="#week-days" data-parent="#accordion">Week Days</label>
+                                 <div class="collapse" id="week-days">
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Monday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Tuesday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Wednesday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Thursday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Friday</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="radio">
+                                 <label><input type="radio" name="optradio" data-toggle="collapse" data-target="#week-ends" data-parent="#accordion">Week Ends</label>
+                                 <div class="collapse" id="week-ends">
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Saturday</label>
+                                    </div>
+                                    <div class="checkbox">
+                                       <label><input type="checkbox" checked value="">Sunday</label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="col-sm-offset-5 col-sm-10 ">
+                        <button type="submit" class="btn btn-success text-center" data-toogle="tooltip" title="Click to publish the goods.">Publish</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
