@@ -5,7 +5,7 @@
         icon.alt = "icon";
         return icon;
     }
-    
+
      function createRow(itemName, quantity, unit) {
         var row = document.createElement('tr');
         var td1 = document.createElement('td');
@@ -24,7 +24,7 @@
     }
 
 function create_single_goods_card(item) {
-    
+
     function promisedDonationProgressBar(value) {
         var promisedDonationProgressBar = document.createElement("div");
         promisedDonationProgressBar.className = "progress-bar";
@@ -168,7 +168,7 @@ function createOrganisationPromisedDonationCard(item) {
     promisedDateText.innerHTML = "Promised Date"
     promisedDateText.setAttribute('style', 'margin-botom:0px;');
 
-    //    var promisedDate = promisedDate(item.promised_date);   
+    //    var promisedDate = promisedDate(item.promised_date);
     var promisedDate = getPromisedDate("04 Nov 2016");
     promisedDateText.className = "text-center";
 
@@ -205,6 +205,14 @@ function createOrganisationPromisedDonationCard(item) {
 
     var tableHeader = createRow("Item Name", "Quantity", "Unit");
     var tableBody = document.createElement("tbody");
+     tableBody.append(tableHeader);
+    var tableContent=[];
+
+    var donationItemList=item.donation_item_list;
+    console.log(donationItemList)
+
+    for (var i = 0; i < donationItemList.length ; i++){
+
     tableBody.append(tableHeader);
     var tableContent = [];
 
@@ -237,7 +245,7 @@ function createOrganisationPromisedDonationCard(item) {
     promisedDateDiv.append(promisedDate);
 
     userImgDiv.append(userIcon);
-    
+
     userDetailDiv.append(userName);
     userDetailDiv.append(donationId);
     userDetailDiv.append(userEmail);
@@ -263,5 +271,5 @@ function createOrganisationPromisedDonationCard(item) {
 
 function create_donation_item_details(item)
     {
-        
+
     }
