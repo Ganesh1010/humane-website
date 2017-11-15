@@ -66,10 +66,6 @@ function create_single_goods_card(item) {
 }
 
 function create_single_service_card(service) {
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 
 
     function getMainIconImage(src) {
@@ -106,7 +102,6 @@ function create_single_service_card(service) {
     orgCity.innerHTML = service.service_org_detail.city + " - 600001";
 
     var serviceInterestedUserCount = document.createElement("h5");
-<<<<<<< HEAD
     serviceInterestedUserCount.innerHTML = "No. of People Interested : "+5;
 
     var serveButton = document.createElement("button");
@@ -128,7 +123,6 @@ function create_single_service_card(service) {
 
     document.getElementById("servicetab").appendChild(serviceCard);
 }
-=======
     serviceInterestedUserCount.innerHTML = service.service_org_detail.org_name;
 
     var donateButton = document.createElement("button");
@@ -306,5 +300,3 @@ function createOrganisationPromisedDonationCard(item) {
 
 
 }
-
->>>>>>> origin/master
