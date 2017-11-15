@@ -146,7 +146,6 @@ function create_single_service_card(service) {
 }
 
 
-
 function createOrganisationPromisedDonationCard(item) {
 
     var doc = document.createDocumentFragment();
@@ -201,7 +200,7 @@ function createOrganisationPromisedDonationCard(item) {
     promisedDateText.innerHTML = "Promised Date"
     promisedDateText.setAttribute('style', 'margin-botom:0px;');
 
-    //    var promisedDate = promisedDate(item.promised_date);   
+    //    var promisedDate = promisedDate(item.promised_date);
     var promisedDate = getPromisedDate("04 Nov 2016");
     promisedDateText.className = "text-center";
 
@@ -240,10 +239,10 @@ function createOrganisationPromisedDonationCard(item) {
     var tableBody = document.createElement("tbody");
      tableBody.append(tableHeader);
     var tableContent=[];
-    
+
     var donationItemList=item.donation_item_list;
     console.log(donationItemList)
-   
+
     for (var i = 0; i < donationItemList.length ; i++){
         var itemName = donationItemList[i].goods_item_detail.goods_item_id;
         var itemQuantity = donationItemList[i].goods_item_detail.sub_item_category_one;
