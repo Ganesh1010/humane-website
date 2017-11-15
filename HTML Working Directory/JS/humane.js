@@ -205,7 +205,6 @@ function createOrganisationPromisedDonationCard(item) {
 
     var tableHeader = createRow("Item Name", "Quantity", "Unit");
     var tableBody = document.createElement("tbody");
-<<<<<<< HEAD
      tableBody.append(tableHeader);
     var tableContent=[];
 
@@ -213,7 +212,7 @@ function createOrganisationPromisedDonationCard(item) {
     console.log(donationItemList)
 
     for (var i = 0; i < donationItemList.length ; i++){
-=======
+
     tableBody.append(tableHeader);
     var tableContent = [];
 
@@ -221,7 +220,6 @@ function createOrganisationPromisedDonationCard(item) {
     console.log(donationItemList)
 
     for (var i = 0; i < donationItemList.length; i++) {
->>>>>>> c20a05705c52b9cd9e35149c5cf6ef0a5d66318d
         var itemName = donationItemList[i].goods_item_detail.goods_item_id;
         var itemQuantity = donationItemList[i].goods_item_detail.sub_item_category_one;
         var itemUnit = donationItemList[i].goods_item_detail.unit;
