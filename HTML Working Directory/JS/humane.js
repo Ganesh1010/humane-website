@@ -123,7 +123,6 @@ function create_single_service_card(service) {
 }
 
 
-
 function createOrganisationPromisedDonationCard(item) {
 
     var doc = document.createDocumentFragment();
@@ -176,37 +175,34 @@ function createOrganisationPromisedDonationCard(item) {
 
     var promisedDateText = getPromisedDate("Promised Date");
     promisedDateText.innerHTML = "Promised Date"
-    promisedDateText.setAttribute('style', 'margin-botom:0px;');
-
-    //    var promisedDate = promisedDate(item.promised_date);   
-    var promisedDate = getPromisedDate("04 Nov 2016");
+    promisedDateText.classList.add("promised-date-padding");
+    var promisedDate = getPromisedDate(item.promised_date);
     promisedDateText.className = "text-center";
 
     var userImgDiv = document.createElement("div");
     userImgDiv.classList.add("media-left");
     userImgDiv.classList.add("media-top");
-    //    var userIcon = userImage(item.donating_user.user_profile_picture);
-    var userIcon = userImage("Images/venky.jpg");
+    var userIcon = userImage(item.donating_user.user_profile_picture);
+    console.log(userIcon);
 
     var userDetailDiv = document.createElement("div");
     userDetailDiv.classList.add("media-body");
 
     var userName = document.createElement("h4");
-    //    userName.innerHTML = item.donating_user.first_name;
-    userName.innerHTML = "venky";
-
+    userName.innerHTML = item.donating_user.first_name;
     userName.classList.add("media-heading");
 
     var donationId = document.createElement("h5");
-    donationId.innerHTML = "#004";
-    // donationId.innerHTML = item.donation_id;
+    donationId.innerHTML = item.donation_id;
 
     var userEmail = document.createElement("h5");
-    //    userEmail.innerHTML = item.donating_user.email;
-    userEmail.innerHTML = "venky@gmail.com";
+    userEmail.innerHTML = item.donating_user.email;
+
 
     var status = document.createElement("h5");
-    status.innerHTML = "status";
+    if (item.is_donation_completed == false) {
+        status.innerHTML = "Waiting";
+    }
 
     var itemTable = document.createElement("table");
     itemTable.classList.add("table");
@@ -215,17 +211,17 @@ function createOrganisationPromisedDonationCard(item) {
 
     var tableHeader = createRow("Item Name", "Quantity", "Unit");
     var tableBody = document.createElement("tbody");
-     tableBody.append(tableHeader);
-    var tableContent=[];
-    
-    var donationItemList=item.donation_item_list;
+    tableBody.append(tableHeader);
+    var tableContent = [];
+
+    var donationItemList = item.donation_item_list;
     console.log(donationItemList)
-   
-    for (var i = 0; i < donationItemList.length ; i++){
+
+    for (var i = 0; i < donationItemList.length; i++) {
         var itemName = donationItemList[i].goods_item_detail.goods_item_id;
         var itemQuantity = donationItemList[i].goods_item_detail.sub_item_category_one;
         var itemUnit = donationItemList[i].goods_item_detail.unit;
-        tableContent[i] = createRow(itemName,itemQuantity, itemUnit);
+        tableContent[i] = createRow(itemName, itemQuantity, itemUnit);
         tableBody.append(tableContent[i]);
     }
 
@@ -277,4 +273,3 @@ function createOrganisationPromisedDonationCard(item) {
 
 
 }
-

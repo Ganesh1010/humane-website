@@ -161,6 +161,10 @@ img { max-width: 100%; }
     margin-top:5px;
 }
 
+.promised-date-padding{
+    margin-bottom: 0px;
+}
+
 /***** Media queries *****/
 
 @media (min-width: 992px) and (max-width: 1199px) {}
