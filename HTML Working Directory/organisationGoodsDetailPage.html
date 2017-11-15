@@ -59,7 +59,6 @@
                             <tr>
                                 <td class="col-md-3 text-center"><strong>01-11-2017</strong></td>
                                 <td class=" col-md-3 text-center "><strong>05-11-2017</strong></td>
-
                             </tr>
                         </tbody>
                     </table>
@@ -68,64 +67,7 @@
             </div>
             <hr>
             <h3>Needed Items:</h3>
-            <div class="media">
-
-                <div class="media-body ">
-                    <h4 class="media-heading text-center">Pulses</h4>
-                    <table class="table table-padding table-hover table-responsive">
-                        <tbody>
-                            <tr style="background-color:lavender;">
-                                <td class="col-md-3 text-center">Required (Kg)</td>
-                                <td class=" col-md-3 text-center ">Promised (Kg)</td>
-                                <td class=" col-md-3 text-center ">Received (Kg)</td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-3 text-center"><strong>10</strong></td>
-                                <td class=" col-md-3 text-center "><strong>5</strong></td>
-                                <td class=" col-md-3 text-center "><strong>2</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
-            </div>
-
-            <hr>
-
-            <div class="media">
-
-                <div class="media-body ">
-                    <h4 class="media-heading text-center">Rice</h4>
-                    <table class="table table-padding table-hover table-responsive">
-                        <thead>
-                            <tr>
-
-                            </tr>
-
-                        </thead>
-                        <tbody>
-                            <tr style="background-color:lavender;">
-                                <td class="col-md-3 text-center">Required (Kg)</td>
-                                <td class=" col-md-3 text-center ">Promised (Kg)</td>
-                                <td class=" col-md-3 text-center ">Received (Kg)</td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-3 text-center"><strong>10</strong></td>
-                                <td class=" col-md-3 text-center "><strong>5</strong></td>
-                                <td class=" col-md-3 text-center "><strong>2</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
-                <button type="button" class="btn btn-success center-block close-button-padding" data-target="#close">Close</button>
-
-            </div>
-
-
-
+            <div id="itemsRequired"></div>                                                                 
         </div>
 
         <div class=" col-md-6 card">
@@ -198,5 +140,25 @@
     </div>
 
 </body>
+<script type="text/javascript">
+    $(document).ready(function() {
 
+        function getDonationItemDetails(data) {
+            var t = $.parseJSON(data)['results']
+            //  var t =data['results'];
+            //            $('.loader').hide();
+            $.each(t, function(key, value) {
+                //    alert(key);
+                console.log("called service card")
+                create_donation_item_details(value);
+
+            });
+        }
+
+        $.getJSON("http://vuramdevdb.vuram.com:8000/humane/goodsDetail/?callback=?", function(data) {
+            getDonationItemDetails(data)
+        });
+
+    });
+</script>
 </html>
