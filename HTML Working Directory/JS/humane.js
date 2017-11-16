@@ -102,6 +102,7 @@
                 //Test Comment added By Ganesh
 
       serviceCardParentDiv.classList.add('goods-box');
+      
 
       var servicePanelHeading = document.createElement("div");
       servicePanelHeading.className = "panel-heading";
@@ -176,7 +177,7 @@
 
       promisedDateText.setAttribute('style', 'margin-botom:0px;');
 
-      //    var promisedDate = promisedDate(item.promised_date);   
+      //    var promisedDate = promisedDate(item.promised_date);
       var promisedDate = getPromisedDate("04 Nov 2016");
 
       promisedDateText.classList.add("promised-date-padding");
@@ -325,9 +326,9 @@
       var goodsItemList = item.goods_item_list
 
       for (var i = 0; i < goodsItemList.length; i++) {
-          
+
           var itemsNeeded = document.createDocumentFragment();
-          
+
           var itemDetailOuterDiv = document.createElement("div");
           itemDetailOuterDiv.className = "media";
 
@@ -465,7 +466,7 @@ function createServiceInterestCard(item) {
 
     var userEmail = document.createElement("h5");
     userEmail.innerHTML = item.service_user_detail.email;
-    
+
     var servicingTimeLabel = getText("Servicing time");
     var servicingTimeText = item.service_interest_expressed_start_time+"to"+item.service_interest_expressed_end_time;
     var servicingTime = getText(servicingTimeText);
@@ -501,7 +502,7 @@ function createServiceInterestCard(item) {
     cardContentDiv.append(serviceDateDiv);
     cardContentDiv.append(userImgDiv);
     cardContentDiv.append(userDetailDiv);
- 
+
 
     serviceInterestCardDiv.append(cardContentDiv);
     serviceInterestCardDiv.append(attendedButton);
