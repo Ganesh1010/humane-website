@@ -119,6 +119,8 @@
       var serviceCardParentDiv = document.createElement("div");
       serviceCardParentDiv.classList.add('panel');
       serviceCardParentDiv.classList.add('panel-primary');
+                //Test Comment added By Ganesh
+
       serviceCardParentDiv.classList.add('goods-box');
 
       var servicePanelHeading = document.createElement("div");
@@ -345,6 +347,7 @@
       function userImage(imgSrc) {
 
           var icon = document.createElement("img");
+          //Test Comment added By Ganesh
           icon.setAttribute("src", imgSrc);
           icon.classList.add("media-object");
           icon.classList.add("thumbnail");
@@ -437,6 +440,7 @@
 
 
       doc.appendChild(serviceInterestCardDiv);
+              //Test Comment added By Ganesh
 
       document.getElementById("service-interest-expressed-card").appendChild(doc);
 
