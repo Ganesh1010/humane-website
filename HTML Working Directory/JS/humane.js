@@ -32,18 +32,6 @@
 
   function create_single_goods_card(item) {
 
-      function getImage(src) {
-          var icon = document.createElement("img");
-          icon.setAttribute("src", src);
-          icon.className = "main-item-image";
-          icon.alt = "icon";
-          return icon;
-      }
-
-  }
-
-  function create_single_goods_card(item) {
-
       function promisedDonationProgressBar(value) {
           var promisedDonationProgressBar = document.createElement("div");
           promisedDonationProgressBar.className = "progress-bar";
@@ -154,7 +142,7 @@
 
   function createOrganisationPromisedDonationCard(item) {
 
-      doc = document.createDocumentFragment();
+      var doc = document.createDocumentFragment();
 
       function getPromisedDate(dateText) {
           var promisedDate = document.createElement("p");
@@ -173,6 +161,24 @@
           return icon;
       }
 
+      function createRow(itemName, quantity, unit) {
+          var row = document.createElement('tr');
+          var td1 = document.createElement('td');
+          var td2 = document.createElement('td');
+          var td3 = document.createElement('td');
+
+          td1.appendChild(document.createTextNode(itemName));
+          td2.appendChild(document.createTextNode(quantity));
+          td3.appendChild(document.createTextNode(unit));
+
+          row.append(td1);
+          row.append(td2);
+          row.append(td3);
+
+          return row;
+      }
+
+
       var promisedCardDiv = document.createElement("div");
       promisedCardDiv.classList.add("card");
       promisedCardDiv.classList.add("col-md-4");
@@ -186,24 +192,13 @@
 
       var promisedDateText = getPromisedDate("Promised Date");
       promisedDateText.innerHTML = "Promised Date"
-
       promisedDateText.classList.add("promised-date-padding");
-      var promisedDate = getPromisedDate(item.promised_date);
+      var promisedDateString = item.promised_date;
+      var date = new Date(promisedDateString);
+      console.log(date.toLocaleDateString());
+      var promisedDate = getPromisedDate(date.toDateString());
 
-      promisedDateText.setAttribute('style', 'margin-botom:0px;');
-
-      //    var promisedDate = promisedDate(item.promised_date);
-      var promisedDate = getPromisedDate("04 Nov 2016");
-
-      promisedDateText.setAttribute('style', 'margin-botom:0px;');
-
-      //    var promisedDate = promisedDate(item.promised_date);   
-      var promisedDate = getPromisedDate("04 Nov 2016");
-
-      promisedDateText.classList.add("promised-date-padding");
-      var promisedDate = getPromisedDate(item.promised_date);
-
-      promisedDateText.className = "text-center";
+      promisedDate.className = "text-center";
 
       var userImgDiv = document.createElement("div");
       userImgDiv.classList.add("media-left");
@@ -228,22 +223,18 @@
       var status = document.createElement("h5");
       if (item.is_donation_completed == false) {
           status.innerHTML = "Waiting";
+      } else {
+          status.innerHTML = "Received";
       }
 
       var itemTable = document.createElement("table");
       itemTable.classList.add("table");
       itemTable.classList.add("table-hover");
       itemTable.classList.add("table-responsive");
+      itemTable.classList.add("table-bottom-padding")
 
       var tableHeader = createRow("Item Name", "Quantity", "Unit");
       var tableBody = document.createElement("tbody");
-
-      tableBody.append(tableHeader);
-      var tableContent = [];
-
-      var donationItemList = item.donation_item_list;
-      console.log(donationItemList)
-
       tableBody.append(tableHeader);
       var tableContent = [];
 
@@ -260,17 +251,13 @@
           moreButton.innerHTML = "click to see full details";
       }
 
-
-
-
-
       if (donationItemList != null) {
-          if (document.getElementById("moreButtonId"))
-              donationItemListSize = donationItemList.length;
-          else
-              donationItemListSize = 1;
-          console.log(document.getElementById("moreButtonId"));
-          for (var i = 0; i < donationItemListSize; i++) {
+//          if (document.getElementById("moreButtonId"))
+//              donationItemListSize = donationItemList.length;
+//          else
+//              donationItemListSize = 1;
+//          console.log(document.getElementById("moreButtonId"));
+          for (var i = 0; i < 1; i++) {
               var itemName = donationItemList[i].goods_item_detail.goods_item_id;
               var itemQuantity = donationItemList[i].goods_item_detail.sub_item_category_one;
               var itemUnit = donationItemList[i].goods_item_detail.unit;
@@ -279,19 +266,6 @@
 
 
           }
-
-
-      console.log(donationItemList)
-
-
-
-      tableBody.append(tableHeader);
-      var tableContent = [];
-
-      var donationItemList = item.donation_item_list;
-      console.log(donationItemList)
-
-
       }
 
       var receivedButton = document.createElement("button");
@@ -304,12 +278,17 @@
       receivedButton.setAttribute("data-target", "#");
       receivedButton.innerHTML = "Received";
 
-      var breakLine = document.createElement("br");
-      var line = document.createElement("hr");
 
-      cardContentDiv.append(line);
+
+      var breakLine = document.createElement("br");
+      var hrline = document.createElement("hr");
+      var hrline1 = document.createElement("hr");
+
+
+      cardContentDiv.append(hrline);
       promisedDateDiv.append(promisedDateText);
       promisedDateDiv.append(promisedDate);
+
 
       userImgDiv.append(userIcon);
 
@@ -326,6 +305,8 @@
       cardContentDiv.append(userDetailDiv);
       cardContentDiv.append(itemTable);
 
+
+
       if (donationItemListSize > 1) {
           cardContentDiv.append(moreButton);
       }
@@ -333,10 +314,16 @@
 
       promisedCardDiv.append(cardContentDiv);
       promisedCardDiv.append(receivedButton);
+      promisedCardDiv.append(breakLine);
+      promisedCardDiv.append(hrline1);
+
+
+
 
       doc.appendChild(promisedCardDiv);
 
       document.getElementById("promised-donation-card").appendChild(doc);
+
 
   }
 
@@ -346,9 +333,9 @@
       var goodsItemList = item.goods_item_list
 
       for (var i = 0; i < goodsItemList.length; i++) {
-          
+
           var itemsNeeded = document.createDocumentFragment();
-          
+
           var itemDetailOuterDiv = document.createElement("div");
           itemDetailOuterDiv.className = "media";
 
@@ -402,128 +389,128 @@
 
   }
 
-function createServiceInterestCard(item) {
+  function createServiceInterestCard(item) {
 
-    doc = document.createDocumentFragment();
+      doc = document.createDocumentFragment();
 
-    function getText(text) {
-        var paragraph = document.createElement("p");
-        paragraph.innerHTML = text;
-        return paragraph;
-    }
+      function getText(text) {
+          var paragraph = document.createElement("p");
+          paragraph.innerHTML = text;
+          return paragraph;
+      }
 
-    function createRow(string1, string2) {
-        var row = document.createElement('tr');
-        var td1 = document.createElement('td');
-        var td2 = document.createElement('td');
+      function createRow(string1, string2) {
+          var row = document.createElement('tr');
+          var td1 = document.createElement('td');
+          var td2 = document.createElement('td');
 
-        td1.appendChild(document.createTextNode(string1));
-        td2.appendChild(document.createTextNode(string2));
+          td1.appendChild(document.createTextNode(string1));
+          td2.appendChild(document.createTextNode(string2));
 
-        row.append(td1);
-        row.append(td2);
-
-
-        return row;
-    }
-
-    function userImage(imgSrc) {
-
-        var icon = document.createElement("img");
-        icon.setAttribute("src", imgSrc);
-        icon.classList.add("media-object");
-        icon.classList.add("thumbnail");
-        icon.classList.add("icon");
-        icon.setAttribute('style', 'width:80px;margin-bottom:5px;')
-
-        return icon;
-    }
+          row.append(td1);
+          row.append(td2);
 
 
-    var serviceInterestCardDiv = document.createElement("div");
-    serviceInterestCardDiv.classList.add("card");
-    serviceInterestCardDiv.classList.add("col-md-4");
+          return row;
+      }
 
-    var cardContentDiv = document.createElement("div");
-    cardContentDiv.classList.add("media");
+      function userImage(imgSrc) {
 
-    var serviceDateDiv = document.createElement("div");
-    serviceDateDiv.className = "pull-right";
-    var interestedDateText = getText("Interested Date");
+          var icon = document.createElement("img");
+          icon.setAttribute("src", imgSrc);
+          icon.classList.add("media-object");
+          icon.classList.add("thumbnail");
+          icon.classList.add("icon");
+          icon.setAttribute('style', 'width:80px;margin-bottom:5px;')
 
-    interestedDateText.setAttribute('style', 'margin-bottom:0px;')
-    var interestedDateString = item.service_interest_action_performed_date;
-    var date = new Date(interestedDateString);
-    console.log(date.toLocaleDateString());
-    var interestedDate = getText(date.toDateString());
-    interestedDate.className = "text-center";
+          return icon;
+      }
 
 
-    var userImgDiv = document.createElement("div");
-    userImgDiv.classList.add("media-left");
-    userImgDiv.classList.add("media-middle");
-    var userIcon = userImage(item.service_user_detail.user_profile_picture);
-    console.log(userIcon);
+      var serviceInterestCardDiv = document.createElement("div");
+      serviceInterestCardDiv.classList.add("card");
+      serviceInterestCardDiv.classList.add("col-md-4");
 
-    var userDetailDiv = document.createElement("div");
-    userDetailDiv.classList.add("media-body");
+      var cardContentDiv = document.createElement("div");
+      cardContentDiv.classList.add("media");
 
-    var userName = document.createElement("h4");
-    userName.innerHTML = item.service_user_detail.first_name;
-    userName.classList.add("media-heading");
+      var serviceDateDiv = document.createElement("div");
+      serviceDateDiv.className = "pull-right";
+      var interestedDateText = getText("Interested Date");
 
-    var serviceId = document.createElement("h5");
-    serviceId.innerHTML = "#000"+item.service_detail.service_id;
-
-    var userEmail = document.createElement("h5");
-    userEmail.innerHTML = item.service_user_detail.email;
-    
-    var servicingTimeLabel = getText("Servicing time");
-    var servicingTimeText = item.service_interest_expressed_start_time+"to"+item.service_interest_expressed_end_time;
-    var servicingTime = getText(servicingTimeText);
-    console.log(servicingTime);
+      interestedDateText.setAttribute('style', 'margin-bottom:0px;')
+      var interestedDateString = item.service_interest_action_performed_date;
+      var date = new Date(interestedDateString);
+      console.log(date.toLocaleDateString());
+      var interestedDate = getText(date.toDateString());
+      interestedDate.className = "text-center";
 
 
-    var attendedButton = document.createElement("button");
-    attendedButton.classList.add("btn");
-    attendedButton.classList.add("btn-success");
-    attendedButton.classList.add("pull-right");
-    attendedButton.setAttribute("type", "button");
-    attendedButton.setAttribute("data-toggle", "tool-tip");
-    attendedButton.setAttribute("title", "Click to mark it as attended");
-    attendedButton.setAttribute("data-target", "#");
-    attendedButton.innerHTML = "Attended";
+      var userImgDiv = document.createElement("div");
+      userImgDiv.classList.add("media-left");
+      userImgDiv.classList.add("media-middle");
+      var userIcon = userImage(item.service_user_detail.user_profile_picture);
+      console.log(userIcon);
 
-    var breakLine = document.createElement("br");
-    var startLine = document.createElement("hr");
-    var endLine = document.createElement("hr");
+      var userDetailDiv = document.createElement("div");
+      userDetailDiv.classList.add("media-body");
 
-    serviceInterestCardDiv.append(startLine);
-    serviceDateDiv.append(interestedDateText);
-    serviceDateDiv.append(interestedDate);
+      var userName = document.createElement("h4");
+      userName.innerHTML = item.service_user_detail.first_name;
+      userName.classList.add("media-heading");
 
-    userImgDiv.append(userIcon);
+      var serviceId = document.createElement("h5");
+      serviceId.innerHTML = "#000" + item.service_detail.service_id;
 
-    userDetailDiv.append(userName);
-    userDetailDiv.append(serviceId);
-    userDetailDiv.append(userEmail);
-    userDetailDiv.append(servicingTime)
+      var userEmail = document.createElement("h5");
+      userEmail.innerHTML = item.service_user_detail.email;
 
-
-    cardContentDiv.append(serviceDateDiv);
-    cardContentDiv.append(userImgDiv);
-    cardContentDiv.append(userDetailDiv);
- 
-
-    serviceInterestCardDiv.append(cardContentDiv);
-    serviceInterestCardDiv.append(attendedButton);
-    serviceInterestCardDiv.append(breakLine);
-    serviceInterestCardDiv.append(endLine);
+      var servicingTimeLabel = getText("Servicing time");
+      var servicingTimeText = item.service_interest_expressed_start_time + "to" + item.service_interest_expressed_end_time;
+      var servicingTime = getText(servicingTimeText);
+      console.log(servicingTime);
 
 
-    doc.appendChild(serviceInterestCardDiv);
+      var attendedButton = document.createElement("button");
+      attendedButton.classList.add("btn");
+      attendedButton.classList.add("btn-success");
+      attendedButton.classList.add("pull-right");
+      attendedButton.setAttribute("type", "button");
+      attendedButton.setAttribute("data-toggle", "tool-tip");
+      attendedButton.setAttribute("title", "Click to mark it as attended");
+      attendedButton.setAttribute("data-target", "#");
+      attendedButton.innerHTML = "Attended";
 
-    document.getElementById("service-interest-expressed-card").appendChild(doc);
+      var breakLine = document.createElement("br");
+      var startLine = document.createElement("hr");
+      var endLine = document.createElement("hr");
+
+      serviceInterestCardDiv.append(startLine);
+      serviceDateDiv.append(interestedDateText);
+      serviceDateDiv.append(interestedDate);
+
+      userImgDiv.append(userIcon);
+
+      userDetailDiv.append(userName);
+      userDetailDiv.append(serviceId);
+      userDetailDiv.append(userEmail);
+      userDetailDiv.append(servicingTime)
 
 
-}
+      cardContentDiv.append(serviceDateDiv);
+      cardContentDiv.append(userImgDiv);
+      cardContentDiv.append(userDetailDiv);
+
+
+      serviceInterestCardDiv.append(cardContentDiv);
+      serviceInterestCardDiv.append(attendedButton);
+      serviceInterestCardDiv.append(breakLine);
+      serviceInterestCardDiv.append(endLine);
+
+
+      doc.appendChild(serviceInterestCardDiv);
+
+      document.getElementById("service-interest-expressed-card").appendChild(doc);
+
+
+  }
