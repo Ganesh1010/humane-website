@@ -385,6 +385,8 @@
       document.getElementById("main-item-image").setAttribute("src", item.main_item_image);
   }
 
+
+
 function createServiceInterestCard(item) {
 
     doc = document.createDocumentFragment();
