@@ -392,11 +392,6 @@
   }
 
 
-      document.getElementById("postedDate").innerHTML = item.posted_date;
-      document.getElementById("deadline").innerHTML = item.deadline;
-
-  }
-
   function createServiceInterestCard(item) {
 
       doc = document.createDocumentFragment();
