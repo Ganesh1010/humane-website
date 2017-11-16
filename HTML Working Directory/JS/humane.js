@@ -386,7 +386,6 @@
   }
 
 
-
 function createServiceInterestCard(item) {
 
     doc = document.createDocumentFragment();
