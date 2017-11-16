@@ -374,10 +374,13 @@
           document.getElementById("itemsRequired").appendChild(itemsNeeded);
 
       }
-
-      document.getElementById("postedDate").innerHTML = item.posted_date;
-      document.getElementById("deadline").innerHTML = item.deadline;
-
+      var postedDate = new Date(item.posted_date);
+      var deadline = new Date(item.deadline);
+      document.getElementById("postedDate").innerHTML = postedDate.toDateString();
+      document.getElementById("deadline").innerHTML = deadline.toDateString();
+      document.getElementById("main-item-name").innerHTML = item.main_item;
+      document.getElementById("main-item-image").setAttribute("src", item.main_item_image);
+     
   }
 
 function createServiceInterestCard(item) {
