@@ -32,18 +32,6 @@
 
   function create_single_goods_card(item) {
 
-      function getImage(src) {
-          var icon = document.createElement("img");
-          icon.setAttribute("src", src);
-          icon.className = "main-item-image";
-          icon.alt = "icon";
-          return icon;
-      }
-
-  }
-
-  function create_single_goods_card(item) {
-
       function promisedDonationProgressBar(value) {
           var promisedDonationProgressBar = document.createElement("div");
           promisedDonationProgressBar.className = "progress-bar";
@@ -162,17 +150,6 @@
           var promisedDate = document.createElement("p");
           promisedDate.innerHTML = dateText;
           return promisedDate;
-      }
-
-      function userImage(imgSrc) {
-
-          var icon = document.createElement("img");
-          icon.setAttribute("src", imgSrc);
-          icon.classList.add("media-object");
-          icon.classList.add("thumbnail");
-          icon.setAttribute('style', 'width:80px;margin-bottom:5px;')
-
-          return icon;
       }
 
       var promisedCardDiv = document.createElement("div");
@@ -397,7 +374,6 @@
           document.getElementById("itemsRequired").appendChild(itemsNeeded);
 
       }
-
 
       document.getElementById("postedDate").innerHTML = item.posted_date;
       document.getElementById("deadline").innerHTML = item.deadline;
