@@ -382,6 +382,14 @@
           document.getElementById("itemsRequired").appendChild(itemsNeeded);
 
       }
+      //A new Commnet By ganesh for test
+      var postedDate = new Date(item.posted_date);
+      var deadline = new Date(item.deadline);
+      document.getElementById("postedDate").innerHTML = postedDate.toDateString();
+      document.getElementById("deadline").innerHTML = deadline.toDateString();
+      document.getElementById("main-item-name").innerHTML = item.main_item;
+      document.getElementById("main-item-image").setAttribute("src", item.main_item_image);
+  }
 
 
       document.getElementById("postedDate").innerHTML = item.posted_date;
@@ -507,10 +515,11 @@
       serviceInterestCardDiv.append(breakLine);
       serviceInterestCardDiv.append(endLine);
 
+              //Test Comment added By Ganesh
 
       doc.appendChild(serviceInterestCardDiv);
 
       document.getElementById("service-interest-expressed-card").appendChild(doc);
 
 
-  }
+}
