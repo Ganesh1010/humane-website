@@ -252,11 +252,11 @@
       }
 
       if (donationItemList != null) {
-//          if (document.getElementById("moreButtonId"))
-//              donationItemListSize = donationItemList.length;
-//          else
-//              donationItemListSize = 1;
-//          console.log(document.getElementById("moreButtonId"));
+          //          if (document.getElementById("moreButtonId"))
+          //              donationItemListSize = donationItemList.length;
+          //          else
+          //              donationItemListSize = 1;
+          //          console.log(document.getElementById("moreButtonId"));
           for (var i = 0; i < 1; i++) {
               var itemName = donationItemList[i].goods_item_detail.goods_item_id;
               var itemQuantity = donationItemList[i].goods_item_detail.sub_item_category_one;
@@ -402,7 +402,7 @@
           return paragraph;
       }
 
-      
+
       function createRow(string1, string2) {
           var row = document.createElement('tr');
           var td1 = document.createElement('td');
@@ -511,11 +511,109 @@
       serviceInterestCardDiv.append(breakLine);
       serviceInterestCardDiv.append(endLine);
 
-              //Test Comment added By Ganesh
+      //Test Comment added By Ganesh
 
       doc.appendChild(serviceInterestCardDiv);
 
       document.getElementById("service-interest-expressed-card").appendChild(doc);
 
 
+  }
+
+function createHistoryCard(item) {
+    var doc = document.createDocumentFragment();
+
+    function createRow(string1, string2) {
+        var row = document.createElement('tr');
+        var td1 = document.createElement('td');
+        var td2 = document.createElement('td');
+
+        td1.appendChild(document.createTextNode(string1));
+        td2.appendChild(document.createTextNode(string2));
+
+        td1.classList.add("col-md-3");
+        td2.classList.add("col-md-3");
+
+        td1.classList.add("text-center");
+        td2.classList.add("text-center");
+
+        row.append(td1);
+        row.append(td2);
+
+        return row;
+    }
+
+    function userImage(imgSrc) {
+
+        var icon = document.createElement("img");
+        icon.setAttribute("src", imgSrc);
+        icon.classList.add("media-object");
+        icon.classList.add("thumbnail");
+    
+        return icon;
+    }
+
+    function getHeaderText(text) {
+        var header = document.createElement("h5");
+        header.innerHTML = text;
+        return header;
+    }
+
+    var historyCardDiv = document.createElement("div");
+    historyCardDiv.classList.add("card");
+    historyCardDiv.classList.add("col-md-6");
+
+    var cardContentDiv = document.createElement("div");
+    cardContentDiv.classList.add("media");
+    cardContentDiv.classList.add("history-card-padding");
+
+    var itemImageDiv = document.createElement("div");
+    itemImageDiv.classList.add("media-left");
+    itemImageDiv.classList.add("media-middle");
+    var itemImage = userImage(item.main_item_image);
+
+    var itemDetailDiv = document.createElement("div");
+    itemDetailDiv.classList.add("media-body");
+
+    var breakLine = document.createElement("br");
+
+    var itemName = getHeaderText(item.main_item);
+    itemName.classList.add("media-heading");
+    itemName.classList.add("text-center");
+
+    var dateTable = document.createElement("table");
+    dateTable.classList.add("table");
+    dateTable.classList.add("table-hover");
+    dateTable.classList.add("table-responsive");
+
+    var tableBody = document.createElement("tbody");
+    var tableHeader = createRow("Posted Date", "DeadLine Date");
+    
+    
+    var postedDateString = item.posted_date;
+    var deadLineDateString = item.deadline;
+    var postedDate = new Date(postedDateString);
+    var deadLineDate = new Date(deadLineDateString);
+    var tableContent = createRow(postedDate.toDateString(), deadLineDate.toDateString());
+
+    tableBody.append(tableHeader);
+    tableBody.append(tableContent);
+
+    itemImageDiv.append(itemImage);
+    dateTable.append(tableBody);
+
+    itemDetailDiv.append(breakLine);
+    itemDetailDiv.append(itemName);
+    itemDetailDiv.append(dateTable);
+
+    cardContentDiv.append(itemImageDiv);
+    cardContentDiv.append(itemDetailDiv);
+
+    historyCardDiv.append(cardContentDiv);
+
+    doc.appendChild(historyCardDiv);
+
+    document.getElementById("history-card").appendChild(doc);
+
 }
+
