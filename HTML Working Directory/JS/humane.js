@@ -243,14 +243,38 @@
       var tableContent = [];
 
       var donationItemList = item.donation_item_list;
-      console.log(donationItemList);
+      var donationItemListSize = donationItemList.length;
 
-      for (var i = 0; i < donationItemList.length; i++) {
-          var itemName = donationItemList[i].goods_item_detail.goods_item_id;
-          var itemQuantity = donationItemList[i].goods_item_detail.sub_item_category_one;
-          var itemUnit = donationItemList[i].goods_item_detail.unit;
-          tableContent[i] = createRow(itemName, itemQuantity, itemUnit);
-          tableBody.append(tableContent[i]);
+      if (donationItemListSize > 1) {
+          console.log("more buton created");
+          var moreButton = document.createElement("button");
+          moreButton.setAttribute("id", "moreButtonId");
+          moreButton.classList.add("btn-link");
+          moreButton.classList.add("pull-right");
+          moreButton.innerHTML = "click to see full details";
+      }
+
+
+
+
+
+      if (donationItemList != null) {
+          if (document.getElementById("moreButtonId"))
+              donationItemListSize = donationItemList.length;
+          else
+              donationItemListSize = 1;
+          console.log(document.getElementById("moreButtonId"));
+          for (var i = 0; i < donationItemListSize; i++) {
+              var itemName = donationItemList[i].goods_item_detail.goods_item_id;
+              var itemQuantity = donationItemList[i].goods_item_detail.sub_item_category_one;
+              var itemUnit = donationItemList[i].goods_item_detail.unit;
+              tableContent[i] = createRow(itemName, itemQuantity, itemUnit);
+              tableBody.append(tableContent[i]);
+
+
+          }
+
+
       }
 
       var receivedButton = document.createElement("button");
@@ -285,6 +309,10 @@
       cardContentDiv.append(userImgDiv);
       cardContentDiv.append(userDetailDiv);
       cardContentDiv.append(itemTable);
+
+      if (donationItemListSize > 1) {
+          cardContentDiv.append(moreButton);
+      }
 
 
       promisedCardDiv.append(cardContentDiv);
