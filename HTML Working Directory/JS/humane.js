@@ -102,7 +102,7 @@
                 //Test Comment added By Ganesh
 
       serviceCardParentDiv.classList.add('goods-box');
-      
+
 
       var servicePanelHeading = document.createElement("div");
       servicePanelHeading.className = "panel-heading";
@@ -326,7 +326,7 @@
       var goodsItemList = item.goods_item_list
 
       for (var i = 0; i < goodsItemList.length; i++) {
-
+            //A new Commnet By ganesh for test
           var itemsNeeded = document.createDocumentFragment();
 
           var itemDetailOuterDiv = document.createElement("div");
@@ -347,7 +347,7 @@
 
           itemDetailTableBody.append(tableHeader);
           var tableContent = [];
-
+            //A new Commnet By ganesh for test
           var itemCategory = goodsItemList[i].sub_item_category_two;
           if (itemCategory != null)
               itemCategory = "(" + itemCategory + ")";
@@ -355,6 +355,7 @@
               itemCategory = "";
           var itemName = document.createElement("h4");
           itemName.classList.add("media-heading");
+            //A new Commnet By ganesh for test
           itemName.classList.add("text-center");
           itemName.innerHTML = goodsItemList[i].sub_item_category_one + itemCategory;
           var required = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
@@ -378,7 +379,7 @@
 
       document.getElementById("postedDate").innerHTML = item.posted_date;
       document.getElementById("deadline").innerHTML = item.deadline;
-
+      //A new Commnet By ganesh for test
   }
 
 function createServiceInterestCard(item) {
