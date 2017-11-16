@@ -402,6 +402,7 @@
           return paragraph;
       }
 
+      
       function createRow(string1, string2) {
           var row = document.createElement('tr');
           var td1 = document.createElement('td');
