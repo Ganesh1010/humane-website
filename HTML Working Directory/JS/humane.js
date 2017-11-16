@@ -401,3 +401,129 @@
       document.getElementById("deadline").innerHTML = item.deadline;
 
   }
+
+function createServiceInterestCard(item) {
+
+    doc = document.createDocumentFragment();
+
+    function getText(text) {
+        var paragraph = document.createElement("p");
+        paragraph.innerHTML = text;
+        return paragraph;
+    }
+
+    function createRow(string1, string2) {
+        var row = document.createElement('tr');
+        var td1 = document.createElement('td');
+        var td2 = document.createElement('td');
+
+        td1.appendChild(document.createTextNode(string1));
+        td2.appendChild(document.createTextNode(string2));
+
+        row.append(td1);
+        row.append(td2);
+
+
+        return row;
+    }
+
+    function userImage(imgSrc) {
+
+        var icon = document.createElement("img");
+        icon.setAttribute("src", imgSrc);
+        icon.classList.add("media-object");
+        icon.classList.add("thumbnail");
+        icon.classList.add("icon");
+        icon.setAttribute('style', 'width:80px;margin-bottom:5px;')
+
+        return icon;
+    }
+
+
+    var serviceInterestCardDiv = document.createElement("div");
+    serviceInterestCardDiv.classList.add("card");
+    serviceInterestCardDiv.classList.add("col-md-4");
+
+    var cardContentDiv = document.createElement("div");
+    cardContentDiv.classList.add("media");
+
+    var serviceDateDiv = document.createElement("div");
+    serviceDateDiv.className = "pull-right";
+    var interestedDateText = getText("Interested Date");
+
+    interestedDateText.setAttribute('style', 'margin-bottom:0px;')
+    var interestedDateString = item.service_interest_action_performed_date;
+    var date = new Date(interestedDateString);
+    console.log(date.toLocaleDateString());
+    var interestedDate = getText(date.toDateString());
+    interestedDate.className = "text-center";
+
+
+    var userImgDiv = document.createElement("div");
+    userImgDiv.classList.add("media-left");
+    userImgDiv.classList.add("media-middle");
+    var userIcon = userImage(item.service_user_detail.user_profile_picture);
+    console.log(userIcon);
+
+    var userDetailDiv = document.createElement("div");
+    userDetailDiv.classList.add("media-body");
+
+    var userName = document.createElement("h4");
+    userName.innerHTML = item.service_user_detail.first_name;
+    userName.classList.add("media-heading");
+
+    var serviceId = document.createElement("h5");
+    serviceId.innerHTML = "#000"+item.service_detail.service_id;
+
+    var userEmail = document.createElement("h5");
+    userEmail.innerHTML = item.service_user_detail.email;
+    
+    var servicingTimeLabel = getText("Servicing time");
+    var servicingTimeText = item.service_interest_expressed_start_time+"to"+item.service_interest_expressed_end_time;
+    var servicingTime = getText(servicingTimeText);
+    console.log(servicingTime);
+
+
+    var attendedButton = document.createElement("button");
+    attendedButton.classList.add("btn");
+    attendedButton.classList.add("btn-success");
+    attendedButton.classList.add("pull-right");
+    attendedButton.setAttribute("type", "button");
+    attendedButton.setAttribute("data-toggle", "tool-tip");
+    attendedButton.setAttribute("title", "Click to mark it as attended");
+    attendedButton.setAttribute("data-target", "#");
+    attendedButton.innerHTML = "Attended";
+
+    var breakLine = document.createElement("br");
+    var startLine = document.createElement("hr");
+    var endLine = document.createElement("hr");
+
+    serviceInterestCardDiv.append(startLine);
+    serviceDateDiv.append(interestedDateText);
+    serviceDateDiv.append(interestedDate);
+
+    userImgDiv.append(userIcon);
+
+    userDetailDiv.append(userName);
+    userDetailDiv.append(serviceId);
+    userDetailDiv.append(userEmail);
+    userDetailDiv.append(servicingTime)
+
+
+    cardContentDiv.append(serviceDateDiv);
+    cardContentDiv.append(userImgDiv);
+    cardContentDiv.append(userDetailDiv);
+ 
+
+    serviceInterestCardDiv.append(cardContentDiv);
+    serviceInterestCardDiv.append(attendedButton);
+    serviceInterestCardDiv.append(breakLine);
+    serviceInterestCardDiv.append(endLine);
+
+
+    doc.appendChild(serviceInterestCardDiv);
+
+    document.getElementById("service-interest-expressed-card").appendChild(doc);
+
+
+}
