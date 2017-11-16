@@ -1,18 +1,20 @@
-.main-item-image{
-    width: 200%;height:150px;
+.main-item-image {
+    width: 200%;
+    height: 150px;
 }
 
-.donate-button{
-    height:30px;
-    padding-top:5px;
-    margin-top:5px;
+.donate-button {
+    height: 30px;
+    padding-top: 5px;
+    margin-top: 5px;
 }
-.card-panel-heading{
+
+.card-panel-heading {
     height: 5px;
-    padding:0;
+    padding: 0;
 }
 
-.promised-date-padding{
+.promised-date-padding {
     margin-bottom: 0px;
 }
 
@@ -24,6 +26,23 @@
     font-weight: bold;
 }
 
+.card {
+    margin-top: 1%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.icon{
+    width:80px;
+    margin-bottom:5px;
+}
+
+
 /***** Media queries *****/
 
 @media (min-width: 992px) and (max-width: 1199px) {}
@@ -31,13 +50,18 @@
 @media (min-width: 768px) and (max-width: 991px) {}
 
 @media (max-width: 767px) {
-	
-	.inner-bg { padding: 60px 0 110px 0; }
+
+    .inner-bg {
+        padding: 60px 0 110px 0;
+    }
 
 }
 
 @media (max-width: 415px) {
-	
-	h1, h2 { font-size: 32px; }
+
+    h1,
+    h2 {
+        font-size: 32px;
+    }
 
 }
