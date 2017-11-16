@@ -139,18 +139,7 @@
       document.getElementById("servicetab").appendChild(serviceCard);
   }
 
-
-  function createOrganisationPromisedDonationCard(item) {
-
-      var doc = document.createDocumentFragment();
-
-      function getPromisedDate(dateText) {
-          var promisedDate = document.createElement("p");
-          promisedDate.innerHTML = dateText;
-          return promisedDate;
-      }
-
-      function userImage(imgSrc) {
+ function userImage(imgSrc) {
 
           var icon = document.createElement("img");
           icon.setAttribute("src", imgSrc);
@@ -161,7 +150,7 @@
           return icon;
       }
 
-      function createRow(itemName, quantity, unit) {
+  function createRow(itemName, quantity, unit) {
           var row = document.createElement('tr');
           var td1 = document.createElement('td');
           var td2 = document.createElement('td');
@@ -178,6 +167,36 @@
           return row;
       }
 
+  function createRowWithTwoColumns(itemName, quantity, unit) {
+          var row = document.createElement('tr');
+          var td1 = document.createElement('td');
+          var td2 = document.createElement('td');
+
+          td1.classList.add("media-heading");
+          td1.classList.add("text-center");
+      
+          td2.classList.add("media-heading");
+          td2.classList.add("text-center");
+      
+          td1.appendChild(document.createTextNode(itemName));
+          td2.appendChild(document.createTextNode(quantity));
+
+          row.append(td1);
+          row.append(td2);
+
+          return row;
+      }
+
+
+  function createOrganisationPromisedDonationCard(item) {
+
+      var doc = document.createDocumentFragment();
+
+      function getPromisedDate(dateText) {
+          var promisedDate = document.createElement("p");
+          promisedDate.innerHTML = dateText;
+          return promisedDate;
+      }
 
       var promisedCardDiv = document.createElement("div");
       promisedCardDiv.classList.add("card");
@@ -616,4 +635,70 @@ function createHistoryCard(item) {
     document.getElementById("history-card").appendChild(doc);
 
 }
+
+function createDonationDetails(donationItem) {
+          donationDetailCard = document.createDocumentFragment();
+
+          donationDetailParentdiv = document.createElement("div");
+          donationDetailParentdiv.classList.add("donation-card");
+          donationDetailParentdiv.classList.add("media");
+          donationDetailParentdiv.classList.add("padding");
+
+          donorImageDiv = document.createElement("div");
+          donorImageDiv.classList.add("media-left");
+          donorImageDiv.classList.add("media-middle");
+
+          donorImage = userImage(donationItem.donating_user.user_profile_picture);
+          donorImage.classList.add("media-object");
+          donorImage.classList.add("thumbnail");
+          donorImage.setAttribute("style", "width:80px");
+
+          donorImageDiv.append(donorImage);
+
+          donationDetailDiv = document.createElement("div");
+          donationDetailDiv.className = "media-body";
+
+          donorName = document.createElement("h4");
+          donorName.classList.add("media-heading");
+          donorName.classList.add("text-center");
+          donorName.innerHTML = donationItem.donating_user.first_name
+
+          donationDetailDiv.append(donorName);
+
+          donationTable = document.createElement("table");
+          donationTable.classList.add("table");
+          donationTable.classList.add("table-hover");
+          donationTable.classList.add("table-responsive");
+
+          var promisedDate = new Date(donationItem.promised_date);
+          donationTableBody = document.createElement("tbody");
+          tableHeader = createRowWithTwoColumns("Status", "Promised Date");
+          tableContent = createRowWithTwoColumns("Promised", promisedDate.toDateString());
+          tableContent.className = "table-data-font"
+
+          donationTableBody.appendChild(tableHeader);
+          donationTableBody.appendChild(tableContent);
+
+          donationTable.append(donationTableBody);
+          donationDetailDiv.append(donationTable);
+
+          receivedButton = document.createElement("button");
+          receivedButton.classList.add("btn");
+          receivedButton.classList.add("btn-success");
+          receivedButton.classList.add("pull-right");
+          receivedButton.setAttribute("type", "button");
+          receivedButton.innerHTML = "Received";
+
+          donationDetailDiv.append(receivedButton);
+
+          var hr = document.createElement('hr');
+
+          donationDetailParentdiv.append(donorImageDiv);
+          donationDetailParentdiv.append(donationDetailDiv);
+          donationDetailParentdiv.append(hr);
+          donationDetailCard.append(donationDetailParentdiv);
+
+          document.getElementById('donation-detail').appendChild(donationDetailCard);
+
+      }
 
