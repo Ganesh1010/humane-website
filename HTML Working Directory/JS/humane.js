@@ -5,7 +5,6 @@
       icon.alt = "icon";
       return icon;
   }
-
   function createRow(itemName, quantity, unit) {
       var row = document.createElement('tr');
       var td1 = document.createElement('td');
