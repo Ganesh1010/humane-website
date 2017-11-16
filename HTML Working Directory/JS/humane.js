@@ -30,19 +30,6 @@
       return row;
   }
 
-
-  function create_single_goods_card(item) {
-
-      function getImage(src) {
-          var icon = document.createElement("img");
-          icon.setAttribute("src", src);
-          icon.className = "main-item-image";
-          icon.alt = "icon";
-          return icon;
-      }
-
-  }
-
   function create_single_goods_card(item) {
 
       function promisedDonationProgressBar(value) {
@@ -364,7 +351,6 @@
           document.getElementById("itemsRequired").appendChild(itemsNeeded);
 
       }
-
 
       document.getElementById("postedDate").innerHTML = item.posted_date;
       document.getElementById("deadline").innerHTML = item.deadline;
