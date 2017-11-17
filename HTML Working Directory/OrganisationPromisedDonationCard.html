@@ -2,15 +2,15 @@
 <html lang="en">
 
 <head>
-    <title>Humane - Organisation Promised Donation </title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/humane.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="JS/humane.js"></script>
-<!--
+	<title>Humane - Organisation Promised Donation </title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="CSS/humane.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="JS/humane.js"></script>
+	<!--
     <style>
         .card {
             margin-top: 1%;
@@ -28,11 +28,11 @@
 </head>
 
 <body>
-    <div class="container">
+	<div class="container">
 
-        <div class="row" id="promised-donation-card">
+		<div class="row" id="promised-donation-card">
 
-            <!--
+			<!--
       <div class="card col-md-4">
          <div class="  media padding"> <hr>
             <div class="pull-right">
@@ -153,7 +153,7 @@
           <hr>
       </div>
 -->
-            <!--
+			<!--
         
       <div class="card col-md-4">
          <div class="  media padding"> <hr>
@@ -202,7 +202,7 @@
       </div>
         
 -->
-            <!--
+			<!--
             <div class="card col-md-4">
                 <div class="  media padding">
                     <hr>
@@ -253,21 +253,21 @@
             </div>
 -->
 
-        </div>
+		</div>
 
-    </div>
+	</div>
 </body>
 <script type="text/javascript">
-    $(document).ready(function() {
-        function loadPromisedDonationDetails(data) {
-            var t = $.parseJSON(data)['results']
-            $('.loader').hide();
-            $.each(t, function(key, value) {
-                createOrganisationPromisedDonationCard(value);
+	$(document).ready(function() {
+		function loadPromisedDonationDetails(data) {
+			var t = $.parseJSON(data)['results']
+			$('.loader').hide();
+			$.each(t, function(key, value) {
+				createOrganisationPromisedDonationCard(value);
 
-            });
-        }
-        var item = `{
+			});
+		}
+		var item = `{
     "count": 3,
     "next": null,
     "previous": null,
@@ -450,9 +450,9 @@
         }
     ]
 }`;
-        loadPromisedDonationDetails(item);
+		loadPromisedDonationDetails(item);
 
-    });
+	});
 
 </script>
 

@@ -1,347 +1,331 @@
   function getImage(src) {
-      var icon = document.createElement("img");
-      icon.setAttribute("src", src);
-      icon.className = "main-item-image";
-      icon.alt = "icon";
-      return icon;
+  	var icon = document.createElement("img");
+  	icon.setAttribute("src", src);
+  	icon.alt = "icon";
+  	return icon;
   }
+
+  function getText(text) {
+  	var paragraph = document.createElement("p");
+  	paragraph.innerHTML = text;
+  	return paragraph;
+  }
+
+  function getLocalDateFormat(dateString) {
+  	var date = new Date(dateString);
+  	var dateText = date.toDateString();
+  	return dateText;
+  }
+
+	function getHeaderText(text,textSize) {
+  		var header = document.createElement("h"+textSize);
+  		header.innerHTML = text;
+  		return header;
+  	}
 
   function createRow(itemName, quantity, unit) {
-      var row = document.createElement('tr');
-      var td1 = document.createElement('td');
-      var td2 = document.createElement('td');
-      var td3 = document.createElement('td');
+  	var row = document.createElement('tr');
+  	var td1 = document.createElement('td');
+  	var td2 = document.createElement('td');
+  	var td3 = document.createElement('td');
 
-      td1.classList.add("col-md-3");
-      td1.classList.add("text-center");
-      td2.classList.add("col-md-3");
-      td2.classList.add("text-center");
-      td3.classList.add("col-md-3");
-      td3.classList.add("text-center");
+  	td1.classList.add("col-md-3");
+  	td1.classList.add("text-center");
+  	td2.classList.add("col-md-3");
+  	td2.classList.add("text-center");
+  	td3.classList.add("col-md-3");
+  	td3.classList.add("text-center");
 
-      td1.appendChild(document.createTextNode(itemName));
-      td2.appendChild(document.createTextNode(quantity));
-      td3.appendChild(document.createTextNode(unit));
+  	td1.appendChild(document.createTextNode(itemName));
+  	td2.appendChild(document.createTextNode(quantity));
+  	td3.appendChild(document.createTextNode(unit));
 
-      row.append(td1);
-      row.append(td2);
-      row.append(td3);
+  	row.append(td1);
+  	row.append(td2);
+  	row.append(td3);
 
-      return row;
+  	return row;
   }
+
+ function createRowWithTwoColumns(itemName, quantity) {
+  	var row = document.createElement('tr');
+  	var td1 = document.createElement('td');
+  	var td2 = document.createElement('td');
+
+  	td1.classList.add("media-heading");
+  	td1.classList.add("text-center");
+
+  	td2.classList.add("media-heading");
+  	td2.classList.add("text-center");
+
+  	td1.appendChild(document.createTextNode(itemName));
+  	td2.appendChild(document.createTextNode(quantity));
+
+  	row.append(td1);
+  	row.append(td2);
+
+  	return row;
+  }
+
+
+function promisedDonationProgressBar(value) {
+  		var promisedDonationProgressBar = document.createElement("div");
+  		promisedDonationProgressBar.className = "progress-bar";
+  		promisedDonationProgressBar.setAttribute('role', 'promisedDonationProgressBar');
+  		promisedDonationProgressBar.setAttribute('aria-valuenow', value);
+  		promisedDonationProgressBar.setAttribute('style', 'width:' + value + '%');
+  		promisedDonationProgressBar.innerHTML = +value + "%";
+  		return promisedDonationProgressBar;
+  	}
 
   function create_single_goods_card(item) {
 
-      function promisedDonationProgressBar(value) {
-          var promisedDonationProgressBar = document.createElement("div");
-          promisedDonationProgressBar.className = "progress-bar";
-          promisedDonationProgressBar.setAttribute('role', 'promisedDonationProgressBar');
-          promisedDonationProgressBar.setAttribute('aria-valuenow', value);
-          promisedDonationProgressBar.setAttribute('style', 'width:' + value + '%');
-          promisedDonationProgressBar.innerHTML = +value + "%";
-          return promisedDonationProgressBar;
-      }
 
-      var goodsCard = document.createDocumentFragment();
 
-      var goodsCardOuterDiv = document.createElement("div");
-      goodsCardOuterDiv.className = "col-sm-3";
+  	var goodsCard = document.createDocumentFragment();
 
-      var goodsCardParentDiv = document.createElement("div");
-      goodsCardParentDiv.classList.add('panel');
-      goodsCardParentDiv.classList.add('panel-primary');
-      goodsCardParentDiv.classList.add('goods-box');
+  	var goodsCardOuterDiv = document.createElement("div");
+  	goodsCardOuterDiv.className = "col-sm-3";
 
-      var goodsPanelHeading = document.createElement("div");
-      goodsPanelHeading.classList.add("panel-heading");
-      goodsPanelHeading.classList.add("card-panel-heading");
+  	var goodsCardParentDiv = document.createElement("div");
+  	goodsCardParentDiv.classList.add('panel');
+  	goodsCardParentDiv.classList.add('panel-primary');
+  	goodsCardParentDiv.classList.add('goods-box');
 
-      var goodsPanelBody = document.createElement("div");
-      goodsPanelBody.className = "panel-body";
+  	var goodsPanelHeading = document.createElement("div");
+  	goodsPanelHeading.classList.add("panel-heading");
+  	goodsPanelHeading.classList.add("card-panel-heading");
 
-      var mainItemIcon = getImage(item.main_item_image); // indicates the main item icon
+  	var goodsPanelBody = document.createElement("div");
+  	goodsPanelBody.className = "panel-body";
 
-      var orgName = document.createElement("h5");
-      orgName.innerHTML = item.organisation_detail.org_name;
+  	var mainItemIcon = getImage(item.main_item_image); // indicates the main item icon
+  	mainItemIcon.className = "main-item-image";
 
-      var orgCity = document.createElement('h6');
-      orgCity.innerHTML = item.organisation_detail.city + " - 600001";
+  	var orgName = document.createElement("h5");
+  	orgName.innerHTML = item.organisation_detail.org_name;
 
-      var promisedDonationProgressBar = promisedDonationProgressBar(90); // indicates the promised donation ProgressBar
+  	var orgCity = document.createElement('h6');
+  	orgCity.innerHTML = item.organisation_detail.city + " - 600001";
 
-      var donateButton = document.createElement("button");
-      donateButton.classList.add('btn');
-      donateButton.classList.add('btn-donor');
-      donateButton.classList.add('pull-right');
-      donateButton.classList.add("donate-button");
-      donateButton.innerHTML = "Donate";
+  	var promisedDonationProgressValue = promisedDonationProgressBar(90); // indicates the promised donation ProgressBar
 
-      goodsPanelBody.appendChild(mainItemIcon);
-      goodsPanelBody.appendChild(orgName);
-      goodsPanelBody.appendChild(orgCity);
-      goodsPanelBody.appendChild(promisedDonationProgressBar);
-      goodsPanelBody.appendChild(donateButton);
-      goodsCardParentDiv.appendChild(goodsPanelHeading);
-      goodsCardParentDiv.appendChild(goodsPanelBody);
-      goodsCardOuterDiv.appendChild(goodsCardParentDiv);
-      goodsCard.appendChild(goodsCardOuterDiv);
+  	var donateButton = document.createElement("button");
+  	donateButton.classList.add('btn');
+  	donateButton.classList.add('btn-donor');
+  	donateButton.classList.add('pull-right');
+  	donateButton.classList.add("donate-button");
+  	donateButton.innerHTML = "Donate";
 
-      document.getElementById("goodstab").appendChild(goodsCard);
+  	goodsPanelBody.appendChild(mainItemIcon);
+  	goodsPanelBody.appendChild(orgName);
+  	goodsPanelBody.appendChild(orgCity);
+  	goodsPanelBody.appendChild(promisedDonationProgressValue);
+  	goodsPanelBody.appendChild(donateButton);
+  	goodsCardParentDiv.appendChild(goodsPanelHeading);
+  	goodsCardParentDiv.appendChild(goodsPanelBody);
+  	goodsCardOuterDiv.appendChild(goodsCardParentDiv);
+  	goodsCard.appendChild(goodsCardOuterDiv);
+
+  	document.getElementById("goodstab").appendChild(goodsCard);
   }
 
   function create_single_service_card(service) {
 
-      var serviceCard = document.createDocumentFragment();
+  	var serviceCard = document.createDocumentFragment();
 
-      var serviceCardOuttertDiv = document.createElement("div");
-      serviceCardOuttertDiv.className = "col-sm-3";
+  	var serviceCardOuttertDiv = document.createElement("div");
+  	serviceCardOuttertDiv.className = "col-sm-3";
 
-      var serviceCardParentDiv = document.createElement("div");
-      serviceCardParentDiv.classList.add('panel');
-      serviceCardParentDiv.classList.add('panel-primary');
-      serviceCardParentDiv.classList.add('goods-box');
+  	var serviceCardParentDiv = document.createElement("div");
+  	serviceCardParentDiv.classList.add('panel');
+  	serviceCardParentDiv.classList.add('panel-primary');
+  	serviceCardParentDiv.classList.add('goods-box');
 
-      var servicePanelHeading = document.createElement("div");
-      servicePanelHeading.className = "panel-heading";
-      servicePanelHeading.classList.add("card-panel-heading");
+  	var servicePanelHeading = document.createElement("div");
+  	servicePanelHeading.className = "panel-heading";
+  	servicePanelHeading.classList.add("card-panel-heading");
 
-      var servicePanelBody = document.createElement("div");
-      servicePanelBody.className = "panel-body";
+  	var servicePanelBody = document.createElement("div");
+  	servicePanelBody.className = "panel-body";
 
-      var mainItemIcon = getImage(service.main_service_icon); // indicates the main item icon
+  	var mainItemIcon = getImage(service.main_service_icon); // indicates the main item icon
+  	mainItemIcon.className = "main-item-image";
 
-      var orgName = document.createElement("h5");
-      orgName.innerHTML = service.service_org_detail.org_name;
+  	var orgName = document.createElement("h5");
+  	orgName.innerHTML = service.service_org_detail.org_name;
 
-      var orgCity = document.createElement('h6');
-      orgCity.innerHTML = service.service_org_detail.city + " - 600001";
+  	var orgCity = document.createElement('h6');
+  	orgCity.innerHTML = service.service_org_detail.city + " - 600001";
 
-      var serviceInterestedUserCount = document.createElement("h5");
-      serviceInterestedUserCount.innerHTML = "No. of People Interested : " + 5;
+  	var serviceInterestedUserCount = document.createElement("h5");
+  	serviceInterestedUserCount.innerHTML = "No. of People Interested : " + 5;
 
-      var serveButton = document.createElement("button");
-      serveButton.classList.add('btn');
-      serveButton.classList.add('btn-donor');
-      serveButton.classList.add('pull-right');
-      serveButton.classList.add("serve-button");
-      serveButton.innerHTML = "Serve";
+  	var serveButton = document.createElement("button");
+  	serveButton.classList.add('btn');
+  	serveButton.classList.add('btn-donor');
+  	serveButton.classList.add('pull-right');
+  	serveButton.classList.add("serve-button");
+  	serveButton.innerHTML = "Serve";
 
-      servicePanelBody.appendChild(mainItemIcon);
-      servicePanelBody.appendChild(orgName);
-      servicePanelBody.appendChild(orgCity);
-      servicePanelBody.appendChild(serviceInterestedUserCount);
-      servicePanelBody.appendChild(serveButton);
-      serviceCardParentDiv.appendChild(servicePanelHeading);
-      serviceCardParentDiv.appendChild(servicePanelBody);
-      serviceCardOuttertDiv.appendChild(serviceCardParentDiv);
-      serviceCard.appendChild(serviceCardOuttertDiv);
+  	servicePanelBody.appendChild(mainItemIcon);
+  	servicePanelBody.appendChild(orgName);
+  	servicePanelBody.appendChild(orgCity);
+  	servicePanelBody.appendChild(serviceInterestedUserCount);
+  	servicePanelBody.appendChild(serveButton);
+  	serviceCardParentDiv.appendChild(servicePanelHeading);
+  	serviceCardParentDiv.appendChild(servicePanelBody);
+  	serviceCardOuttertDiv.appendChild(serviceCardParentDiv);
+  	serviceCard.appendChild(serviceCardOuttertDiv);
 
-      document.getElementById("servicetab").appendChild(serviceCard);
+  	document.getElementById("servicetab").appendChild(serviceCard);
   }
-
- function userImage(imgSrc) {
-
-          var icon = document.createElement("img");
-          icon.setAttribute("src", imgSrc);
-          icon.classList.add("media-object");
-          icon.classList.add("thumbnail");
-          icon.setAttribute('style', 'width:80px;margin-bottom:5px;')
-
-          return icon;
-      }
-
-  function createRow(itemName, quantity, unit) {
-          var row = document.createElement('tr');
-          var td1 = document.createElement('td');
-          var td2 = document.createElement('td');
-          var td3 = document.createElement('td');
-
-          td1.appendChild(document.createTextNode(itemName));
-          td2.appendChild(document.createTextNode(quantity));
-          td3.appendChild(document.createTextNode(unit));
-
-          row.append(td1);
-          row.append(td2);
-          row.append(td3);
-
-          return row;
-      }
-
-  function createRowWithTwoColumns(itemName, quantity, unit) {
-          var row = document.createElement('tr');
-          var td1 = document.createElement('td');
-          var td2 = document.createElement('td');
-
-          td1.classList.add("media-heading");
-          td1.classList.add("text-center");
-      
-          td2.classList.add("media-heading");
-          td2.classList.add("text-center");
-      
-          td1.appendChild(document.createTextNode(itemName));
-          td2.appendChild(document.createTextNode(quantity));
-
-          row.append(td1);
-          row.append(td2);
-
-          return row;
-      }
 
 
   function createOrganisationPromisedDonationCard(item) {
 
-      var doc = document.createDocumentFragment();
+  	var doc = document.createDocumentFragment();
 
-      function getPromisedDate(dateText) {
-          var promisedDate = document.createElement("p");
-          promisedDate.innerHTML = dateText;
-          return promisedDate;
-      }
+  	var promisedCardDiv = document.createElement("div");
+  	promisedCardDiv.classList.add("card");
+  	promisedCardDiv.classList.add("col-md-4");
 
-      var promisedCardDiv = document.createElement("div");
-      promisedCardDiv.classList.add("card");
-      promisedCardDiv.classList.add("col-md-4");
+  	var cardContentDiv = document.createElement("div");
+  	cardContentDiv.classList.add("media");
+  	cardContentDiv.classList.add("padding");
 
-      var cardContentDiv = document.createElement("div");
-      cardContentDiv.classList.add("media");
-      cardContentDiv.classList.add("padding");
+  	var promisedDateDiv = document.createElement("div");
+  	promisedDateDiv.className = "pull-right";
 
-      var promisedDateDiv = document.createElement("div");
-      promisedDateDiv.className = "pull-right";
+  	var promisedDateText = getText("Promised Date");
+  	promisedDateText.innerHTML = "Promised Date"
+  	promisedDateText.classList.add("promised-date-padding");
+  	var promisedDateString = item.promised_date;
 
-      var promisedDateText = getPromisedDate("Promised Date");
-      promisedDateText.innerHTML = "Promised Date"
-      promisedDateText.classList.add("promised-date-padding");
-      var promisedDateString = item.promised_date;
-      var date = new Date(promisedDateString);
-      console.log(date.toLocaleDateString());
-      var promisedDate = getPromisedDate(date.toDateString());
+  	var promisedDate = getLocalDateFormat(promisedDateString);
+  	promisedDate.className = "text-center";
 
-      promisedDate.className = "text-center";
+  	var userImgDiv = document.createElement("div");
+  	userImgDiv.classList.add("media-left");
+  	userImgDiv.classList.add("media-top");
+  	var userIcon = getImage(item.donating_user.user_profile_picture);
+  	userIcon.classList.add("media-object");
+  	userIcon.classList.add("thumbnail");
+  	console.log(userIcon);
 
-      var userImgDiv = document.createElement("div");
-      userImgDiv.classList.add("media-left");
-      userImgDiv.classList.add("media-top");
-      var userIcon = userImage(item.donating_user.user_profile_picture);
-      console.log(userIcon);
+  	var userDetailDiv = document.createElement("div");
+  	userDetailDiv.classList.add("media-body");
 
-      var userDetailDiv = document.createElement("div");
-      userDetailDiv.classList.add("media-body");
+  	var userName = getHeaderText(item.donating_user.first_name,4);
+  	userName.classList.add("media-heading");
 
-      var userName = document.createElement("h4");
-      userName.innerHTML = item.donating_user.first_name;
-      userName.classList.add("media-heading");
+  	var donationId = document.createElement("h5");
+  	donationId.innerHTML = item.donation_id;
 
-      var donationId = document.createElement("h5");
-      donationId.innerHTML = item.donation_id;
-
-      var userEmail = document.createElement("h5");
-      userEmail.innerHTML = item.donating_user.email;
+  	var userEmail = document.createElement("h5");
+  	userEmail.innerHTML = item.donating_user.email;
 
 
-      var status = document.createElement("h5");
-      if (item.is_donation_completed == false) {
-          status.innerHTML = "Waiting";
-      } else {
-          status.innerHTML = "Received";
-      }
+  	var status = document.createElement("h5");
+  	if (item.is_donation_completed == false) {
+  		status.innerHTML = "Waiting";
+  	} else {
+  		status.innerHTML = "Received";
+  	}
 
-      var itemTable = document.createElement("table");
-      itemTable.classList.add("table");
-      itemTable.classList.add("table-hover");
-      itemTable.classList.add("table-responsive");
-      itemTable.classList.add("table-bottom-padding")
+  	var itemTable = document.createElement("table");
+  	itemTable.classList.add("table");
+  	itemTable.classList.add("table-hover");
+  	itemTable.classList.add("table-responsive");
+  	itemTable.classList.add("table-bottom-padding")
 
-      var tableHeader = createRow("Item Name", "Quantity", "Unit");
-      var tableBody = document.createElement("tbody");
-      tableBody.append(tableHeader);
-      var tableContent = [];
+  	var tableHeader = createRow("Item Name", "Quantity", "Unit");
+  	var tableBody = document.createElement("tbody");
+  	tableBody.append(tableHeader);
+  	var tableContent = [];
 
-      var donationItemList = item.donation_item_list;
+  	var donationItemList = item.donation_item_list;
 
-      var donationItemListSize = donationItemList.length;
+  	var donationItemListSize = donationItemList.length;
 
-      if (donationItemListSize > 1) {
-          console.log("more buton created");
-          var moreButton = document.createElement("button");
-          moreButton.setAttribute("id", "moreButtonId");
-          moreButton.classList.add("btn-link");
-          moreButton.classList.add("pull-right");
-          moreButton.innerHTML = "click to see full details";
-      }
+  	if (donationItemListSize > 1) {
+  		console.log("more buton created");
+  		var moreButton = document.createElement("button");
+  		moreButton.setAttribute("id", "moreButtonId");
+  		moreButton.classList.add("btn-link");
+  		moreButton.classList.add("pull-right");
+  		moreButton.innerHTML = "click to see full details";
+  	}
 
-      if (donationItemList != null) {
-          //          if (document.getElementById("moreButtonId"))
-          //              donationItemListSize = donationItemList.length;
-          //          else
-          //              donationItemListSize = 1;
-          //          console.log(document.getElementById("moreButtonId"));
-          for (var i = 0; i < 1; i++) {
-              var itemName = donationItemList[i].goods_item_detail.goods_item_id;
-              var itemQuantity = donationItemList[i].goods_item_detail.sub_item_category_one;
-              var itemUnit = donationItemList[i].goods_item_detail.unit;
-              tableContent[i] = createRow(itemName, itemQuantity, itemUnit);
-              tableBody.append(tableContent[i]);
+  	if (donationItemList != null) {
+  		//          if (document.getElementById("moreButtonId"))
+  		//              donationItemListSize = donationItemList.length;
+  		//          else
+  		//              donationItemListSize = 1;
+  		//          console.log(document.getElementById("moreButtonId"));
+  		for (var i = 0; i < 1; i++) {
+  			var itemName = donationItemList[i].goods_item_detail.goods_item_id;
+  			var itemQuantity = donationItemList[i].goods_item_detail.sub_item_category_one;
+  			var itemUnit = donationItemList[i].goods_item_detail.unit;
+  			tableContent[i] = createRow(itemName, itemQuantity, itemUnit);
+  			tableBody.append(tableContent[i]);
 
 
-          }
-      }
+  		}
+  	}
 
-      var receivedButton = document.createElement("button");
-      receivedButton.classList.add("btn");
-      receivedButton.classList.add("btn-success");
-      receivedButton.classList.add("pull-right");
-      receivedButton.setAttribute("type", "button");
-      receivedButton.setAttribute("data-toggle", "tool-tip");
-      receivedButton.setAttribute("title", "Click to mark it as received");
-      receivedButton.setAttribute("data-target", "#");
-      receivedButton.innerHTML = "Received";
+  	var receivedButton = document.createElement("button");
+  	receivedButton.classList.add("btn");
+  	receivedButton.classList.add("btn-success");
+  	receivedButton.classList.add("pull-right");
+  	receivedButton.setAttribute("type", "button");
+  	receivedButton.setAttribute("data-toggle", "tool-tip");
+  	receivedButton.setAttribute("title", "Click to mark it as received");
+  	receivedButton.setAttribute("data-target", "#");
+  	receivedButton.innerHTML = "Received";
 
 
 
-      var breakLine = document.createElement("br");
-      var hrline = document.createElement("hr");
-      var hrline1 = document.createElement("hr");
+  	var breakLine = document.createElement("br");
+  	var hrline = document.createElement("hr");
+  	var hrline1 = document.createElement("hr");
 
 
-      cardContentDiv.append(hrline);
-      promisedDateDiv.append(promisedDateText);
-      promisedDateDiv.append(promisedDate);
+  	cardContentDiv.append(hrline);
+  	promisedDateDiv.append(promisedDateText);
+  	promisedDateDiv.append(promisedDate);
 
 
-      userImgDiv.append(userIcon);
+  	userImgDiv.append(userIcon);
 
-      userDetailDiv.append(userName);
-      userDetailDiv.append(donationId);
-      userDetailDiv.append(userEmail);
-      userDetailDiv.append(status);
-
-
-      itemTable.append(tableBody);
-
-      cardContentDiv.append(promisedDateDiv);
-      cardContentDiv.append(userImgDiv);
-      cardContentDiv.append(userDetailDiv);
-      cardContentDiv.append(itemTable);
+  	userDetailDiv.append(userName);
+  	userDetailDiv.append(donationId);
+  	userDetailDiv.append(userEmail);
+  	userDetailDiv.append(status);
 
 
+  	itemTable.append(tableBody);
 
-      if (donationItemListSize > 1) {
-          cardContentDiv.append(moreButton);
-      }
-
-
-      promisedCardDiv.append(cardContentDiv);
-      promisedCardDiv.append(receivedButton);
-      promisedCardDiv.append(breakLine);
-      promisedCardDiv.append(hrline1);
+  	cardContentDiv.append(promisedDateDiv);
+  	cardContentDiv.append(userImgDiv);
+  	cardContentDiv.append(userDetailDiv);
+  	cardContentDiv.append(itemTable);
 
 
 
+  	if (donationItemListSize > 1) {
+  		cardContentDiv.append(moreButton);
+  	}
 
-      doc.appendChild(promisedCardDiv);
 
-      document.getElementById("promised-donation-card").appendChild(doc);
+  	promisedCardDiv.append(cardContentDiv);
+  	promisedCardDiv.append(receivedButton);
+  	promisedCardDiv.append(breakLine);
+  	promisedCardDiv.append(hrline1);
+
+  	doc.appendChild(promisedCardDiv);
+
+  	document.getElementById("promised-donation-card").appendChild(doc);
 
 
   }
@@ -349,356 +333,283 @@
 
   function create_donation_item_details(item) {
 
-      var goodsItemList = item.goods_item_list
+  	var goodsItemList = item.goods_item_list
 
-      for (var i = 0; i < goodsItemList.length; i++) {
+  	for (var i = 0; i < goodsItemList.length; i++) {
 
-          var itemsNeeded = document.createDocumentFragment();
+  		var itemsNeeded = document.createDocumentFragment();
 
-          var itemDetailOuterDiv = document.createElement("div");
-          itemDetailOuterDiv.className = "media";
+  		var itemDetailOuterDiv = document.createElement("div");
+  		itemDetailOuterDiv.className = "media";
 
-          var itemDetailParentDiv = document.createElement("div");
-          itemDetailParentDiv.className = "media-body";
+  		var itemDetailParentDiv = document.createElement("div");
+  		itemDetailParentDiv.className = "media-body";
 
-          var itemDetailTable = document.createElement("table")
-          itemDetailTable.classList.add("table");
-          itemDetailTable.classList.add("table-padding");
-          itemDetailTable.classList.add("table-hover");
-          itemDetailTable.classList.add("table-responsive");
+  		var itemDetailTable = document.createElement("table")
+  		itemDetailTable.classList.add("table");
+  		itemDetailTable.classList.add("table-padding");
+  		itemDetailTable.classList.add("table-hover");
+  		itemDetailTable.classList.add("table-responsive");
 
-          var itemDetailTableBody = document.createElement("tbody")
-          var tableHeader = createRow("Required", "Promised", "Received");
-          tableHeader.className = "table-header-color";
+  		var itemDetailTableBody = document.createElement("tbody")
+  		var tableHeader = createRow("Required", "Promised", "Received");
+  		tableHeader.className = "table-header-color";
 
-          itemDetailTableBody.append(tableHeader);
-          var tableContent = [];
+  		itemDetailTableBody.append(tableHeader);
+  		var tableContent = [];
 
-          var itemCategory = goodsItemList[i].sub_item_category_two;
-          if (itemCategory != null)
-              itemCategory = "(" + itemCategory + ")";
-          else
-              itemCategory = "";
-          var itemName = document.createElement("h4");
-          itemName.classList.add("media-heading");
-          itemName.classList.add("text-center");
-          itemName.innerHTML = goodsItemList[i].sub_item_category_one + itemCategory;
-          var required = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
-          var promised = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
-          var received = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
+  		var itemCategory = goodsItemList[i].sub_item_category_two;
+  		if (itemCategory != null)
+  			itemCategory = "(" + itemCategory + ")";
+  		else
+  			itemCategory = "";
+  		var itemName = getHeaderText(goodsItemList[i].sub_item_category_one + itemCategory,4);
+  		itemName.classList.add("media-heading");
+  		itemName.classList.add("text-center");
+  		var required = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
+  		var promised = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
+  		var received = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
 
-          tableContent[i] = createRow(required, promised, received);
-          tableContent[i].className = "table-data-font";
-          itemDetailTableBody.append(tableContent[i]);
+  		tableContent[i] = createRow(required, promised, received);
+  		tableContent[i].className = "table-data-font";
+  		itemDetailTableBody.append(tableContent[i]);
 
-          itemDetailTable.append(itemDetailTableBody);
-          itemDetailParentDiv.append(itemName);
-          itemDetailParentDiv.append(itemDetailTable);
-          itemDetailOuterDiv.append(itemDetailParentDiv);
+  		itemDetailTable.append(itemDetailTableBody);
+  		itemDetailParentDiv.append(itemName);
+  		itemDetailParentDiv.append(itemDetailTable);
+  		itemDetailOuterDiv.append(itemDetailParentDiv);
 
-          itemsNeeded.appendChild(itemDetailOuterDiv);
+  		itemsNeeded.appendChild(itemDetailOuterDiv);
 
-          document.getElementById("itemsRequired").appendChild(itemsNeeded);
+  		document.getElementById("itemsRequired").appendChild(itemsNeeded);
 
-      }
-      //A new Commnet By ganesh for test
-      var postedDate = new Date(item.posted_date);
-      var deadline = new Date(item.deadline);
-      document.getElementById("postedDate").innerHTML = postedDate.toDateString();
-      document.getElementById("deadline").innerHTML = deadline.toDateString();
-      document.getElementById("main-item-name").innerHTML = item.main_item;
-      document.getElementById("main-item-image").setAttribute("src", item.main_item_image);
+  	}
+  	//A new Commnet By ganesh for test
+  	var postedDate = getLocalDateFormat(item.posted_date);
+  	var deadline = getLocalDateFormat(item.deadline);
+  	document.getElementById("postedDate").innerHTML = postedDate;
+  	document.getElementById("deadline").innerHTML = deadline;
+  	document.getElementById("main-item-name").innerHTML = item.main_item;
+  	document.getElementById("main-item-image").setAttribute("src", item.main_item_image);
   }
 
 
   function createServiceInterestCard(item) {
 
-      doc = document.createDocumentFragment();
+  	doc = document.createDocumentFragment();
 
-      function getText(text) {
-          var paragraph = document.createElement("p");
-          paragraph.innerHTML = text;
-          return paragraph;
-      }
+  	var serviceInterestCardDiv = document.createElement("div");
+  	serviceInterestCardDiv.classList.add("card");
+  	serviceInterestCardDiv.classList.add("col-md-4");
 
+  	var cardContentDiv = document.createElement("div");
+  	cardContentDiv.classList.add("media");
 
-      function createRow(string1, string2) {
-          var row = document.createElement('tr');
-          var td1 = document.createElement('td');
-          var td2 = document.createElement('td');
+  	var serviceDateDiv = document.createElement("div");
+  	serviceDateDiv.className = "pull-right";
+  	var interestedDateText = getText("Interested Date");
 
-          td1.appendChild(document.createTextNode(string1));
-          td2.appendChild(document.createTextNode(string2));
-
-          row.append(td1);
-          row.append(td2);
+  	interestedDateText.setAttribute('style', 'margin-bottom:0px;')
+  	var interestedDateString = item.service_interest_action_performed_date;
+  	var interestedDate = getLocalDateFormat(interestedDateString);
+  	interestedDate.className = "text-center";
 
 
-          return row;
-      }
+  	var userImgDiv = document.createElement("div");
+  	userImgDiv.classList.add("media-left");
+  	userImgDiv.classList.add("media-middle");
+  	var userIcon = getImage(item.service_user_detail.user_profile_picture);
+  	userIcon.classList.add("media-object");
+  	userIcon.classList.add("thumbnail");
+  	console.log(userIcon);
 
-      function userImage(imgSrc) {
+  	var userDetailDiv = document.createElement("div");
+  	userDetailDiv.classList.add("media-body");
 
-          var icon = document.createElement("img");
-          icon.setAttribute("src", imgSrc);
-          icon.classList.add("media-object");
-          icon.classList.add("thumbnail");
-          icon.classList.add("icon");
-          icon.setAttribute('style', 'width:80px;margin-bottom:5px;')
+  	var userName = getHeaderText(item.service_user_detail.first_name,4);
+  	userName.classList.add("media-heading");
 
-          return icon;
-      }
+  	var serviceId = document.createElement("h5");
+  	serviceId.innerHTML = "#000" + item.service_detail.service_id;
 
+  	var userEmail = document.createElement("h5");
+  	userEmail.innerHTML = item.service_user_detail.email;
 
-      var serviceInterestCardDiv = document.createElement("div");
-      serviceInterestCardDiv.classList.add("card");
-      serviceInterestCardDiv.classList.add("col-md-4");
-
-      var cardContentDiv = document.createElement("div");
-      cardContentDiv.classList.add("media");
-
-      var serviceDateDiv = document.createElement("div");
-      serviceDateDiv.className = "pull-right";
-      var interestedDateText = getText("Interested Date");
-
-      interestedDateText.setAttribute('style', 'margin-bottom:0px;')
-      var interestedDateString = item.service_interest_action_performed_date;
-      var date = new Date(interestedDateString);
-      console.log(date.toLocaleDateString());
-      var interestedDate = getText(date.toDateString());
-      interestedDate.className = "text-center";
+  	var servicingTimeLabel = getText("Servicing time");
+  	var servicingTimeText = item.service_interest_expressed_start_time + "to" + item.service_interest_expressed_end_time;
+  	var servicingTime = getText(servicingTimeText);
+  	console.log(servicingTime);
 
 
-      var userImgDiv = document.createElement("div");
-      userImgDiv.classList.add("media-left");
-      userImgDiv.classList.add("media-middle");
-      var userIcon = userImage(item.service_user_detail.user_profile_picture);
-      console.log(userIcon);
+  	var attendedButton = document.createElement("button");
+  	attendedButton.classList.add("btn");
+  	attendedButton.classList.add("btn-success");
+  	attendedButton.classList.add("pull-right");
+  	attendedButton.setAttribute("type", "button");
+  	attendedButton.setAttribute("data-toggle", "tool-tip");
+  	attendedButton.setAttribute("title", "Click to mark it as attended");
+  	attendedButton.setAttribute("data-target", "#");
+  	attendedButton.innerHTML = "Attended";
 
-      var userDetailDiv = document.createElement("div");
-      userDetailDiv.classList.add("media-body");
+  	var breakLine = document.createElement("br");
+  	var startLine = document.createElement("hr");
+  	var endLine = document.createElement("hr");
 
-      var userName = document.createElement("h4");
-      userName.innerHTML = item.service_user_detail.first_name;
-      userName.classList.add("media-heading");
+  	serviceInterestCardDiv.append(startLine);
+  	serviceDateDiv.append(interestedDateText);
+  	serviceDateDiv.append(interestedDate);
 
-      var serviceId = document.createElement("h5");
-      serviceId.innerHTML = "#000" + item.service_detail.service_id;
+  	userImgDiv.append(userIcon);
 
-      var userEmail = document.createElement("h5");
-      userEmail.innerHTML = item.service_user_detail.email;
-
-      var servicingTimeLabel = getText("Servicing time");
-      var servicingTimeText = item.service_interest_expressed_start_time + "to" + item.service_interest_expressed_end_time;
-      var servicingTime = getText(servicingTimeText);
-      console.log(servicingTime);
-
-
-      var attendedButton = document.createElement("button");
-      attendedButton.classList.add("btn");
-      attendedButton.classList.add("btn-success");
-      attendedButton.classList.add("pull-right");
-      attendedButton.setAttribute("type", "button");
-      attendedButton.setAttribute("data-toggle", "tool-tip");
-      attendedButton.setAttribute("title", "Click to mark it as attended");
-      attendedButton.setAttribute("data-target", "#");
-      attendedButton.innerHTML = "Attended";
-
-      var breakLine = document.createElement("br");
-      var startLine = document.createElement("hr");
-      var endLine = document.createElement("hr");
-
-      serviceInterestCardDiv.append(startLine);
-      serviceDateDiv.append(interestedDateText);
-      serviceDateDiv.append(interestedDate);
-
-      userImgDiv.append(userIcon);
-
-      userDetailDiv.append(userName);
-      userDetailDiv.append(serviceId);
-      userDetailDiv.append(userEmail);
-      userDetailDiv.append(servicingTime)
+  	userDetailDiv.append(userName);
+  	userDetailDiv.append(serviceId);
+  	userDetailDiv.append(userEmail);
+  	userDetailDiv.append(servicingTime)
 
 
-      cardContentDiv.append(serviceDateDiv);
-      cardContentDiv.append(userImgDiv);
-      cardContentDiv.append(userDetailDiv);
+  	cardContentDiv.append(serviceDateDiv);
+  	cardContentDiv.append(userImgDiv);
+  	cardContentDiv.append(userDetailDiv);
 
 
-      serviceInterestCardDiv.append(cardContentDiv);
-      serviceInterestCardDiv.append(attendedButton);
-      serviceInterestCardDiv.append(breakLine);
-      serviceInterestCardDiv.append(endLine);
+  	serviceInterestCardDiv.append(cardContentDiv);
+  	serviceInterestCardDiv.append(attendedButton);
+  	serviceInterestCardDiv.append(breakLine);
+  	serviceInterestCardDiv.append(endLine);
 
-      //Test Comment added By Ganesh
+  	//Test Comment added By Ganesh
 
-      doc.appendChild(serviceInterestCardDiv);
+  	doc.appendChild(serviceInterestCardDiv);
 
-      document.getElementById("service-interest-expressed-card").appendChild(doc);
+  	document.getElementById("service-interest-expressed-card").appendChild(doc);
 
 
   }
 
-function createHistoryCard(item) {
-    var doc = document.createDocumentFragment();
+  function createHistoryCard(item) {
+  	var doc = document.createDocumentFragment();
 
-    function createRow(string1, string2) {
-        var row = document.createElement('tr');
-        var td1 = document.createElement('td');
-        var td2 = document.createElement('td');
+  	var historyCardDiv = document.createElement("div");
+  	historyCardDiv.classList.add("card");
+  	historyCardDiv.classList.add("col-md-6");
 
-        td1.appendChild(document.createTextNode(string1));
-        td2.appendChild(document.createTextNode(string2));
+  	var cardContentDiv = document.createElement("div");
+  	cardContentDiv.classList.add("media");
+  	cardContentDiv.classList.add("history-card-padding");
 
-        td1.classList.add("col-md-3");
-        td2.classList.add("col-md-3");
+  	var itemImageDiv = document.createElement("div");
+  	itemImageDiv.classList.add("media-left");
+  	itemImageDiv.classList.add("media-middle");
+  	var itemImage = getImage(item.main_item_image);
+  	itemImage.classList.add("media-object");
+  	itemImage.classList.add("thumbnail");
 
-        td1.classList.add("text-center");
-        td2.classList.add("text-center");
+  	var itemDetailDiv = document.createElement("div");
+  	itemDetailDiv.classList.add("media-body");
 
-        row.append(td1);
-        row.append(td2);
+  	var breakLine = document.createElement("br");
 
-        return row;
-    }
+  	var itemName = getHeaderText(item.main_item,4);
+  	itemName.classList.add("media-heading");
+  	itemName.classList.add("text-center");
 
-    function userImage(imgSrc) {
+  	var dateTable = document.createElement("table");
+  	dateTable.classList.add("table");
+  	dateTable.classList.add("table-hover");
+  	dateTable.classList.add("table-responsive");
 
-        var icon = document.createElement("img");
-        icon.setAttribute("src", imgSrc);
-        icon.classList.add("media-object");
-        icon.classList.add("thumbnail");
-    
-        return icon;
-    }
+  	var tableBody = document.createElement("tbody");
+  	var tableHeader = createRowWithTwoColumns("Posted Date", "DeadLine Date");
 
-    function getHeaderText(text) {
-        var header = document.createElement("h5");
-        header.innerHTML = text;
-        return header;
-    }
 
-    var historyCardDiv = document.createElement("div");
-    historyCardDiv.classList.add("card");
-    historyCardDiv.classList.add("col-md-6");
+  	var postedDateString = item.posted_date;
+  	var deadLineDateString = item.deadline;
+  	var postedDate = getLocalDateFormat(postedDateString);
+  	var deadLineDate = getLocalDateFormat(deadLineDateString);
+  	var tableContent = createRowWithTwoColumns(postedDate, deadLineDate);
 
-    var cardContentDiv = document.createElement("div");
-    cardContentDiv.classList.add("media");
-    cardContentDiv.classList.add("history-card-padding");
+  	tableBody.append(tableHeader);
+  	tableBody.append(tableContent);
 
-    var itemImageDiv = document.createElement("div");
-    itemImageDiv.classList.add("media-left");
-    itemImageDiv.classList.add("media-middle");
-    var itemImage = userImage(item.main_item_image);
+  	itemImageDiv.append(itemImage);
+  	dateTable.append(tableBody);
 
-    var itemDetailDiv = document.createElement("div");
-    itemDetailDiv.classList.add("media-body");
+  	itemDetailDiv.append(breakLine);
+  	itemDetailDiv.append(itemName);
+  	itemDetailDiv.append(dateTable);
 
-    var breakLine = document.createElement("br");
+  	cardContentDiv.append(itemImageDiv);
+  	cardContentDiv.append(itemDetailDiv);
 
-    var itemName = getHeaderText(item.main_item);
-    itemName.classList.add("media-heading");
-    itemName.classList.add("text-center");
+  	historyCardDiv.append(cardContentDiv);
 
-    var dateTable = document.createElement("table");
-    dateTable.classList.add("table");
-    dateTable.classList.add("table-hover");
-    dateTable.classList.add("table-responsive");
+  	doc.appendChild(historyCardDiv);
 
-    var tableBody = document.createElement("tbody");
-    var tableHeader = createRow("Posted Date", "DeadLine Date");
-    
-    
-    var postedDateString = item.posted_date;
-    var deadLineDateString = item.deadline;
-    var postedDate = new Date(postedDateString);
-    var deadLineDate = new Date(deadLineDateString);
-    var tableContent = createRow(postedDate.toDateString(), deadLineDate.toDateString());
+  	document.getElementById("history-card").appendChild(doc);
 
-    tableBody.append(tableHeader);
-    tableBody.append(tableContent);
+  }
 
-    itemImageDiv.append(itemImage);
-    dateTable.append(tableBody);
+  function createDonationDetails(donationItem) {
+  	donationDetailCard = document.createDocumentFragment();
 
-    itemDetailDiv.append(breakLine);
-    itemDetailDiv.append(itemName);
-    itemDetailDiv.append(dateTable);
+  	donationDetailParentdiv = document.createElement("div");
+  	donationDetailParentdiv.classList.add("donation-card");
+  	donationDetailParentdiv.classList.add("media");
+  	donationDetailParentdiv.classList.add("padding");
 
-    cardContentDiv.append(itemImageDiv);
-    cardContentDiv.append(itemDetailDiv);
+  	donorImageDiv = document.createElement("div");
+  	donorImageDiv.classList.add("media-left");
+  	donorImageDiv.classList.add("media-middle");
 
-    historyCardDiv.append(cardContentDiv);
+  	donorImage = getImage(donationItem.donating_user.user_profile_picture);
+  	donorImage.classList.add("media-object");
+  	donorImage.classList.add("thumbnail");
+  	donorImage.setAttribute("style", "width:80px");
 
-    doc.appendChild(historyCardDiv);
+  	donorImageDiv.append(donorImage);
 
-    document.getElementById("history-card").appendChild(doc);
+  	donationDetailDiv = document.createElement("div");
+  	donationDetailDiv.className = "media-body";
 
-}
+  	donorName = getHeaderText(donationItem.donating_user.first_name,4);
+  	donorName.classList.add("media-heading");
+  	donorName.classList.add("text-center");
 
-function createDonationDetails(donationItem) {
-          donationDetailCard = document.createDocumentFragment();
+  	donationDetailDiv.append(donorName);
 
-          donationDetailParentdiv = document.createElement("div");
-          donationDetailParentdiv.classList.add("donation-card");
-          donationDetailParentdiv.classList.add("media");
-          donationDetailParentdiv.classList.add("padding");
+  	donationTable = document.createElement("table");
+  	donationTable.classList.add("table");
+  	donationTable.classList.add("table-hover");
+  	donationTable.classList.add("table-responsive");
 
-          donorImageDiv = document.createElement("div");
-          donorImageDiv.classList.add("media-left");
-          donorImageDiv.classList.add("media-middle");
+  	var promisedDate = getLocalDateFormat(donationItem.promised_date);
+  	donationTableBody = document.createElement("tbody");
+  	tableHeader = createRowWithTwoColumns("Status", "Promised Date");
+  	tableContent = createRowWithTwoColumns("Promised", promisedDate);
+  	tableContent.className = "table-data-font"
 
-          donorImage = userImage(donationItem.donating_user.user_profile_picture);
-          donorImage.classList.add("media-object");
-          donorImage.classList.add("thumbnail");
-          donorImage.setAttribute("style", "width:80px");
+  	donationTableBody.appendChild(tableHeader);
+  	donationTableBody.appendChild(tableContent);
 
-          donorImageDiv.append(donorImage);
+  	donationTable.append(donationTableBody);
+  	donationDetailDiv.append(donationTable);
 
-          donationDetailDiv = document.createElement("div");
-          donationDetailDiv.className = "media-body";
+  	receivedButton = document.createElement("button");
+  	receivedButton.classList.add("btn");
+  	receivedButton.classList.add("btn-success");
+  	receivedButton.classList.add("pull-right");
+  	receivedButton.setAttribute("type", "button");
+  	receivedButton.innerHTML = "Received";
 
-          donorName = document.createElement("h4");
-          donorName.classList.add("media-heading");
-          donorName.classList.add("text-center");
-          donorName.innerHTML = donationItem.donating_user.first_name
+  	donationDetailDiv.append(receivedButton);
 
-          donationDetailDiv.append(donorName);
+  	var hr = document.createElement('hr');
 
-          donationTable = document.createElement("table");
-          donationTable.classList.add("table");
-          donationTable.classList.add("table-hover");
-          donationTable.classList.add("table-responsive");
+  	donationDetailParentdiv.append(donorImageDiv);
+  	donationDetailParentdiv.append(donationDetailDiv);
+  	donationDetailParentdiv.append(hr);
+  	donationDetailCard.append(donationDetailParentdiv);
 
-          var promisedDate = new Date(donationItem.promised_date);
-          donationTableBody = document.createElement("tbody");
-          tableHeader = createRowWithTwoColumns("Status", "Promised Date");
-          tableContent = createRowWithTwoColumns("Promised", promisedDate.toDateString());
-          tableContent.className = "table-data-font"
+  	document.getElementById('donation-detail').appendChild(donationDetailCard);
 
-          donationTableBody.appendChild(tableHeader);
-          donationTableBody.appendChild(tableContent);
-
-          donationTable.append(donationTableBody);
-          donationDetailDiv.append(donationTable);
-
-          receivedButton = document.createElement("button");
-          receivedButton.classList.add("btn");
-          receivedButton.classList.add("btn-success");
-          receivedButton.classList.add("pull-right");
-          receivedButton.setAttribute("type", "button");
-          receivedButton.innerHTML = "Received";
-
-          donationDetailDiv.append(receivedButton);
-
-          var hr = document.createElement('hr');
-
-          donationDetailParentdiv.append(donorImageDiv);
-          donationDetailParentdiv.append(donationDetailDiv);
-          donationDetailParentdiv.append(hr);
-          donationDetailCard.append(donationDetailParentdiv);
-
-          document.getElementById('donation-detail').appendChild(donationDetailCard);
-
-      }
-
+  }

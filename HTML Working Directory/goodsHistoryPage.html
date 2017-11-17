@@ -2,76 +2,76 @@
 <html lang="en">
 
 <head>
-    <title>Humane - Goods Detail Page</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="js/humane.js"></script>
+	<title>Humane - Goods Detail Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="js/humane.js"></script>
 
-    <style>
-        .container {
-            padding-left: 0px;
-            padding-right: 0px;
-        }
+	<style>
+		.container {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
 
-        .card {
-            margin-top: 1%;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-            transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-        }
+		.card {
+			margin-top: 1%;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+			transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+		}
 
-        .history-card-padding {
-            margin-top: 3%;
-        }
+		.history-card-padding {
+			margin-top: 3%;
+		}
 
-        .thumbnail {
-            margin-left: 5%;
-            margin-top: 3%;
-            height: 80px;
-            width: 80px;
+		.thumbnail {
+			margin-left: 5%;
+			margin-top: 3%;
+			height: 80px;
+			width: 80px;
 
-        }
+		}
 
-    </style>
+	</style>
 </head>
 
 <body>
 
-    <div class="container">
+	<div class="container">
 
-        <div id="history-card"></div>
+		<div id="history-card"></div>
 
 
-        <div class="card col-md-6">
-            <div class="media history-card-padding">
-                <div class="media-left media-middle">
-                    <img src="Images/grocery.jpg" class="media-object thumbnail" style="width:80px">
-                </div>
-                <div class="media-body ">
-                    <br>
-                    <h5 class="media-heading text-center">Groceries</h5>
-                    <table class="table table-padding table-hover table-responsive">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-3 text-center">Posted Date</td>
-                                <td class=" col-md-3 text-center ">DeadLine date</td>
+		<div class="card col-md-6">
+			<div class="media history-card-padding">
+				<div class="media-left media-middle">
+					<img src="Images/grocery.jpg" class="media-object thumbnail" style="width:80px">
+				</div>
+				<div class="media-body ">
+					<br>
+					<h5 class="media-heading text-center">Groceries</h5>
+					<table class="table table-padding table-hover table-responsive">
+						<tbody>
+							<tr>
+								<td class="col-md-3 text-center">Posted Date</td>
+								<td class=" col-md-3 text-center ">DeadLine date</td>
 
-                            </tr>
-                            <tr>
-                                <td class="col-md-3 text-center"><strong>01-11-2017</strong></td>
-                                <td class=" col-md-3 text-center "><strong>05-11-2017</strong></td>
+							</tr>
+							<tr>
+								<td class="col-md-3 text-center"><strong>01-11-2017</strong></td>
+								<td class=" col-md-3 text-center "><strong>05-11-2017</strong></td>
 
-                            </tr>
-                        </tbody>
-                    </table>
+							</tr>
+						</tbody>
+					</table>
 
-                </div>
-            </div>
-        </div>
+				</div>
+			</div>
+		</div>
 
-        <!--          <div class="card col-md-6">
+		<!--          <div class="card col-md-6">
          <div class="media history-card-padding">
             <div class="media-left media-middle">
                 <img src="Images/rice.jpg" class="media-object thumbnail" style="width:80px">
@@ -152,19 +152,19 @@
         </div>
         </div>
 -->
-    </div>
+	</div>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            function loadHistoryDetails(data) {
-                var t = $.parseJSON(data)['results']
-                $('.loader').hide();
-                $.each(t, function(key, value) {
-                    createHistoryCard(value);
+	<script type="text/javascript">
+		$(document).ready(function() {
+			function loadHistoryDetails(data) {
+				var t = $.parseJSON(data)['results']
+				$('.loader').hide();
+				$.each(t, function(key, value) {
+					createHistoryCard(value);
 
-                });
-            }
-            var item = `{
+				});
+			}
+			var item = `{
     "count": 20,
     "next": "http://vuramdevdb.vuram.com:8000/auth/register/goodsHistoryDetail/?page=2",
     "previous": null,
@@ -859,11 +859,11 @@
     ]
 }`;
 
-            loadHistoryDetails(item);
+			loadHistoryDetails(item);
 
-        });
+		});
 
-    </script>
+	</script>
 
 </body>
 
