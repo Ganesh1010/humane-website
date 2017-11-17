@@ -92,6 +92,10 @@
 	        padding: 3%;
 	    }
 
+    .notification-card-img-padding{
+            margin-top: 10px;margin-bottom: 10px;
+        }
+
 /***** Media queries *****/
 
 @media (min-width: 992px) and (max-width: 1199px) {}

@@ -1,4 +1,15 @@
-  function getImage(src) {
+const REQUEST_TYPE_DONATION = 1;
+const REQUEST_TYPE_SERVICE = 2;
+const REQUEST_TYPE_THANKYOU_NOTE = 3;
+const DONATION_NOTIFICATION_MSG = "You have promised to donate";
+const SERVICE_NOTIFICATION_MSG = "You have expressed interest for the service";
+const THANK_YOU_NOTIFICATION_MSG = "You have received a thank you note";
+const FROM_TEXT = "from";
+const TO_TEXT = "to";
+const ON_TEXT = "on";
+const ITEM_COUNT = 1;
+
+function getImage(src) {
       var icon = document.createElement("img");
       icon.setAttribute("src", src);
       icon.alt = "icon";
@@ -246,7 +257,7 @@
 
       var donationItemListSize = donationItemList.length;
 
-      if (donationItemListSize > 1) {
+      if (donationItemListSize > ITEM_COUNT) {
           console.log("more buton created");
           var moreButton = document.createElement("button");
           moreButton.setAttribute("id", "moreButtonId");
@@ -825,3 +836,66 @@
 
 
   }
+
+function createNotificationCard(item) {
+
+    var doc = document.createDocumentFragment();
+
+    var notificationCardContainer = document.createElement("div");
+    notificationCardContainer.className = "container"
+    var notificationCardDiv = document.createElement("div");
+    notificationCardDiv.classList.add("card");
+    notificationCardDiv.classList.add("col-md-3");
+
+
+
+    var cardContentDiv = document.createElement("div");
+    cardContentDiv.className = "media";
+
+    var itemImageDiv = document.createElement("div");
+    itemImageDiv.classList.add("media-left");
+    itemImageDiv.classList.add("media-middle");
+    var itemImage = getImage(item.main_item_image);
+    itemImage.classList.add("notification-card-img-padding");
+    itemImage.classList.add("media-object");
+    itemImage.classList.add("thumbnail");
+
+    var notificationContentDiv = document.createElement("div");
+    notificationContentDiv.classList.add("media-body");
+    notificationContentDiv.classList.add("media-middle");
+
+    var orgName = item.organisation.org_name;
+
+    var mainItem = item.main_item;
+
+    var date = getLocalDateFormat(item.actioned_time);
+
+    var notification_type = item.task_type;
+
+    if (notification_type == REQUEST_TYPE_DONATION) {
+        var notificationMsg = getText(DONATION_NOTIFICATION_MSG + " " + mainItem + " " + TO_TEXT + " " + orgName + " " + ON_TEXT + " " + date);
+        cardContentDiv.append(itemImageDiv);
+        cardContentDiv.append(notificationContentDiv);
+    } else if (notification_type == REQUEST_TYPE_SERVICE) {
+        var notificationMsg = getText(SERVICE_NOTIFICATION_MSG + " " + mainItem + " " + TO_TEXT + " " + orgName + " " + ON_TEXT + " " + date);
+        cardContentDiv.append(notificationContentDiv);
+        cardContentDiv.append(itemImageDiv);
+    } else {
+        var notificationMsg = getText(THANK_YOU_NOTIFICATION_MSG + " " + mainItem + " " + FROM_TEXT + " " + orgName + " " + ON_TEXT + " " + date);
+        cardContentDiv.append(notificationContentDiv);
+        cardContentDiv.append(itemImageDiv);
+    }
+
+    itemImageDiv.append(itemImage);
+    notificationContentDiv.append(notificationMsg);
+
+    notificationCardDiv.append(cardContentDiv);
+
+    notificationCardContainer.append(notificationCardDiv);
+
+    doc.appendChild(notificationCardContainer);
+
+    document.getElementById("notification-card-id").appendChild(doc);
+
+
+}

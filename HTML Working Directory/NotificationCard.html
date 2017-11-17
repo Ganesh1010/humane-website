@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Humane - Notification</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="styesheet" href="CSS/humane.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/humane.js"></script>
+
+</head>
+
+<body>
+    
+    <div id="notification-card-id"></div>
+<!--
+    <div class="container">
+        <div class="card col-md-3">
+            <div class="media">
+                <div class="media-left media-middle">
+                    <img src="Images/grocery.jpg" class="media-object thumbnail" style="width:80px;margin-top: 10px;margin-bottom: 10px;">
+                </div>
+                <div class="media-body media-middle">
+                    <p style="margin-top: 10px;">You have Promised to donate
+                        <Strong>Groceries</Strong> to
+                        <Strong>Alayam</Strong> on 09 Nov 2017</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+-->
+<!--
+    <div class="container">
+        <div class="card col-md-6col-md-3 col-sm-3 col-xs-3">
+            <div class="media">
+
+                <div class="media-body media-middle">
+                    <p style="margin-top: 10px;">You have expressed interest for the service
+                        <Strong>Singer</Strong> to
+                        <Strong>Alayam</Strong> on 09 Nov 2017</p>
+                </div>
+                <div class="media-left media-middle">
+                    <img src="Images/grocery.jpg" class="media-object thumbnail" style="width:80px;margin-top: 10px;margin-bottom: 10px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card col-md-6 col-md-3 col-sm-3 col-xs-3">
+            <div class="media">
+
+                <div class="media-body media-middle">
+                    <p style="margin-top: 10px;">You have received a thank you video from
+                        <Strong> Alayam</Strong> on 10 Nov 2017</p>
+                </div>
+                <div class="media-left media-middle">
+                    <img src="Images/thank_you_card.png" class="media-object thumbnail" style="width:80px;margin-top: 10px;margin-bottom: 10px;">
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+</body>
+    
+        <script type="text/javascript">
+        $(document).ready(function() {
+            function loadNotificationDetails(data) {
+                var t = $.parseJSON(data)['results']
+                $('.loader').hide();
+                $.each(t, function(key, value) {
+                    createNotificationCard(value);
+
+                });
+            }
+            var item = `{
+    "count": 69,
+    "next": "http://vuramdevdb.vuram.com:8000/auth/register/getNotificationDetails/?page=2",
+    "previous": null,
+    "results": [
+        {
+            "task_id": 745,
+            "organisation": {
+                "org_id": 10,
+                "org_name": "Alayam",
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "city": 1
+            },
+            "donation_detail": {
+                "donation_id": 461,
+                "donation_item_list": [
+                    {
+                        "donation_item_id": 443,
+                        "goods_item_detail": {
+                            "goods_item_id": 205,
+                            "quantity": 60,
+                            "goods_txt_desc": null,
+                            "is_goods_item_satisfied": false,
+                            "goods": 159,
+                            "sub_item_category_one": 1,
+                            "sub_item_category_two": 7,
+                            "unit": 1
+                        },
+                        "quantity": 5,
+                        "unit": 1
+                    },
+                    {
+                        "donation_item_id": 444,
+                        "goods_item_detail": {
+                            "goods_item_id": 206,
+                            "quantity": 30,
+                            "goods_txt_desc": null,
+                            "is_goods_item_satisfied": false,
+                            "goods": 159,
+                            "sub_item_category_one": 5,
+                            "sub_item_category_two": null,
+                            "unit": 1
+                        },
+                        "quantity": 4,
+                        "unit": 1
+                    },
+                    {
+                        "donation_item_id": 445,
+                        "goods_item_detail": {
+                            "goods_item_id": 207,
+                            "quantity": 6,
+                            "goods_txt_desc": null,
+                            "is_goods_item_satisfied": false,
+                            "goods": 159,
+                            "sub_item_category_one": 7,
+                            "sub_item_category_two": 13,
+                            "unit": 1
+                        },
+                        "quantity": 3,
+                        "unit": 1
+                    }
+                ],
+                "donating_user": {
+                    "id": 282,
+                    "first_name": "Venky R",
+                    "email": "venky@gmail.com",
+                    "country_code": 1,
+                    "dob": "2017-10-19",
+                    "mobile": "8110803987",
+                    "role": 2,
+                    "is_mobile_verified": false,
+                    "is_email_verified": true,
+                    "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                    "profile_video_exists": true
+                },
+                "organisation": {
+                    "org_id": "10",
+                    "org_name": "Alayam",
+                    "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                    "city": 1
+                },
+                "pickup_address": null,
+                "promised_date": "2017-11-18T14:19:21.481000Z",
+                "posted_date": "2017-11-16T08:49:22.364391Z",
+                "delivered_date": null,
+                "received_by": null,
+                "is_volunteer_required": false,
+                "is_donation_completed": false,
+                "is_thank_you_video_posted": false,
+                "goods": 159,
+                "user": 282
+            },
+            "service_interested_detail": null,
+            "request_id": 461,
+            "task_description": "you have promised donations",
+            "actioned_time": "2017-11-18T14:19:21.481000Z",
+            "is_viewed": false,
+            "user": 282,
+            "task_status": 1,
+            "task_type": 1,
+            "request_type": 1,
+            "main_item": 3
+        },
+        {
+            "task_id": 744,
+            "organisation": {
+                "org_id": 10,
+                "org_name": "Alayam",
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "city": 1
+            },
+            "donation_detail": null,
+            "service_interested_detail": {
+                "service_interested_id": 374,
+                "service_user_detail": {
+                    "id": 282,
+                    "first_name": "Venky R",
+                    "email": "venky@gmail.com",
+                    "country_code": 1,
+                    "dob": "2017-10-19",
+                    "mobile": "8110803987",
+                    "role": 2,
+                    "is_mobile_verified": false,
+                    "is_email_verified": true,
+                    "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                    "profile_video_exists": true
+                },
+                "service_detail": {
+                    "service_id": 313,
+                    "service_org_detail": {
+                        "org_id": 10,
+                        "org_name": "Alayam",
+                        "mobile": "9791235645",
+                        "org_email": "alayam@gmail.com",
+                        "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                        "city": 1
+                    },
+                    "main_service": 5,
+                    "sub_service_category_one": 10,
+                    "sub_service_category_two": null,
+                    "service_start_date": "2017-11-25",
+                    "service_end_date": "2017-11-30",
+                    "service_requested_time": [
+                        {
+                            "service_requested_time_id": 365,
+                            "start_time": 13,
+                            "end_time": 14
+                        }
+                    ]
+                },
+                "service_interest_action_performed_date": "2017-11-14T16:55:40.000404Z",
+                "service_interest_expressed_date": "2017-11-30",
+                "service": 313,
+                "service_interest_expressed_start_time": 13,
+                "service_interest_expressed_end_time": 14,
+                "is_thank_you_video_posted": false,
+                "is_interest_expressed_satisfied": false
+            },
+            "request_id": 374,
+            "task_description": "you have expressed interest",
+            "actioned_time": "2017-11-30T00:00:00Z",
+            "is_viewed": false,
+            "user": 282,
+            "task_status": 1,
+            "task_type": 2,
+            "request_type": 2,
+            "main_item": 5
+        },
+        {
+            "task_id": 743,
+            "organisation": {
+                "org_id": 10,
+                "org_name": "Alayam",
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "city": 1
+            },
+            "donation_detail": null,
+            "service_interested_detail": {
+                "service_interested_id": 373,
+                "service_user_detail": {
+                    "id": 282,
+                    "first_name": "Venky R",
+                    "email": "venky@gmail.com",
+                    "country_code": 1,
+                    "dob": "2017-10-19",
+                    "mobile": "8110803987",
+                    "role": 2,
+                    "is_mobile_verified": false,
+                    "is_email_verified": true,
+                    "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                    "profile_video_exists": true
+                },
+                "service_detail": {
+                    "service_id": 312,
+                    "service_org_detail": {
+                        "org_id": 10,
+                        "org_name": "Alayam",
+                        "mobile": "9791235645",
+                        "org_email": "alayam@gmail.com",
+                        "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                        "city": 1
+                    },
+                    "main_service": 5,
+                    "sub_service_category_one": 10,
+                    "sub_service_category_two": null,
+                    "service_start_date": "2017-11-25",
+                    "service_end_date": "2017-12-06",
+                    "service_requested_time": [
+                        {
+                            "service_requested_time_id": 364,
+                            "start_time": 10,
+                            "end_time": 20
+                        }
+                    ]
+                },
+                "service_interest_action_performed_date": "2017-11-14T05:57:29.240350Z",
+                "service_interest_expressed_date": "2017-11-29",
+                "service": 312,
+                "service_interest_expressed_start_time": 10,
+                "service_interest_expressed_end_time": 20,
+                "is_thank_you_video_posted": false,
+                "is_interest_expressed_satisfied": false
+            },
+            "request_id": 373,
+            "task_description": "you have expressed interest",
+            "actioned_time": "2017-11-29T00:00:00Z",
+            "is_viewed": true,
+            "user": 282,
+            "task_status": 1,
+            "task_type": 2,
+            "request_type": 2,
+            "main_item": 5
+        },
+        {
+            "task_id": 742,
+            "organisation": {
+                "org_id": 10,
+                "org_name": "Alayam",
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "city": 1
+            },
+            "donation_detail": {
+                "donation_id": 460,
+                "donation_item_list": [
+                    {
+                        "donation_item_id": 442,
+                        "goods_item_detail": {
+                            "goods_item_id": 196,
+                            "quantity": 20,
+                            "goods_txt_desc": null,
+                            "is_goods_item_satisfied": false,
+                            "goods": 151,
+                            "sub_item_category_one": 27,
+                            "sub_item_category_two": null,
+                            "unit": 3
+                        },
+                        "quantity": 4,
+                        "unit": 3
+                    }
+                ],
+                "donating_user": {
+                    "id": 282,
+                    "first_name": "Venky R",
+                    "email": "venky@gmail.com",
+                    "country_code": 1,
+                    "dob": "2017-10-19",
+                    "mobile": "8110803987",
+                    "role": 2,
+                    "is_mobile_verified": false,
+                    "is_email_verified": true,
+                    "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                    "profile_video_exists": true
+                },
+                "organisation": {
+                    "org_id": "10",
+                    "org_name": "Alayam",
+                    "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                    "city": 1
+                },
+                "pickup_address": null,
+                "promised_date": "2017-11-16T11:26:40.438000Z",
+                "posted_date": "2017-11-14T05:56:39.570400Z",
+                "delivered_date": null,
+                "received_by": null,
+                "is_volunteer_required": false,
+                "is_donation_completed": false,
+                "is_thank_you_video_posted": false,
+                "goods": 151,
+                "user": 282
+            },
+            "service_interested_detail": null,
+            "request_id": 460,
+            "task_description": "you have promised donations",
+            "actioned_time": "2017-11-16T11:26:40.438000Z",
+            "is_viewed": true,
+            "user": 282,
+            "task_status": 1,
+            "task_type": 1,
+            "request_type": 1,
+            "main_item": 1
+        },
+        {
+            "task_id": 741,
+            "organisation": {
+                "org_id": 10,
+                "org_name": "Alayam",
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "city": 1
+            },
+            "donation_detail": {
+                "donation_id": 459,
+                "donation_item_list": [
+                    {
+                        "donation_item_id": 441,
+                        "goods_item_detail": {
+                            "goods_item_id": 188,
+                            "quantity": 20,
+                            "goods_txt_desc": null,
+                            "is_goods_item_satisfied": false,
+                            "goods": 145,
+                            "sub_item_category_one": 11,
+                            "sub_item_category_two": null,
+                            "unit": 3
+                        },
+                        "quantity": 1,
+                        "unit": 3
+                    }
+                ],
+                "donating_user": {
+                    "id": 282,
+                    "first_name": "Venky R",
+                    "email": "venky@gmail.com",
+                    "country_code": 1,
+                    "dob": "2017-10-19",
+                    "mobile": "8110803987",
+                    "role": 2,
+                    "is_mobile_verified": false,
+                    "is_email_verified": true,
+                    "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                    "profile_video_exists": true
+                },
+                "organisation": {
+                    "org_id": "10",
+                    "org_name": "Alayam",
+                    "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                    "city": 1
+                },
+                "pickup_address": null,
+                "promised_date": "2017-11-25T12:00:57.253000Z",
+                "posted_date": "2017-11-13T06:30:44.944779Z",
+                "delivered_date": "2017-11-13T14:53:32.517068Z",
+                "received_by": "Rahul",
+                "is_volunteer_required": false,
+                "is_donation_completed": true,
+                "is_thank_you_video_posted": false,
+                "goods": 145,
+                "user": 282
+            },
+            "service_interested_detail": null,
+            "request_id": 459,
+            "task_description": "you have promised donations",
+            "actioned_time": "2017-11-25T12:00:57.253000Z",
+            "is_viewed": false,
+            "user": 282,
+            "task_status": 1,
+            "task_type": 1,
+            "request_type": 1,
+            "main_item": 6
+        },
+        {
+            "task_id": 740,
+            "organisation": {
+                "org_id": 10,
+                "org_name": "Alayam",
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "city": 1
+            },
+            "donation_detail": null,
+            "service_interested_detail": {
+                "service_interested_id": 372,
+                "service_user_detail": {
+                    "id": 282,
+                    "first_name": "Venky R",
+                    "email": "venky@gmail.com",
+                    "country_code": 1,
+                    "dob": "2017-10-19",
+                    "mobile": "8110803987",
+                    "role": 2,
+                    "is_mobile_verified": false,
+                    "is_email_verified": true,
+                    "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                    "profile_video_exists": true
+                },
+                "service_detail": {
+                    "service_id": 307,
+                    "service_org_detail": {
+                        "org_id": 10,
+                        "org_name": "Alayam",
+                        "mobile": "9791235645",
+                        "org_email": "alayam@gmail.com",
+                        "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                        "city": 1
+                    },
+                    "main_service": 2,
+                    "sub_service_category_one": 8,
+                    "sub_service_category_two": 15,
+                    "service_start_date": "2017-11-10",
+                    "service_end_date": "2017-11-30",
+                    "service_requested_time": [
+                        {
+                            "service_requested_time_id": 359,
+                            "start_time": 10,
+                            "end_time": 20
+                        }
+                    ]
+                },
+                "service_interest_action_performed_date": "2017-11-13T06:25:20.160423Z",
+                "service_interest_expressed_date": "2017-11-15",
+                "service": 307,
+                "service_interest_expressed_start_time": 10,
+                "service_interest_expressed_end_time": 20,
+                "is_thank_you_video_posted": false,
+                "is_interest_expressed_satisfied": false
+            },
+            "request_id": 372,
+            "task_description": "you have expressed interest",
+            "actioned_time": "2017-11-15T00:00:00Z",
+            "is_viewed": false,
+            "user": 282,
+            "task_status": 1,
+            "task_type": 2,
+            "request_type": 2,
+            "main_item": 2
+        },
+        {
+            "task_id": 738,
+            "organisation": {
+                "org_id": 10,
+                "org_name": "Alayam",
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "city": 1
+            },
+            "donation_detail": {
+                "donation_id": 457,
+                "donation_item_list": [
+                    {
+                        "donation_item_id": 439,
+                        "goods_item_detail": {
+                            "goods_item_id": 195,
+                            "quantity": 60,
+                            "goods_txt_desc": null,
+                            "is_goods_item_satisfied": false,
+                            "goods": 150,
+                            "sub_item_category_one": 12,
+                            "sub_item_category_two": null,
+                            "unit": 3
+                        },
+                        "quantity": 1,
+                        "unit": 3
+                    }
+                ],
+                "donating_user": {
+                    "id": 282,
+                    "first_name": "Venky R",
+                    "email": "venky@gmail.com",
+                    "country_code": 1,
+                    "dob": "2017-10-19",
+                    "mobile": "8110803987",
+                    "role": 2,
+                    "is_mobile_verified": false,
+                    "is_email_verified": true,
+                    "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                    "profile_video_exists": true
+                },
+                "organisation": {
+                    "org_id": "10",
+                    "org_name": "Alayam",
+                    "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                    "city": 1
+                },
+                "pickup_address": null,
+                "promised_date": "2017-11-23T08:39:34.138000Z",
+                "posted_date": "2017-11-11T03:09:25.097736Z",
+                "delivered_date": null,
+                "received_by": null,
+                "is_volunteer_required": false,
+                "is_donation_completed": false,
+                "is_thank_you_video_posted": false,
+                "goods": 150,
+                "user": 282
+            },
+            "service_interested_detail": null,
+            "request_id": 457,
+            "task_description": "you have promised donations",
+            "actioned_time": "2017-11-23T08:39:34.138000Z",
+            "is_viewed": false,
+            "user": 282,
+            "task_status": 1,
+            "task_type": 1,
+            "request_type": 1,
+            "main_item": 6
+        },
+        {
+            "task_id": 737,
+            "organisation": {
+                "org_id": 10,
+                "org_name": "Alayam",
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "city": 1
+            },
+            "donation_detail": null,
+            "service_interested_detail": {
+                "service_interested_id": 371,
+                "service_user_detail": {
+                    "id": 282,
+                    "first_name": "Venky R",
+                    "email": "venky@gmail.com",
+                    "country_code": 1,
+                    "dob": "2017-10-19",
+                    "mobile": "8110803987",
+                    "role": 2,
+                    "is_mobile_verified": false,
+                    "is_email_verified": true,
+                    "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                    "profile_video_exists": true
+                },
+                "service_detail": {
+                    "service_id": 307,
+                    "service_org_detail": {
+                        "org_id": 10,
+                        "org_name": "Alayam",
+                        "mobile": "9791235645",
+                        "org_email": "alayam@gmail.com",
+                        "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                        "city": 1
+                    },
+                    "main_service": 2,
+                    "sub_service_category_one": 8,
+                    "sub_service_category_two": 15,
+                    "service_start_date": "2017-11-10",
+                    "service_end_date": "2017-11-30",
+                    "service_requested_time": [
+                        {
+                            "service_requested_time_id": 359,
+                            "start_time": 10,
+                            "end_time": 20
+                        }
+                    ]
+                },
+                "service_interest_action_performed_date": "2017-11-10T07:13:13.174915Z",
+                "service_interest_expressed_date": "2017-11-25",
+                "service": 307,
+                "service_interest_expressed_start_time": 12,
+                "service_interest_expressed_end_time": 16,
+                "is_thank_you_video_posted": true,
+                "is_interest_expressed_satisfied": true
+            },
+            "request_id": 371,
+            "task_description": "you have received a thankyou video for expressing an interest",
+            "actioned_time": "2017-11-25T00:00:00Z",
+            "is_viewed": false,
+            "user": 282,
+            "task_status": 1,
+            "task_type": 3,
+            "request_type": 2,
+            "main_item": 2
+        },
+        {
+            "task_id": 736,
+            "organisation": {
+                "org_id": 10,
+                "org_name": "Alayam",
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "city": 1
+            },
+            "donation_detail": null,
+            "service_interested_detail": {
+                "service_interested_id": 371,
+                "service_user_detail": {
+                    "id": 282,
+                    "first_name": "Venky R",
+                    "email": "venky@gmail.com",
+                    "country_code": 1,
+                    "dob": "2017-10-19",
+                    "mobile": "8110803987",
+                    "role": 2,
+                    "is_mobile_verified": false,
+                    "is_email_verified": true,
+                    "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                    "profile_video_exists": true
+                },
+                "service_detail": {
+                    "service_id": 307,
+                    "service_org_detail": {
+                        "org_id": 10,
+                        "org_name": "Alayam",
+                        "mobile": "9791235645",
+                        "org_email": "alayam@gmail.com",
+                        "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                        "city": 1
+                    },
+                    "main_service": 2,
+                    "sub_service_category_one": 8,
+                    "sub_service_category_two": 15,
+                    "service_start_date": "2017-11-10",
+                    "service_end_date": "2017-11-30",
+                    "service_requested_time": [
+                        {
+                            "service_requested_time_id": 359,
+                            "start_time": 10,
+                            "end_time": 20
+                        }
+                    ]
+                },
+                "service_interest_action_performed_date": "2017-11-10T07:13:13.174915Z",
+                "service_interest_expressed_date": "2017-11-25",
+                "service": 307,
+                "service_interest_expressed_start_time": 12,
+                "service_interest_expressed_end_time": 16,
+                "is_thank_you_video_posted": true,
+                "is_interest_expressed_satisfied": true
+            },
+            "request_id": 371,
+            "task_description": "you have expressed interest",
+            "actioned_time": "2017-11-25T00:00:00Z",
+            "is_viewed": false,
+            "user": 282,
+            "task_status": 1,
+            "task_type": 2,
+            "request_type": 2,
+            "main_item": 2
+        },
+        {
+            "task_id": 735,
+            "organisation": {
+                "org_id": 10,
+                "org_name": "Alayam",
+                "mobile": "9791235645",
+                "org_email": "alayam@gmail.com",
+                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                "city": 1
+            },
+            "donation_detail": {
+                "donation_id": 456,
+                "donation_item_list": [
+                    {
+                        "donation_item_id": 438,
+                        "goods_item_detail": {
+                            "goods_item_id": 189,
+                            "quantity": 20,
+                            "goods_txt_desc": null,
+                            "is_goods_item_satisfied": false,
+                            "goods": 146,
+                            "sub_item_category_one": 1,
+                            "sub_item_category_two": 7,
+                            "unit": 1
+                        },
+                        "quantity": 1,
+                        "unit": 1
+                    }
+                ],
+                "donating_user": {
+                    "id": 282,
+                    "first_name": "Venky R",
+                    "email": "venky@gmail.com",
+                    "country_code": 1,
+                    "dob": "2017-10-19",
+                    "mobile": "8110803987",
+                    "role": 2,
+                    "is_mobile_verified": false,
+                    "is_email_verified": true,
+                    "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
+                    "profile_video_exists": true
+                },
+                "organisation": {
+                    "org_id": "10",
+                    "org_name": "Alayam",
+                    "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
+                    "city": 1
+                },
+                "pickup_address": null,
+                "promised_date": "2017-11-25T10:32:30.379000Z",
+                "posted_date": "2017-11-10T05:02:22.883574Z",
+                "delivered_date": "2017-11-10T05:09:18.383209Z",
+                "received_by": "Rahul",
+                "is_volunteer_required": false,
+                "is_donation_completed": true,
+                "is_thank_you_video_posted": false,
+                "goods": 146,
+                "user": 282
+            },
+            "service_interested_detail": null,
+            "request_id": 456,
+            "task_description": "you have promised donations",
+            "actioned_time": "2017-11-25T10:32:30.379000Z",
+            "is_viewed": false,
+            "user": 282,
+            "task_status": 1,
+            "task_type": 1,
+            "request_type": 1,
+            "main_item": 3
+        }
+    ]
+}`;
+
+            loadNotificationDetails(item);
+
+        });
+
+    </script>
+
+</html>
