@@ -1,644 +1,69 @@
 <html>
 
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="CSS/humane.css">
-	<script src="JS/humane.js"></script>
-	<style>
-		.progress-bar {
-			height: auto
-		}
-
-		.loader {
-			position: fixed;
-			left: 0px;
-			top: 0px;
-			width: 100%;
-			height: 100%;
-			z-index: 9999;
-			background: url('https://loading.io/assets/img/landing/curved-bars.svg') 50% 50% no-repeat rgb(249, 249, 249);
-			opacity: .8;
-		}
-
-	</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="CSS/humane.css">
+    <script src="JS/humane.js"></script>
 </head>
 
 <body>
-	<div id="main">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="panel with-nav-tabs panel-info">
-						<div class="panel-heading">
-							<ul class="nav nav-tabs">
-								<li class="active col-sm-2"><a href="#goodstab" data-toggle="tab">Goods</a></li>
-								<li class="col-sm-2"><a href="#servicetab" data-toggle="tab">Services</a></li>
-							</ul>
-						</div>
+    <div id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel with-nav-tabs panel-info">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active col-sm-2"><a href="#goodstab" data-toggle="tab">Goods</a></li>
+                                <li class="col-sm-2"><a href="#servicetab" data-toggle="tab">Services</a></li>
+                            </ul>
+                        </div>
 
-						<div class="panel-body">
-							<div class="tab-content">
-								<div class="tab-pane fade in active" id="goodstab">
-									<div class="loader"></div>
-								</div>
-								<div class="tab-pane fade " id="servicetab">
-									<div class="loader"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="modal fade" id="myModal" role="dialog">
-						<div class="modal-dialog">
-
-							<!-- Modal content-->
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">Need Details</h4>
-								</div>
-
-								<div class="modal-body">
-									<div class="container">
-										<div class="row">
-											<div class="col-md-6">
-												<table class="table table-hover">
-													<thead>
-														<tr>
-															<th>Product</th>
-															<th class="text-center">Required (Kg)</th>
-															<th class="text-center">Received (Kg)</th>
-															<th class="text-center">Your Contribution (Kg)</th>
-															<th> </th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td class="col-md-6">
-																<div class="media">
-																	<a class="thumbnail pull-left" href="#"> <img class="media-object" src="images/rice.jpg" style="width:100%; height:100%;"> </a>
-																	<div class="media-body">
-																		<h4 class="media-heading"><a href="#">Product name</a></h4>
-																		<h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-																		<span>Status: </span><span class="text-success"><strong>10+ Promised</strong></span>
-																	</div>
-																</div>
-															</td>
-															<td class="col-sm-1 col-md-1 text-center"><strong>10</strong></td>
-															<td class="col-sm-1 col-md-1 text-center"><strong>5</strong></td>
-															<td class="col-sm-1 col-md-1" style="text-align: center">
-																<div class="input-group">
-																	<span class="input-group-btn">
-											  <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
-												<span class="glyphicon glyphicon-minus"></span>
-																	</button>
-																	</span>
-																	<input type="text" name="quant[2]" class="form-control input-number" value="0" min="1" max="100">
-																	<span class="input-group-btn">
-											  <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
-												  <span class="glyphicon glyphicon-plus"></span>
-																	</button>
-																	</span>
-																</div>
-															</td>
-
-														</tr>
-														<tr>
-															<td class="col-md-6">
-																<div class="media">
-																	<a class="thumbnail pull-left" href="#"> <img class="media-object" src="images/pulses.jpg" style="panel-heading"> </a>
-																	<div class="media-body">
-																		<h4 class="media-heading"><a href="#">Rice</a></h4>
-																		<h5 class="media-heading"> by <a href="#">Vuram</a></h5>
-																		<span>Status: </span><span class="text-warning"><strong>No Promises</strong></span>
-																	</div>
-																</div>
-															</td>
-															<td class="col-sm-1 col-md-1 text-center"><strong>10</strong></td>
-															<td class="col-sm-1 col-md-1 text-center"><strong>5</strong></td>
-															<td class="col-sm-1 col-md-1" style="text-align: center">
-																<div class="input-group">
-																	<span class="input-group-btn">
-											  <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
-												<span class="glyphicon glyphicon-minus"></span>
-																	</button>
-																	</span>
-																	<input type="text" name="quant[2]" class="form-control input-number" value="0" min="1" max="100">
-																	<span class="input-group-btn">
-											  <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
-												  <span class="glyphicon glyphicon-plus"></span>
-																	</button>
-																	</span>
-																</div>
-															</td>
-
-														</tr>
-														<tr>
-															<td>   </td>
-															<td>   </td>
-															<td>
-																<button type="button" class="btn btn-default" data-dismiss="modal">
-										<span class="glyphicon glyphicon-shopping-cart"></span> Cancel
-									</button></td>
-															<td>
-																<button type="button" class="btn btn-success" data-dismiss="modal">
-										Donate <span class="glyphicon glyphicon-play"></span>
-									</button></td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-
-					</div>
-
-					<div class="modal fade" id="New_Goods_Modal" role="dialog">
-						<div class="modal-dialog">
-
-							<!-- Modal content-->
-							<div class="modal-content">
-
-								<!-- Modal header-->
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">New Need</h4>
-								</div>
-
-								<!-- Modal Body-->
-								<div class="modal-body">
-									<div class="container">
-										<div class="row">
-											<div class="col-md-6">
-												<form>
-													<table>
-														<thead>
-															<tr>
-																<td>Main Item: </td>
-																<td class="text-center"></td>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td class="col-sm-1 col-md-1 text-center">
-																	<select class="form-control" id="count">
-																<option>Select Main Item</option>
-																<option>Cloth</option>
-																<option>Groceries</option>
-																<option>Stationaries</option>
-															</select>
-																</td>
-																<td class="col-sm-1 col-md-1 text-center">
-																	<button class="btn btn-primary">Add New Item</buuton>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-											<br><br>
-											<table class="table table-hover">
-												<thead>
-													<tr>
-														<th>Sub Item</th>
-														<th class="text-center">Quantity (Kg)</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td class="col-sm-1 col-md-1 text-center">
-															<select class="form-control" id="count">
-																<option>Select Sub Item</option>
-																<option>Rice</option>
-																<option>Wheat</option>
-																<option>Sugar</option>
-																<option>Salt</option>
-																<option>Pulses</option>
-															</select>
-														</td>
-														<td class="col-sm-1 col-md-1 text-center">
-															<div class="input-group">
-																<span class="input-group-btn">
-																	<button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
-																		<span class="glyphicon glyphicon-minus"></span>
-																	</button>
-																	</span>
-																	<input type="text" id="quantity1" name="quantity1" class="form-control input-number" value="0" min="1" max="100">
-																	<span class="input-group-btn">
-																	<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
-																		<span class="glyphicon glyphicon-plus"></span>
-																	</button>
-																	</span>
-											</div>
-											</td>
-											</tr>
-											<tr>
-												<td></td>
-												<td class="pull-right">
-													<button type="button" class="btn btn-default" data-dismiss="modal">
-															<span class="glyphicon glyphicon-shopping-cart"></span> Cancel
-														</button>
-													<button type="button" class="btn btn-success" data-dismiss="modal">
-															Request <span class="glyphicon glyphicon-play"></span>
-														</button></td>
-											</tr>
-											</tbody>
-											</table>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Modal footer-->
-
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-	</div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="goodstab">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="tab-pane fade " id="servicetab">
+                                    <div class="loader"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script type="text/javascript">
-	$(document).ready(function() {
-//		var serviceData = `{
-//    "count": 4,
-//    "next": null,
-//    "previous": null,
-//    "results": [
-//        {
-//            "service_id": 313,
-//            "service_org_detail": {
-//                "org_id": 10,
-//                "bank_details": [
-//                    {
-//                        "bank_details_id": 10,
-//                        "account_number": "345612459078",
-//                        "ifsc_code": "ICICI120053",
-//                        "bank_name": "AXIS",
-//                        "branch_name": "Saligramam",
-//                        "branch_code": "5985478",
-//                        "merchant_id": "512456",
-//                        "salt": "214526",
-//                        "key": "325254",
-//                        "org_id": 10
-//                    }
-//                ],
-//                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
-//                "org_reg_no": "36456",
-//                "org_name": "Alayam",
-//                "latitude": 13.0483,
-//                "longitude": 80.1984,
-//                "mobile": "9791235645",
-//                "org_email": "alayam@gmail.com",
-//                "street": "15th cross street",
-//                "postal_code": "600093",
-//                "org_desc": "very good",
-//                "is_active": true,
-//                "state": 2,
-//                "city": "Chennai",
-//                "country": 1,
-//                "org_type": 1,
-//                "people_count": 1
-//            },
-//            "service_interest_expressed": [
-//                {
-//                    "service_interested_id": 374,
-//                    "service_user_detail": {
-//                        "id": 282,
-//                        "first_name": "Venky R",
-//                        "email": "venky@gmail.com",
-//                        "country_code": 1,
-//                        "dob": "2017-10-19",
-//                        "mobile": "8110803987",
-//                        "role": 2,
-//                        "is_mobile_verified": false,
-//                        "is_email_verified": true,
-//                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
-//                        "profile_video_exists": true
-//                    },
-//                    "service_interest_expressed_date": "2017-11-30",
-//                    "service_interest_action_performed_date": "2017-11-14T16:55:40.000404Z",
-//                    "is_interest_expressed_satisfied": false,
-//                    "is_thank_you_video_posted": false,
-//                    "service": 313,
-//                    "service_interest_expressed_start_time": 13,
-//                    "service_interest_expressed_end_time": 14,
-//                    "user": 282
-//                }
-//            ],
-//            "posted_date": "2017-11-14T16:54:15.378639Z",
-//            "service_requested_day": [],
-//            "service_requested_time": [
-//                {
-//                    "service_requested_time_id": 365,
-//                    "start_time": 13,
-//                    "end_time": 14
-//                }
-//            ],
-//            "main_service": 5,
-//            "main_service_icon" :"https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Music-thumbnail-100x100-70.jpg",
-//            "sub_service_category_one": 10,
-//            "sub_service_category_two": null,
-//            "service_text_description": "need the service very urgent",
-//            "service_start_date": "2017-11-25",
-//            "service_end_date": "2017-11-30",
-//            "is_service_satisfied": false
-//        },
-//        {
-//            "service_id": 312,
-//            "service_org_detail": {
-//                "org_id": 10,
-//                "bank_details": [
-//                    {
-//                        "bank_details_id": 10,
-//                        "account_number": "345612459078",
-//                        "ifsc_code": "ICICI120053",
-//                        "bank_name": "AXIS",
-//                        "branch_name": "Saligramam",
-//                        "branch_code": "5985478",
-//                        "merchant_id": "512456",
-//                        "salt": "214526",
-//                        "key": "325254",
-//                        "org_id": 10
-//                    }
-//                ],
-//                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
-//                "org_reg_no": "36456",
-//                "org_name": "Alayam",
-//                "latitude": 13.0483,
-//                "longitude": 80.1984,
-//                "mobile": "9791235645",
-//                "org_email": "alayam@gmail.com",
-//                "street": "15th cross street",
-//                "postal_code": "600093",
-//                "org_desc": "very good",
-//                "is_active": true,
-//                "state": 2,
-//                "city": "Chennai",
-//                "country": 1,
-//                "org_type": 1,
-//                "people_count": 1
-//            },
-//            "service_interest_expressed": [
-//                {
-//                    "service_interested_id": 373,
-//                    "service_user_detail": {
-//                        "id": 282,
-//                        "first_name": "Venky R",
-//                        "email": "venky@gmail.com",
-//                        "country_code": 1,
-//                        "dob": "2017-10-19",
-//                        "mobile": "8110803987",
-//                        "role": 2,
-//                        "is_mobile_verified": false,
-//                        "is_email_verified": true,
-//                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
-//                        "profile_video_exists": true
-//                    },
-//                    "service_interest_expressed_date": "2017-11-29",
-//                    "service_interest_action_performed_date": "2017-11-14T05:57:29.240350Z",
-//                    "is_interest_expressed_satisfied": false,
-//                    "is_thank_you_video_posted": false,
-//                    "service": 312,
-//                    "service_interest_expressed_start_time": 10,
-//                    "service_interest_expressed_end_time": 20,
-//                    "user": 282
-//                }
-//            ],
-//            "posted_date": "2017-11-14T05:30:30.162093Z",
-//            "service_requested_day": [
-//                {
-//                    "service_requested_day_id": 509,
-//                    "day": 1
-//                },
-//                {
-//                    "service_requested_day_id": 510,
-//                    "day": 4
-//                },
-//                {
-//                    "service_requested_day_id": 511,
-//                    "day": 5
-//                }
-//            ],
-//            "service_requested_time": [
-//                {
-//                    "service_requested_time_id": 364,
-//                    "start_time": 10,
-//                    "end_time": 20
-//                }
-//            ],
-//            "main_service": 5,
-//            "main_service_icon" :"https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Music-thumbnail-100x100-70.jpg",
-//            "sub_service_category_one": 10,
-//            "sub_service_category_two": null,
-//            "service_text_description": "required urgently",
-//            "service_start_date": "2017-11-25",
-//            "service_end_date": "2017-12-06",
-//            "is_service_satisfied": false
-//        },
-//        {
-//            "service_id": 311,
-//            "service_org_detail": {
-//                "org_id": 10,
-//                "bank_details": [
-//                    {
-//                        "bank_details_id": 10,
-//                        "account_number": "345612459078",
-//                        "ifsc_code": "ICICI120053",
-//                        "bank_name": "AXIS",
-//                        "branch_name": "Saligramam",
-//                        "branch_code": "5985478",
-//                        "merchant_id": "512456",
-//                        "salt": "214526",
-//                        "key": "325254",
-//                        "org_id": 10
-//                    }
-//                ],
-//                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
-//                "org_reg_no": "36456",
-//                "org_name": "Alayam",
-//                "latitude": 13.0483,
-//                "longitude": 80.1984,
-//                "mobile": "9791235645",
-//                "org_email": "alayam@gmail.com",
-//                "street": "15th cross street",
-//                "postal_code": "600093",
-//                "org_desc": "very good",
-//                "is_active": true,
-//                "state": 2,
-//                "city": "Chennai",
-//                "country": 1,
-//                "org_type": 1,
-//                "people_count": 1
-//            },
-//            "service_interest_expressed": [],
-//            "posted_date": "2017-11-14T05:29:29.867504Z",
-//            "service_requested_day": [
-//                {
-//                    "service_requested_day_id": 502,
-//                    "day": 1
-//                },
-//                {
-//                    "service_requested_day_id": 503,
-//                    "day": 2
-//                },
-//                {
-//                    "service_requested_day_id": 504,
-//                    "day": 3
-//                },
-//                {
-//                    "service_requested_day_id": 505,
-//                    "day": 4
-//                },
-//                {
-//                    "service_requested_day_id": 506,
-//                    "day": 5
-//                },
-//                {
-//                    "service_requested_day_id": 507,
-//                    "day": 6
-//                },
-//                {
-//                    "service_requested_day_id": 508,
-//                    "day": 7
-//                }
-//            ],
-//            "service_requested_time": [
-//                {
-//                    "service_requested_time_id": 363,
-//                    "start_time": 10,
-//                    "end_time": 20
-//                }
-//            ],
-//            "main_service": 2,
-//            "main_service_icon" : "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Education-thumbnail-100x100-70.jpg",
-//            "sub_service_category_one": 8,
-//            "sub_service_category_two": 15,
-//            "service_text_description": "required urgently",
-//            "service_start_date": "2017-11-14",
-//            "service_end_date": "2017-11-30",
-//            "is_service_satisfied": false
-//        },
-//        {
-//            "service_id": 310,
-//            "service_org_detail": {
-//                "org_id": 10,
-//                "bank_details": [
-//                    {
-//                        "bank_details_id": 10,
-//                        "account_number": "345612459078",
-//                        "ifsc_code": "ICICI120053",
-//                        "bank_name": "AXIS",
-//                        "branch_name": "Saligramam",
-//                        "branch_code": "5985478",
-//                        "merchant_id": "512456",
-//                        "salt": "214526",
-//                        "key": "325254",
-//                        "org_id": 10
-//                    }
-//                ],
-//                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
-//                "org_reg_no": "36456",
-//                "org_name": "Alayam",
-//                "latitude": 13.0483,
-//                "longitude": 80.1984,
-//                "mobile": "9791235645",
-//                "org_email": "alayam@gmail.com",
-//                "street": "15th cross street",
-//                "postal_code": "600093",
-//                "org_desc": "very good",
-//                "is_active": true,
-//                "state": 2,
-//                "city": "Chennai",
-//                "country": 1,
-//                "org_type": 1,
-//                "people_count": 1
-//            },
-//            "service_interest_expressed": [],
-//            "posted_date": "2017-11-13T17:56:30.094239Z",
-//            "service_requested_day": [
-//                {
-//                    "service_requested_day_id": 497,
-//                    "day": 1
-//                },
-//                {
-//                    "service_requested_day_id": 498,
-//                    "day": 2
-//                },
-//                {
-//                    "service_requested_day_id": 499,
-//                    "day": 3
-//                },
-//                {
-//                    "service_requested_day_id": 500,
-//                    "day": 4
-//                },
-//                {
-//                    "service_requested_day_id": 501,
-//                    "day": 5
-//                }
-//            ],
-//            "service_requested_time": [
-//                {
-//                    "service_requested_time_id": 362,
-//                    "start_time": 13,
-//                    "end_time": 18
-//                }
-//            ],
-//            "main_service": 4,
-//            "main_service_icon" : "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Medical-thumbnail-100x100-70.jpg",
-//            "sub_service_category_one": 9,
-//            "sub_service_category_two": 17,
-//            "service_text_description": "we don't have medical facilities",
-//            "service_start_date": "2017-11-25",
-//            "service_end_date": "2017-12-22",
-//            "is_service_satisfied": false
-//        }
-//    ]
-//}`;
+    $(document).ready(function() {
+        function getGoodsdetail(data) {
+            var t = $.parseJSON(data)['results']
+            $('.loader').hide();
+            $.each(t, function(key, value) {
+                create_single_goods_card(value);
+            });
+        }
 
-		function getGoodsdetail(data) {
-			var t = $.parseJSON(data)['results']
-			//  var t =data['results'];
-			$('.loader').hide();
-			$.each(t, function(key, value) {
-				//    alert(key);
-				create_single_goods_card(value);
+        function getServiceDetail(data) {
+            var t = $.parseJSON(data)['results']
+            $('.loader').hide();
+            $.each(t, function(key, value) {
+                create_single_service_card(value);
+            });
+        }
 
-			});
-		}
+        $.getJSON("http://vuramdevdb.vuram.com:8000/humane/goodsDetail/?isweb=True&callback=?", function(data) {
+            getGoodsdetail(data)
+        });
 
-		function getServiceDetail(data) {
-			var t = $.parseJSON(data)['results']
-			//  var t =data['results'];
-			            $('.loader').hide();
-			$.each(t, function(key, value) {
-				//    alert(key);
-				//console.log("called service card");
-				create_single_service_card(value);
-			});
-		}
-
-		$.getJSON("http://vuramdevdb.vuram.com:8000/humane/goodsDetail/?isweb=True&callback=?", function(data) {
-			getGoodsdetail(data)
-		});
-        
-     
         $.getJSON("http://vuramdevdb.vuram.com:8000/humane/serviceDetail/?isweb=True&callback=?", function(data) {
-			getServiceDetail(data)
-		});
-
-
-		//getServiceDetail(serviceData);
-	});
+            getServiceDetail(data)
+        });
+    });
 
 </script>
 

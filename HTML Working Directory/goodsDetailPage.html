@@ -32,68 +32,35 @@
 			justify-content: center background: rgba(122, 130, 136, 0.2);
 		}
 
-		.org-details {
-			margin-bottom: 5%;
-		}
-
-		.goods-detail {
-			padding: 3%;
-		}
+		
 	</style>
 </head>
 
 <body>
-	<div class=" container">
-
-		<!--
-          <div class="media">
-              <div class="media-body">
-                    <div class="col-md-1">
-                 <div class="col" >
-                        <h2>Organisation Name</h2>      
-                        <p>Organisation Address</p>
-                        <p>Organisation Contact Number</p>
-                        <p><span class="glyphicon glyphicon-ok green-tick">
-                        </span><span class= "verified-text-padding">Verified</span>
-                        </p>
-                    </div>
-                  </div>
-              </div>
-              <div class="media-right">
-                 
-                <img src="Images/referorg.png" class="size padding img-circle " alt="organisation logo">
-                 
-              </div>
-          </div>
--->
-
-		<div class="row org-details">
+	<div class=" container ">
+		
 			<div class="col-md-4">
-				<div class="col ">
+				
 					<h2>Organisation Name</h2>
 					<p>Organisation Address</p>
 					<p>Organisation Contact Number</p>
 					<p><span class="glyphicon glyphicon-ok green-tick">
                         </span>Verified
 					</p>
-				</div>
+				
 			</div>
 			<div class="col-md-4 ">
 				<div class="img-box">
 					<img src="Images/referorg.png" class="size  thumbnail img-responsive" alt="organisation logo">
 				</div>
 			</div>
-		</div>
-
-		<div class="row">
+	
 			<div id="goods-item-card">
+                <div class="loader"></div>
 			</div>
-		</div>
-
 		<br>
-		<hr>
 		<div type="button" class=" btn btn-success " style="width=50px;" data-toggle="modal" data-target="#donate-modal"> Donate </div>
-		<hr>
+		
 
 		<div class="modal fade" id="donate-modal" role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -203,349 +170,20 @@
 			</div>
 		</div>
 	</div>
-
-
 </body>
 <script type="text/javascript">
 	$(document).ready(function() {
-		var goodsDetail = `{
-            "goods_id": 146,
-            "goods_item_list": [
-                {
-                    "goods_item_id": 189,
-                    "quantity": 20,
-                    "goods_text_description": null,
-                    "sub_item_category_one": 1,
-                    "sub_item_category_two": 7,
-                    "unit": 1,
-                    "is_goods_item_satisfied": false
-                },
-                {
-                    "goods_item_id": 190,
-                    "quantity": 1,
-                    "goods_text_description": null,
-                    "sub_item_category_one": 6,
-                    "sub_item_category_two": 1,
-                    "unit": 1,
-                    "is_goods_item_satisfied": false
-                }
-            ],
-            "organisation_detail": {
-                "org_id": 10,
-                "bank_details": [
-                    {
-                        "bank_details_id": 10,
-                        "account_number": "345612459078",
-                        "ifsc_code": "ICICI120053",
-                        "bank_name": "AXIS",
-                        "branch_name": "Saligramam",
-                        "branch_code": "5985478",
-                        "merchant_id": "512456",
-                        "salt": "214526",
-                        "key": "325254",
-                        "org_id": 10
-                    }
-                ],
-                "org_logo": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/organisation_logo/Screenshot_2017-11-13-08-52-56-329_lockscreen_dkbwHII-thumbnail-100x100.png",
-                "org_reg_no": "36456",
-                "org_name": "Alayam",
-                "latitude": 13.0483,
-                "longitude": 80.1984,
-                "mobile": "9791235645",
-                "org_email": "alayam@gmail.com",
-                "street": "15th cross street",
-                "postal_code": "600093",
-                "org_desc": "very good",
-                "is_active": true,
-                "state": 2,
-                "city": 1,
-                "country": 1,
-                "org_type": 1,
-                "people_count": 1
-            },
-            "donation_list": [
-                {
-                    "donation_id": 439,
-                    "donation_item_list": [
-                        {
-                            "donation_item_id": 420,
-                            "goods_item": 189,
-                            "quantity": 5,
-                            "unit": 1
-                        },
-                        {
-                            "donation_item_id": 421,
-                            "goods_item": 190,
-                            "quantity": 1,
-                            "unit": 1
-                        }
-                    ],
-                    "donating_user": {
-                        "id": 282,
-                        "first_name": "Venky R",
-                        "email": "venky@gmail.com",
-                        "country_code": 1,
-                        "dob": "2017-10-19",
-                        "mobile": "8110803987",
-                        "role": 2,
-                        "is_mobile_verified": false,
-                        "is_email_verified": true,
-                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
-                        "profile_video_exists": true
-                    },
-                    "promised_date": "2017-11-25T16:44:11Z",
-                    "posted_date": "2017-11-03T11:14:03Z",
-                    "delivered_date": "2017-11-07T13:04:07.270350Z",
-                    "received_by": "Rahul",
-                    "is_volunteer_required": false,
-                    "is_donation_completed": true,
-                    "is_thank_you_video_posted": true,
-                    "pickup_address": null
-                },
-                {
-                    "donation_id": 442,
-                    "donation_item_list": [
-                        {
-                            "donation_item_id": 424,
-                            "goods_item": 189,
-                            "quantity": 1,
-                            "unit": 1
-                        }
-                    ],
-                    "donating_user": {
-                        "id": 282,
-                        "first_name": "Venky R",
-                        "email": "venky@gmail.com",
-                        "country_code": 1,
-                        "dob": "2017-10-19",
-                        "mobile": "8110803987",
-                        "role": 2,
-                        "is_mobile_verified": false,
-                        "is_email_verified": true,
-                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
-                        "profile_video_exists": true
-                    },
-                    "promised_date": "2017-11-09T16:17:21.901000Z",
-                    "posted_date": "2017-11-09T10:47:15.695901Z",
-                    "delivered_date": "2017-11-09T10:59:09.324681Z",
-                    "received_by": "Rahul",
-                    "is_volunteer_required": false,
-                    "is_donation_completed": true,
-                    "is_thank_you_video_posted": false,
-                    "pickup_address": null
-                },
-                {
-                    "donation_id": 443,
-                    "donation_item_list": [
-                        {
-                            "donation_item_id": 425,
-                            "goods_item": 189,
-                            "quantity": 1,
-                            "unit": 1
-                        }
-                    ],
-                    "donating_user": {
-                        "id": 282,
-                        "first_name": "Venky R",
-                        "email": "venky@gmail.com",
-                        "country_code": 1,
-                        "dob": "2017-10-19",
-                        "mobile": "8110803987",
-                        "role": 2,
-                        "is_mobile_verified": false,
-                        "is_email_verified": true,
-                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
-                        "profile_video_exists": true
-                    },
-                    "promised_date": "2017-11-09T16:17:21.901000Z",
-                    "posted_date": "2017-11-09T10:47:17.523946Z",
-                    "delivered_date": "2017-11-09T11:00:34.055785Z",
-                    "received_by": "Rahul",
-                    "is_volunteer_required": false,
-                    "is_donation_completed": true,
-                    "is_thank_you_video_posted": false,
-                    "pickup_address": null
-                },
-                {
-                    "donation_id": 453,
-                    "donation_item_list": [
-                        {
-                            "donation_item_id": 435,
-                            "goods_item": 189,
-                            "quantity": 2,
-                            "unit": 1
-                        }
-                    ],
-                    "donating_user": {
-                        "id": 282,
-                        "first_name": "Venky R",
-                        "email": "venky@gmail.com",
-                        "country_code": 1,
-                        "dob": "2017-10-19",
-                        "mobile": "8110803987",
-                        "role": 2,
-                        "is_mobile_verified": false,
-                        "is_email_verified": true,
-                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
-                        "profile_video_exists": true
-                    },
-                    "promised_date": "2017-11-18T10:28:47.625000Z",
-                    "posted_date": "2017-11-10T04:58:41.001500Z",
-                    "delivered_date": "2017-11-10T05:00:10.091823Z",
-                    "received_by": "Rahul",
-                    "is_volunteer_required": false,
-                    "is_donation_completed": true,
-                    "is_thank_you_video_posted": false,
-                    "pickup_address": null
-                },
-                {
-                    "donation_id": 454,
-                    "donation_item_list": [
-                        {
-                            "donation_item_id": 436,
-                            "goods_item": 189,
-                            "quantity": 3,
-                            "unit": 1
-                        }
-                    ],
-                    "donating_user": {
-                        "id": 282,
-                        "first_name": "Venky R",
-                        "email": "venky@gmail.com",
-                        "country_code": 1,
-                        "dob": "2017-10-19",
-                        "mobile": "8110803987",
-                        "role": 2,
-                        "is_mobile_verified": false,
-                        "is_email_verified": true,
-                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
-                        "profile_video_exists": true
-                    },
-                    "promised_date": "2017-11-25T10:31:53.381000Z",
-                    "posted_date": "2017-11-10T05:01:45.713120Z",
-                    "delivered_date": "2017-11-10T05:07:21.856428Z",
-                    "received_by": "Rahul",
-                    "is_volunteer_required": false,
-                    "is_donation_completed": true,
-                    "is_thank_you_video_posted": false,
-                    "pickup_address": null
-                },
-                {
-                    "donation_id": 455,
-                    "donation_item_list": [
-                        {
-                            "donation_item_id": 437,
-                            "goods_item": 189,
-                            "quantity": 3,
-                            "unit": 1
-                        }
-                    ],
-                    "donating_user": {
-                        "id": 282,
-                        "first_name": "Venky R",
-                        "email": "venky@gmail.com",
-                        "country_code": 1,
-                        "dob": "2017-10-19",
-                        "mobile": "8110803987",
-                        "role": 2,
-                        "is_mobile_verified": false,
-                        "is_email_verified": true,
-                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
-                        "profile_video_exists": true
-                    },
-                    "promised_date": "2017-11-25T10:32:11.564900Z",
-                    "posted_date": "2017-11-10T05:02:04.056177Z",
-                    "delivered_date": "2017-11-14T13:24:56.159325Z",
-                    "received_by": "Rahul",
-                    "is_volunteer_required": false,
-                    "is_donation_completed": true,
-                    "is_thank_you_video_posted": false,
-                    "pickup_address": null
-                },
-                {
-                    "donation_id": 456,
-                    "donation_item_list": [
-                        {
-                            "donation_item_id": 438,
-                            "goods_item": 189,
-                            "quantity": 1,
-                            "unit": 1
-                        }
-                    ],
-                    "donating_user": {
-                        "id": 282,
-                        "first_name": "Venky R",
-                        "email": "venky@gmail.com",
-                        "country_code": 1,
-                        "dob": "2017-10-19",
-                        "mobile": "8110803987",
-                        "role": 2,
-                        "is_mobile_verified": false,
-                        "is_email_verified": true,
-                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/user_profile_picture/venky_GkQKO0v-thumbnail-200x200-70.jpg",
-                        "profile_video_exists": true
-                    },
-                    "promised_date": "2017-11-25T10:32:30.379000Z",
-                    "posted_date": "2017-11-10T05:02:22.883574Z",
-                    "delivered_date": "2017-11-10T05:09:18.383209Z",
-                    "received_by": "Rahul",
-                    "is_volunteer_required": false,
-                    "is_donation_completed": true,
-                    "is_thank_you_video_posted": false,
-                    "pickup_address": null
-                },
-                {
-                    "donation_id": 458,
-                    "donation_item_list": [
-                        {
-                            "donation_item_id": 440,
-                            "goods_item": 189,
-                            "quantity": 7,
-                            "unit": 1
-                        }
-                    ],
-                    "donating_user": {
-                        "id": 326,
-                        "first_name": "Venkatesh",
-                        "email": "ramvenky@gmail.com",
-                        "country_code": 1,
-                        "dob": null,
-                        "mobile": "9500065365",
-                        "role": 2,
-                        "is_mobile_verified": false,
-                        "is_email_verified": true,
-                        "user_profile_picture": "https://s3.amazonaws.com/appdev.s3.vuram.com/user_profile_picture/no_img.png",
-                        "profile_video_exists": true
-                    },
-                    "promised_date": "2017-11-13T09:24:57.929000Z",
-                    "posted_date": "2017-11-12T03:54:49.195847Z",
-                    "delivered_date": "2017-11-14T05:18:17.627833Z",
-                    "received_by": "Rahul",
-                    "is_volunteer_required": false,
-                    "is_donation_completed": true,
-                    "is_thank_you_video_posted": false,
-                    "pickup_address": null
-                }
-            ],
-            "is_goods_satisfied": false,
-            "request_type": 1,
-            "posted_date": "2017-11-03T11:12:41.593339Z",
-            "deadline": "2017-11-25T16:42:00Z",
-            "main_item": 3,
-            "main_item_image": "https://s3.amazonaws.com/appdev.s3.vuram.com/__sized__/main_item_icon/Groceries-thumbnail-142x200-70.jpg"
-        }`;
-
 		function getGoodsItemDetails(data) {
 			var t = $.parseJSON(data)['goods_item_list']
-			//  var t =data['results'];
 			$('.loader').hide();
 			$.each(t, function(key, value) {
-				console.log(value)
 				createGoodsItemDetailCard(value);
-
 			});
 		}
-		getGoodsItemDetails(goodsDetail);
+		
+          $.getJSON("http://vuramdevdb.vuram.com:8000/humane/goodsDetail/161/?isweb=true&callback=?", function(data) {
+            getGoodsItemDetails(data)
+        });
 	});
 </script>
 
