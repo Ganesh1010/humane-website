@@ -32,8 +32,16 @@
 		}
 
 		$.getJSON("http://vuramdevdb.vuram.com:8000/humane/serviceInterestedDetail/?isweb=true&callback=?", function(data) {
-			loadServiceInterestExpressedDetails(data);
-		});
+
+			}).done(function(data) {
+				loadServiceInterestExpressedDetails(data);
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("particular goods item page load complete");
+			});
 
 	});
 

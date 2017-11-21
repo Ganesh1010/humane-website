@@ -183,7 +183,7 @@
 		
           $.getJSON("http://vuramdevdb.vuram.com:8000/humane/goodsDetail/161/?isweb=true&callback=?", function(data) {
             getGoodsItemDetails(data)
-        });
+        }).done(function(data) { getGoodsItemDetails(data) }) .fail(function() { console.log("error"); }) .always(function() { console.log("particular goods item page load complete"); });
 	});
 </script>
 

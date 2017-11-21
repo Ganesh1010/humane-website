@@ -31,8 +31,10 @@
 
 		<div class="row">
 
-			<div id="user-service-interest-expressed-card"><div class="loader"></div></div>
-		
+			<div id="user-service-interest-expressed-card">
+				<div class="loader"></div>
+			</div>
+
 		</div>
 	</div>
 </body>
@@ -60,12 +62,30 @@
 		}
 
 		$.getJSON("http://vuramdevdb.vuram.com:8000/humane/serviceInterestedDetail/?isweb=true&callback=?", function(data) {
-			loadUserServiceInterestedDetails(data);
-		});
+
+			}).done(function(data) {
+				loadUserServiceInterestedDetails(data);
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("particular goods item page load complete");
+			});
+
 
 		$.getJSON("http://vuramdevdb.vuram.com:8000/humane/donationDetail/?isweb=true&callback=?", function(data) {
-			getPromisedDonationDetails(data);
-		});
+
+			}).done(function(data) {
+				getPromisedDonationDetails(data);
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("particular goods item page load complete");
+			});
+
 
 
 
