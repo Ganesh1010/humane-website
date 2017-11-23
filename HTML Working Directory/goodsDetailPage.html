@@ -61,7 +61,7 @@
 			<div class="loader"></div>
 		</div>
 		<br>
-		<div type="button" class=" btn btn-success container col-md-1" style="margin-top: 10px;" data-toggle="modal" data-target="#donate-modal"> Donate </div>
+		<div type="button" class=" btn btn-success container col-md-1" style="margin-top: 10px;" data-toggle="modal" data-target="#donate-modal" id="donation-detail"> Donate </div>
 		<div class="modal fade" id="donate-modal" role="dialog">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -72,12 +72,12 @@
 					<div class="modal-body">
 						<div class="container">
 							<div class="col-md-9">
-								<div id="user-detail-card">
+								<div class="card" id="user-detail-card">
 									<h3>Venky</h3>
 									<hr>
 									<h5>venky@gmail.com</h5>
 								</div>
-								<div  id="user-selected-date">
+								<div class="card" id="user-selected-date">
 									<form class="form-horizontal padding">
 										<h4 class="text-center">Your Contribution List</h4>
 										<table class="table table-responsive table-bordered">
@@ -88,24 +88,9 @@
 													<th>Quantity</th>
 												</tr>
 											</thead>
-											<tbody>
-												<tr>
-													<td>Rice</td>
-													<td>Basmati</td>
-													<td>2</td>
-												</tr>
-												<tr>
-													<td>Wheat</td>
-													<td>--</td>
-													<td>5</td>
-												</tr>
-												<tr>
-													<td>Pulses</td>
-													<td>Dry beans</td>
-													<td>2</td>
-												</tr>
-											</tbody>
+											<tbody id="contribution-list"></tbody>
 										</table>
+
 										<div class="form-group ">
 											<label class="control-label " for="donation-promised-date">When do you plan to donate?</label>
 											<div class="input-group date" id="donation-promised-date">
@@ -122,7 +107,6 @@
 														autoclose: true
 													});
 												});
-
 											</script>
 										</div>
 										<div class="form-group">
@@ -158,12 +142,14 @@
 </body>
 <script type="text/javascript">
 	$(document).ready(function() {
+		var goodsItemList;
+
 		function getGoodsItemDetails(data) {
-			var goodsItemList = $.parseJSON(data)['goods_item_list']
+			goodsItemList = $.parseJSON(data)['goods_item_list']
 			var donationList = $.parseJSON(data)['donation_list']
 
 			$.each(goodsItemList, function(key, value) {
-				createGoodsItemDetailCard(value);
+				createGoodsItemDetailCard(donationList, value);
 			});
 
 			$('.loader').hide();
@@ -189,8 +175,12 @@
 		}).always(function() {
 			console.log("particular goods item page load complete");
 		});
-	});
 
+		document.getElementById("donation-detail").onclick = function() {
+			getDonatedItemDetails(goodsItemList)
+		};
+
+	});
 </script>
 
 </html>
