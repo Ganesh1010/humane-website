@@ -134,6 +134,16 @@ function create_single_goods_card(item) {
 	donateButton.classList.add("donate-button");
 	donateButton.innerHTML = "Donate";
 
+	goodsCardOuterDiv.addEventListener('click', function () {
+		var id = item.goods_id;
+		console.log("on click card", id);
+
+		//window.location.href = "goodsDetailPage.html";
+		sessionStorage.setItem("goodsId", id);
+		//window.open("result.html","_blank");
+		window.open('goodsDetailPage.html');
+	});
+
 	goodsPanelBody.appendChild(mainItemIcon);
 	goodsPanelBody.appendChild(orgName);
 	goodsPanelBody.appendChild(orgCity);
