@@ -12,13 +12,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 	<script src="JS/humane.js"></script>
 	<link rel="stylesheet" href="CSS/humane.css">
-
-
 	<style>
 		.green-tick {
 			color: lawngreen;
 			padding-right: 2%;
-
 		}
 
 		.size {
@@ -26,42 +23,40 @@
 			height: 150px;
 		}
 
-
-
 		.img-box {
 			justify-content: center background: rgba(122, 130, 136, 0.2);
 		}
 
-		
 	</style>
 </head>
 
 <body>
 	<div class=" container ">
-		
-			<div class="col-md-4">
-				
-					<h2>Organisation Name</h2>
-					<p>Organisation Address</p>
-					<p>Organisation Contact Number</p>
-					<p><span class="glyphicon glyphicon-ok green-tick">
-                        </span>Verified
-					</p>
-				
+		<div class="col-md-4">
+			<h2>
+				<p id="org-name"></p>
+			</h2>
+			<p id="org-address"></p>
+			<p id="org-mobile"></p>
+			<p><span class="glyphicon glyphicon-ok green-tick"></span>Verified</p>
+		</div>
+		<div class="col-md-4 ">
+			<div class="img-box">
+				<img id="org-logo" class="size  thumbnail img-responsive" alt="organisation logo">
 			</div>
-			<div class="col-md-4 ">
-				<div class="img-box">
-					<img src="Images/referorg.png" class="size  thumbnail img-responsive" alt="organisation logo">
-				</div>
-			</div>
-	
-			<div id="goods-item-card">
-                <div class="loader"></div>
-			</div>
-		<br>
-		<div type="button" class=" btn btn-success " style="width=50px;" data-toggle="modal" data-target="#donate-modal"> Donate </div>
-		
+		</div>
 
+		<div class="container" style="margin-top: 50px;">
+			<p>Received %</p>
+			<div id="promised-donation-percentage" class="col-md-4">
+			</div>
+		</div>
+
+		<div id="goods-item-card" style="margin-top: 15px;">
+			<div class="loader"></div>
+		</div>
+		<br>
+		<div type="button" class=" btn btn-success container col-md-1" style="margin-top: 10px;" data-toggle="modal" data-target="#donate-modal"> Donate </div>
 		<div class="modal fade" id="donate-modal" role="dialog">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -77,10 +72,8 @@
 									<hr>
 									<h5>venky@gmail.com</h5>
 								</div>
-
 								<div class="card" id="user-selected-date">
 									<form class="form-horizontal padding">
-
 										<h4 class="text-center">Your Contribution List</h4>
 										<table class="table table-responsive table-bordered">
 											<thead>
@@ -88,7 +81,6 @@
 													<th>Sub Category One</th>
 													<th>Sub Category Two</th>
 													<th>Quantity</th>
-
 												</tr>
 											</thead>
 											<tbody>
@@ -96,7 +88,6 @@
 													<td>Rice</td>
 													<td>Basmati</td>
 													<td>2</td>
-
 												</tr>
 												<tr>
 													<td>Wheat</td>
@@ -112,14 +103,12 @@
 										</table>
 										<div class="form-group ">
 											<label class="control-label " for="donation-promised-date">When do you plan to donate?</label>
-
 											<div class="input-group date" id="donation-promised-date">
 												<input type="text" class="form-control " placeholder="Select date" />
 												<span class="input-group-addon">
-                                                     <span class="glyphicon glyphicon-calendar"></span>
+                                       <span class="glyphicon glyphicon-calendar"></span>
 												</span>
 											</div>
-
 											<script type="text/javascript">
 												$(function() {
 													$('#donation-promised-date').datepicker({
@@ -128,35 +117,26 @@
 														autoclose: true
 													});
 												});
+
 											</script>
 										</div>
-
 										<div class="form-group">
-
 											<div class="checkbox text-center">
 												<label class="control-label ">
-                                  <input type="checkbox"  data-toggle="collapse" data-target="#user-address"  />Do you need a volunteer to pick up items and deliver on your behalf?</label>
-
+                                       <input type="checkbox"  data-toggle="collapse" data-target="#user-address"  />Do you need a volunteer to pick up items and deliver on your behalf?</label>
 											</div>
 										</div>
-
-
 										<div id="user-address" class="collapse">
 											<div class="form-group">
 												<label class="control-label " for="deadline-time">Required time:</label>
-
 												<input type="time" class="form-control" id="deadline-time" placeholder="Set your time">
 											</div>
-
 											<div class="form-group">
 												<label class="control-label " for="donation-promised-time">Address</label>
 												<textarea class="form-control" rows="4" id="address"></textarea>
 											</div>
-
 											<button type="button" class="btn btn-success center-block"><span class ="glyphicon glyphicon-map-marker"></span> Use My Current Location</button>
-
 										</div>
-
 									</form>
 								</div>
 							</div>
@@ -174,17 +154,38 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		function getGoodsItemDetails(data) {
-			var t = $.parseJSON(data)['goods_item_list']
-			$('.loader').hide();
-			$.each(t, function(key, value) {
+			var goodsItemList = $.parseJSON(data)['goods_item_list']
+			var donationList = $.parseJSON(data)['donation_list']
+			
+			$.each(goodsItemList, function(key, value) {
 				createGoodsItemDetailCard(value);
 			});
+
+			$('.loader').hide();
+
+			var organisationDetail = $.parseJSON(data)['organisation_detail']
+			document.getElementById("org-name").innerHTML = organisationDetail.org_name;
+			document.getElementById("org-address").innerHTML = organisationDetail.city + " - " + organisationDetail.postal_code;
+			document.getElementById("org-mobile").innerHTML = organisationDetail.mobile;
+			console.log("org_logo " + organisationDetail.org_logo);
+			document.getElementById("org-logo").setAttribute("src", organisationDetail.org_logo);
+
+			var promisedPercentage = promisedDonationProgressBar(getPromisedPercentage(goodsItemList, donationList));
+			document.getElementById("promised-donation-percentage").append(promisedPercentage);
+
 		}
-		
-          $.getJSON("http://vuramdevdb.vuram.com:8000/humane/goodsDetail/161/?isweb=true&callback=?", function(data) {
-            getGoodsItemDetails(data)
-        });
+
+		$.getJSON("http://vuramdevdb.vuram.com:8000/humane/goodsDetail/161/?isweb=true&callback=?", function(data) {
+
+		}).done(function(data) {
+			getGoodsItemDetails(data)
+		}).fail(function() {
+			console.log("error");
+		}).always(function() {
+			console.log("particular goods item page load complete");
+		});
 	});
+
 </script>
 
 </html>

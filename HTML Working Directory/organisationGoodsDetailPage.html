@@ -2,98 +2,104 @@
 <html lang="en">
 
 <head>
-    <title>Humane - Organisation Goods Detail Page</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="CSS/humane.css">
-    <script src="JS/humane.js"></script>
+	<title>Humane - Organisation Goods Detail Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="CSS/humane.css">
+	<script src="JS/humane.js"></script>
 
 
-    <style>
-        .card {
-            margin-top: 1%;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-            transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-        }
+	<style>
+		.card {
+			margin-top: 1%;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+			transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+		}
 
-        .close-button-padding {
-            margin-bottom: 3%;
-        }
+		.close-button-padding {
+			margin-bottom: 3%;
+		}
 
-    </style>
+	</style>
 </head>
 
 <body>
 
-    <div class="container">
+	<div class="container">
 
-        <div class="card col-md-6">
+		<div class="card col-md-6">
 
-            <div class="media ">
-                <div class="media-left media-middle">
-                    <img id="main-item-image" class="media-object thumbnail" style="width:80px">
-                </div>
-                <div class="media-body ">
-                    <br>
-                    <h4 class="media-heading text-center" id="main-item-name"></h4>
+			<div class="media ">
+				<div class="media-left media-middle">
+					<img id="main-item-image" class="media-object thumbnail" style="width:80px">
+				</div>
+				<div class="media-body ">
+					<br>
+					<h4 class="media-heading text-center" id="main-item-name"></h4>
 
-                    <table class="table table-padding table-hover table-responsive">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-3 text-center">Posted Date</td>
-                                <td class=" col-md-3 text-center ">DeadLine date</td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-3 text-center"><strong id="postedDate"></strong></td>
-                                <td class=" col-md-3 text-center "><strong id="deadline"></strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
+					<table class="table table-padding table-hover table-responsive">
+						<tbody>
+							<tr>
+								<td class="col-md-3 text-center">Posted Date</td>
+								<td class=" col-md-3 text-center ">DeadLine date</td>
+							</tr>
+							<tr>
+								<td class="col-md-3 text-center"><strong id="postedDate"></strong></td>
+								<td class=" col-md-3 text-center "><strong id="deadline"></strong></td>
+							</tr>
+						</tbody>
+					</table>
 
-                </div>
-            </div>
-            <hr>
-            <h3>Needed Items:</h3>
-            <div id="itemsRequired">
-                <div class="loader"></div>
-            </div>
-        </div>
+				</div>
+			</div>
+			<hr>
+			<h3>Needed Items:</h3>
+			<div id="itemsRequired">
+				<div class="loader"></div>
+			</div>
+		</div>
 
-        <div class=" col-md-6 card">
-            <h3>Donation(s)</h3>
-            <hr>
-            <div id="donation-detail">
-                <div class="loader"></div>
-            </div>
-        </div>
-    </div>
+		<div class=" col-md-6 card">
+			<h3>Donation(s)</h3>
+			<hr>
+			<div id="donation-detail">
+				<div class="loader"></div>
+			</div>
+		</div>
+	</div>
 
 </body>
 <script type="text/javascript">
-    $(document).ready(function() {
-        function getDonationItemDetails(data) {
-            var t = $.parseJSON(data)
-            create_donation_item_details(t);
-        }
+	$(document).ready(function() {
+		function getDonationItemDetails(data) {
+			var t = $.parseJSON(data)
+			create_donation_item_details(t);
+		}
 
-        function getDonatingUserDetail(data) {
-            var t = $.parseJSON(data)['donation_list']
-            $('.loader').hide();
-            $.each(t, function(key, value) {
-                createDonationDetails(value);
+		function getDonatingUserDetail(data) {
+			var t = $.parseJSON(data)['donation_list']
+			$('.loader').hide();
+			$.each(t, function(key, value) {
+				createDonationDetails(value);
 
-            });
-        }
+			});
+		}
 
-        $.getJSON("http://vuramdevdb.vuram.com:8000/humane/goodsDetail/161/?isweb=true&callback=?", function(data) {
-            getDonationItemDetails(data);
-            getDonatingUserDetail(data);
-        });
+		$.getJSON("http://vuramdevdb.vuram.com:8000/humane/goodsDetail/161/?isweb=true&callback=?", function(data) {}).done(function(data) {
+				getDonationItemDetails(data);
+				getDonatingUserDetail(data);
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("particular goods item page load complete");
+			});
 
-    });
+	});
 
 </script>
 

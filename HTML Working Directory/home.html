@@ -1,70 +1,333 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="CSS/humane.css">
-    <script src="JS/humane.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="CSS/humane.css">
+	<script src="JS/humane.js"></script>
+	<style>
+		.progress-bar {
+			height: auto
+		}
+
+		.loader {
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			z-index: 9999;
+			background: url('https://loading.io/assets/img/landing/curved-bars.svg') 50% 50% no-repeat rgb(249, 249, 249);
+			opacity: .8;
+		}
+	</style>
 </head>
 
 <body>
-    <div id="main">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel with-nav-tabs panel-info">
-                        <div class="panel-heading">
-                            <ul class="nav nav-tabs">
-                                <li class="active col-sm-2"><a href="#goodstab" data-toggle="tab">Goods</a></li>
-                                <li class="col-sm-2"><a href="#servicetab" data-toggle="tab">Services</a></li>
-                            </ul>
-                        </div>
+	<div id="main">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel with-nav-tabs panel-info">
+						<div class="panel-heading">
+							<ul class="nav nav-tabs">
+								<li class="active col-sm-2"><a href="#goodstab" data-toggle="tab" id="goods-anchor">Goods</a></li>
+								<li class="col-sm-2"><a href="#servicetab" data-toggle="tab" id="service-anchor">Services</a></li>
+							</ul>
+						</div>
+						<div class="panel-body">
+							<div class="tab-content">
 
-                        <div class="panel-body">
-                            <div class="tab-content">
-                                <div class="tab-pane fade in active" id="goodstab">
-                                    <div class="loader"></div>
-                                </div>
-                                <div class="tab-pane fade " id="servicetab">
-                                    <div class="loader"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+								<div class="tab-pane fade in active" id="goodstab">
+									<div class="loader" id="goods-loader"></div>
+								</div>
+								<div id="goods-pagination"></div>
+
+								<div class="tab-pane fade " id="servicetab">
+									<div class="loader" id="service-loader"></div>
+								</div>
+								<div id="service-pagination"></div>
+
+							</div>
+						</div>
+
+					</div>
+
+					<div class="modal fade" id="myModal" role="dialog">
+						<div class="modal-dialog">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Need Details</h4>
+								</div>
+
+								<div class="modal-body">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-6">
+												<table class="table table-hover">
+													<thead>
+														<tr>
+															<th>Product</th>
+															<th class="text-center">Required (Kg)</th>
+															<th class="text-center">Received (Kg)</th>
+															<th class="text-center">Your Contribution (Kg)</th>
+															<th> </th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td class="col-md-6">
+																<div class="media">
+																	<a class="thumbnail pull-left" href="#"> <img class="media-object" src="images/rice.jpg" style="width:100%; height:100%;"> </a>
+																	<div class="media-body">
+																		<h4 class="media-heading"><a href="#">Product name</a></h4>
+																		<h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+																		<span>Status: </span><span class="text-success"><strong>10+ Promised</strong></span>
+																	</div>
+																</div>
+															</td>
+															<td class="col-sm-1 col-md-1 text-center"><strong>10</strong></td>
+															<td class="col-sm-1 col-md-1 text-center"><strong>5</strong></td>
+															<td class="col-sm-1 col-md-1" style="text-align: center">
+																<div class="input-group">
+																	<span class="input-group-btn">
+											  <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
+												<span class="glyphicon glyphicon-minus"></span>
+																	</button>
+																	</span>
+																	<input type="text" name="quant[2]" class="form-control input-number" value="0" min="1" max="100">
+																	<span class="input-group-btn">
+											  <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+												  <span class="glyphicon glyphicon-plus"></span>
+																	</button>
+																	</span>
+																</div>
+															</td>
+
+														</tr>
+														<tr>
+															<td class="col-md-6">
+																<div class="media">
+																	<a class="thumbnail pull-left" href="#"> <img class="media-object" src="images/pulses.jpg" style="panel-heading"> </a>
+																	<div class="media-body">
+																		<h4 class="media-heading"><a href="#">Rice</a></h4>
+																		<h5 class="media-heading"> by <a href="#">Vuram</a></h5>
+																		<span>Status: </span><span class="text-warning"><strong>No Promises</strong></span>
+																	</div>
+																</div>
+															</td>
+															<td class="col-sm-1 col-md-1 text-center"><strong>10</strong></td>
+															<td class="col-sm-1 col-md-1 text-center"><strong>5</strong></td>
+															<td class="col-sm-1 col-md-1" style="text-align: center">
+																<div class="input-group">
+																	<span class="input-group-btn">
+											  <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
+												<span class="glyphicon glyphicon-minus"></span>
+																	</button>
+																	</span>
+																	<input type="text" name="quant[2]" class="form-control input-number" value="0" min="1" max="100">
+																	<span class="input-group-btn">
+											  <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+												  <span class="glyphicon glyphicon-plus"></span>
+																	</button>
+																	</span>
+																</div>
+															</td>
+
+														</tr>
+														<tr>
+															<td>   </td>
+															<td>   </td>
+															<td>
+																<button type="button" class="btn btn-default" data-dismiss="modal">
+										<span class="glyphicon glyphicon-shopping-cart"></span> Cancel
+									</button></td>
+															<td>
+																<button type="button" class="btn btn-success" data-dismiss="modal">
+										Donate <span class="glyphicon glyphicon-play"></span>
+									</button></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+					<div class="modal fade" id="New_Goods_Modal" role="dialog">
+						<div class="modal-dialog">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+
+								<!-- Modal header-->
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">New Need</h4>
+								</div>
+
+								<!-- Modal Body-->
+								<div class="modal-body">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-6">
+												<form>
+													<table>
+														<thead>
+															<tr>
+																<td>Main Item: </td>
+																<td class="text-center"></td>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td class="col-sm-1 col-md-1 text-center">
+																	<select class="form-control" id="count">
+																<option>Select Main Item</option>
+																<option>Cloth</option>
+																<option>Groceries</option>
+																<option>Stationaries</option>
+															</select>
+																</td>
+																<td class="col-sm-1 col-md-1 text-center">
+																	<button class="btn btn-primary">Add New Item</buuton>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<br><br>
+											<table class="table table-hover">
+												<thead>
+													<tr>
+														<th>Sub Item</th>
+														<th class="text-center">Quantity (Kg)</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td class="col-sm-1 col-md-1 text-center">
+															<select class="form-control" id="count">
+																<option>Select Sub Item</option>
+																<option>Rice</option>
+																<option>Wheat</option>
+																<option>Sugar</option>
+																<option>Salt</option>
+																<option>Pulses</option>
+															</select>
+														</td>
+														<td class="col-sm-1 col-md-1 text-center">
+															<div class="input-group">
+																<span class="input-group-btn">
+																	<button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
+																		<span class="glyphicon glyphicon-minus"></span>
+																	</button>
+																	</span>
+																	<input type="text" id="quantity1" name="quantity1" class="form-control input-number" value="0" min="1" max="100">
+																	<span class="input-group-btn">
+																	<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+																		<span class="glyphicon glyphicon-plus"></span>
+																	</button>
+																	</span>
+											</div>
+											</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td class="pull-right">
+													<button type="button" class="btn btn-default" data-dismiss="modal">
+															<span class="glyphicon glyphicon-shopping-cart"></span> Cancel
+														</button>
+													<button type="button" class="btn btn-success" data-dismiss="modal">
+															Request <span class="glyphicon glyphicon-play"></span>
+														</button></td>
+											</tr>
+											</tbody>
+											</table>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Modal footer-->
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	</div>
 </body>
 <script type="text/javascript">
-    $(document).ready(function() {
-        function getGoodsdetail(data) {
-            var t = $.parseJSON(data)['results']
-            $('.loader').hide();
-            $.each(t, function(key, value) {
-                create_single_goods_card(value);
-            });
-        }
+	$(document).ready(function() {
+		var firstServiceLoad = true;
+		var goodsDetailURL = "http://vuramdevdb.vuram.com:8000/humane/goodsHistoryDetail/?isweb=True&callback=?";
+		var serviceDetailURL = "http://vuramdevdb.vuram.com:8000/humane/serviceHistoryDetail/?isweb=True&callback=?";
 
-        function getServiceDetail(data) {
-            var t = $.parseJSON(data)['results']
-            $('.loader').hide();
-            $.each(t, function(key, value) {
-                create_single_service_card(value);
-            });
-        }
+		loadGoodsDetail(goodsDetailURL);
 
-        $.getJSON("http://vuramdevdb.vuram.com:8000/humane/goodsDetail/?isweb=True&callback=?", function(data) {
-            getGoodsdetail(data)
-        });
+		$("#service-anchor").click(function(e) {
+			if(firstServiceLoad){
+				loadServiceDetail(serviceDetailURL);
+				firstServiceLoad=false;
+			}
+			$('#service-pagination').show();
+			$('#goods-pagination').hide();
 
-        $.getJSON("http://vuramdevdb.vuram.com:8000/humane/serviceDetail/?isweb=True&callback=?", function(data) {
-            getServiceDetail(data)
-        });
-    });
+		});
+		
+		$("#goods-anchor").click(function(e) {
+			$('#service-pagination').hide();
+			$('#goods-pagination').show();
+		});
 
+
+		function loadGoodsDetail(goodsDetailURL) {
+			$.getJSON(goodsDetailURL, function(data) {})
+				.done(function(data) {
+					getGoodsdetail(data);
+					var count = $.parseJSON(data)['count']
+					console.log("goods count " + count)
+					if (count > 10)
+						createPagination(count, goodsDetailURL, "goods-pagination", "#goodstab", 1);
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("goods detail load complete");
+				});
+		}
+
+		function loadServiceDetail(serviceDetailURL) {
+			$.getJSON(serviceDetailURL, function(data) {})
+				.done(function(data) {
+					getServiceDetail(data);
+					var count = $.parseJSON(data)['count']
+					console.log("service count " + count)
+					if (count > 10)
+						createPagination(count, serviceDetailURL, "service-pagination", "#servicetab", 2);
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("service detail load complete");
+				});
+		}
+	});
 </script>
 
 </html>

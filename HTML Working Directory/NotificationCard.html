@@ -1,42 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Humane - Notification</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/humane.css">
 
-    <script src="js/humane.js"></script>
+<head>
+	<title>Humane - Notification</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="CSS/humane.css">
+
+	<script src="js/humane.js"></script>
 
 </head>
 
 <body>
 
-    <div id="notification-card-id">
-    <div class="loader"></div>
-    </div>
+	<div id="notification-card-id">
+		<div class="loader"></div>
+	</div>
 </body>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        function loadNotificationDetails(data) {
-            var t = $.parseJSON(data)['results']
-            $('.loader').hide();
-            $.each(t, function(key, value) {
-                createNotificationCard(value);
+	$(document).ready(function() {
+		function loadNotificationDetails(data) {
+			var t = $.parseJSON(data)['results']
+			$('.loader').hide();
+			$.each(t, function(key, value) {
+				createNotificationCard(value);
 
-            });
-        }
+			});
+		}
 
-        $.getJSON("http://vuramdevdb.vuram.com:8000/humane/getNotificationDetails/?isweb=true&callback=?", function(data) {
-            loadNotificationDetails(data)
-        });
+		$.getJSON("http://vuramdevdb.vuram.com:8000/humane/getNotificationDetails/?isweb=true&callback=?", function(data) {
+
+			}).done(function(data) {
+				loadNotificationDetails(data)
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("particular goods item page load complete");
+			});
 
 
-    });
+	});
 
 </script>
 

@@ -115,10 +115,9 @@ function create_single_goods_card(item) {
 	orgName.innerHTML = item.organisation_detail.org_name;
 
 	var orgCity = document.createElement('h6');
-	orgCity.innerHTML = item.organisation_detail.city + " - 600001";
+	orgCity.innerHTML = item.organisation_detail.city + " - "+item.organisation_detail.postal_code;
 
-	var promisedDonationProgressValue = promisedDonationProgressBar(90); // indicates the promised donation ProgressBar
-
+	var promisedDonationProgressValue = promisedDonationProgressBar(getPromisedPercentage(item.goods_item_list,item.donation_list))
 	var donateButton = document.createElement("button");
 	donateButton.classList.add('btn');
 	donateButton.classList.add('btn-donor');
@@ -165,17 +164,20 @@ function create_single_service_card(service) {
 	orgName.innerHTML = service.service_org_detail.org_name;
 
 	var orgCity = document.createElement('h6');
-	orgCity.innerHTML = service.service_org_detail.city + " - 600001";
+	orgCity.innerHTML = service.service_org_detail.city + " - "+service.service_org_detail.postal_code;
 
 	var serviceInterestedUserCount = document.createElement("h5");
-	serviceInterestedUserCount.innerHTML = "No. of People Interested : " + 5;
+	var count = service.service_interest_expressed.length;
+	if(count==0)
+		count="-";
+	serviceInterestedUserCount.innerHTML = "No. of People Interested : " + count ;
 
 	var serveButton = document.createElement("button");
 	serveButton.classList.add('btn');
 	serveButton.classList.add('btn-donor');
 	serveButton.classList.add('pull-right');
 	serveButton.classList.add("serve-button");
-	serveButton.innerHTML = "Serve";
+	serveButton.innerHTML = "Express Interest";
 
 	servicePanelBody.appendChild(mainItemIcon);
 	servicePanelBody.appendChild(orgName);
@@ -719,8 +721,6 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 	goodsItemDetailHeader.classList.add("col-md-8");
 	goodsItemDetailHeader.classList.add("goods-detail");
 
-	goodsItemname = getHeaderText(goodsItemDetail.sub_item_category_one, 4);
-
 	var descriptipn = getText("Desc: ");
 	var desc = document.createElement("span");
 	desc.classList.add("text-success");
@@ -731,16 +731,6 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 		desctext = "No description available";
 	desc.innerHTML = desctext;
 	descriptipn.append(desc);
-
-	var receivedText = getHeaderText("Received", 5);
-	receivedText.className = "goods";
-
-	var receivedProgressValue = promisedDonationProgressBar(100);
-
-	goodsItemDetailHeader.appendChild(goodsItemname);
-	goodsItemDetailHeader.appendChild(descriptipn);
-	goodsItemDetailHeader.appendChild(receivedText);
-	goodsItemDetailHeader.appendChild(receivedProgressValue);
 
 	var quantityDiv = document.createElement("div");
 	quantityDiv.classList.add("col-md-3");
@@ -818,12 +808,11 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 
 	var itemCategory = goodsItemDetail.sub_item_category_two;
 	if (itemCategory != null)
-		itemCategory = "(" + itemCategory + ")";
+		itemCategory = " (" + itemCategory + ")";
 	else
 		itemCategory = "";
 	var itemName = getHeaderText(goodsItemDetail.sub_item_category_one + itemCategory, 4);
 	itemName.classList.add("media-heading");
-	itemName.classList.add("text-center");
 
 	var required = goodsItemDetail.quantity + " (" + goodsItemDetail.unit + ")";
 	var promised = goodsItemDetail.quantity + " (" + goodsItemDetail.unit + ")";
@@ -836,6 +825,10 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 	itemDetailTable.append(itemDetailTableBody);
 
 	var br = document.createElement("br");
+	
+	goodsItemDetailHeader.appendChild(itemName);
+	goodsItemDetailHeader.appendChild(descriptipn);
+	
 	goodsItemDetailCard.append(goodsItemDetailHeader);
 	goodsItemDetailCard.append(quantityDiv);
 	goodsItemDetailCard.append(br);
@@ -844,7 +837,6 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 	goodsItemDetailDoc.append(goodsItemDetailCard);
 
 	document.getElementById("goods-item-card").appendChild(goodsItemDetailDoc);
-
 
 }
 
@@ -1044,3 +1036,234 @@ function createPromisedDonationcard(donationDetail) {
 	document.getElementById("promised_donation").append(promisedDonationDoc);
 
 }
+
+
+function createPagination(count,urlToLoad,paginationDiv,parentDiv,pageToLoad) {
+
+	var maxPages;
+	var currentpage;
+	var page = 1;
+	var url = urlToLoad;
+
+	currentpage = page;
+
+	var paginationNav = document.createDocumentFragment();
+
+	var pagination = document.createElement("ul");
+	pagination.className = "pagination"
+
+	var previousPage = document.createElement("li");
+	previousPage.classList.add("page-item");
+	previousPage.classList.add("disabled");
+	previousPage.setAttribute("id", "previous"+paginationDiv);
+
+	var previousPageLink = document.createElement("a");
+	previousPageLink.classList.add("page-link");
+	previousPageLink.addEventListener("click", function () {
+		loadNewPage(this, "previous");
+	}, false);
+
+	var previousPageLinkSpan = document.createElement("span");
+	previousPageLinkSpan.setAttribute("aria-hidden", "true");
+	previousPageLinkSpan.innerHTML = "&laquo;";
+
+	previousPageLink.append(previousPageLinkSpan);
+	previousPage.append(previousPageLink);
+
+	pagination.append(previousPage);
+
+	while (count > 0) {
+
+		console.log("page no.", page)
+		var newPage = document.createElement("li");
+		newPage.className = "page-item";
+
+		var newPageLink = document.createElement("a");
+		newPageLink.className = "page-link"
+		newPageLink.addEventListener("click", function () {
+			loadNewPage(this, "new");
+		}, false);
+		newPageLink.innerHTML = page;
+
+		newPage.append(newPageLink);
+
+		pagination.append(newPage);
+		count = count - 10;
+		page++;
+	}
+
+	maxPages = page - 1;
+	console.log("max page " + maxPages)
+
+	var nextPage = document.createElement("li");
+	nextPage.className = "page-item";
+	nextPage.setAttribute("id", "next"+paginationDiv);
+
+	var nextPageLink = document.createElement("a");
+	nextPageLink.className = "page-link";
+	nextPageLink.addEventListener("click", function () {
+		loadNewPage(this, "next");
+	}, false);
+	var nextPageLinkSpan = document.createElement("span");
+	nextPageLinkSpan.setAttribute("aria-hidden", "true");
+	nextPageLinkSpan.innerHTML = "&raquo;";
+
+	nextPageLink.append(nextPageLinkSpan);
+	nextPage.append(nextPageLink);
+	pagination.append(nextPage);
+
+	paginationNav.appendChild(pagination);
+	
+	document.getElementById(paginationDiv).appendChild(paginationNav);
+
+
+	function loadNewPage(callingElement, toLoad) {
+
+		if (toLoad == "previous")
+			currentpage = parseInt(currentpage) - 1;
+		else if (toLoad == "next")
+			currentpage = parseInt(currentpage) + 1;
+		else if (toLoad == "new")
+			currentpage = callingElement.innerHTML;
+
+		if (parseInt(currentpage) == 1) {
+			document.getElementById("previous"+paginationDiv).classList.add("disabled");
+
+			console.log("previous is disabled in "+paginationDiv);
+		} else {
+			document.getElementById("previous"+paginationDiv).classList.remove("disabled");
+			console.log("previous is enabled in "+paginationDiv);
+		}
+
+
+		if (parseInt(currentpage) == maxPages) {
+			document.getElementById("next"+paginationDiv).classList.add("disabled");
+			console.log("next is disabled in "+paginationDiv);
+		} else {
+			document.getElementById("next"+paginationDiv).classList.remove("disabled");
+			console.log("next is enabled in "+paginationDiv);
+		}
+
+		url = urlToLoad + "&page=" + currentpage;
+		console.log("url to load " + url)
+		$(parentDiv).empty();
+		
+		loadMoreData(pageToLoad,url);
+		
+	}
+
+}
+
+function loadMoreData(pageToLoad,url)
+{
+	switch(pageToLoad){
+		case 1:
+				console.log("loading the new goods page");
+			$('#goods-loader').show();
+			$.getJSON(url, function (data) {})
+			.done(function (data) {
+				getGoodsdetail(data);
+			})
+			.fail(function () {
+				console.log("error");
+			$('.loader').hide();
+			})
+			.always(function () {
+
+			});
+			break;
+			
+		case 2:
+			console.log("loading the new service page");
+			$('#service-loader').show();
+			$.getJSON(url, function (data) {})
+			.done(function (data) {
+				getServiceDetail(data);
+			})
+			.fail(function () {
+				console.log("error");
+			$('.loader').hide();
+			})
+			.always(function () {
+
+			});
+			
+			break;
+	}
+}
+
+function getGoodsdetail(data) {
+	var t = $.parseJSON(data)['results']
+	$.each(t, function (key, value) {
+		create_single_goods_card(value);
+	});
+	$('#goods-loader').hide();
+}
+
+function getServiceDetail(data) {
+	var t = $.parseJSON(data)['results']
+	$.each(t, function (key, value) {
+		create_single_service_card(value);
+	});
+	$('#service-loader').hide();
+}
+
+function getPromisedPercentage(goodsItemList, donationlist) {
+			var promisedPercentage = 0;
+			var promisedDonationsItemQuantity = 0;
+			var requestedGoodsItemQuantity = 0;
+			var receivedQuantity = 0;
+
+			var goodsItemId;
+			$.each(goodsItemList, function(key, value) {
+
+				var totalPromisedItemQuantity = 0;
+				var totalReceivedItemQuantity = 0;
+				var goodsItemDetail = value;
+				if (goodsItemDetail != null) {
+					goodsItemId = goodsItemDetail.goods_item_id;
+					requestedGoodsItemQuantity += goodsItemDetail.quantity;
+
+					if (donationlist != null) {
+						var receivedItemQuantity = 0,
+							promisedItemQuantity = 0;
+						$.each(donationlist, function(key, value) {
+							var donationDetail = value;
+							var donationItemDetailArrayList = donationDetail.donation_item_list;
+
+							for (i = 0; i < donationItemDetailArrayList.length; i++) {
+								donationItemDetail = donationItemDetailArrayList[i];
+								if (donationItemDetail.goods_item == goodsItemId) {
+									if (donationDetail.is_donation_completed) {
+										receivedItemQuantity += donationItemDetail.quantity;
+										totalReceivedItemQuantity = receivedItemQuantity
+									} else {
+										promisedItemQuantity += donationItemDetail.quantity;
+										totalPromisedItemQuantity = promisedItemQuantity;
+									}
+								}
+							}
+						});
+					}
+					promisedDonationsItemQuantity += totalPromisedItemQuantity;
+					receivedQuantity += totalReceivedItemQuantity;
+
+//					console.log("promisedDonationsItemQuantity  " + totalPromisedItemQuantity)
+//					console.log("receivedQuantity  " + totalReceivedItemQuantity)
+				}
+
+			});
+
+//			console.log("promised quantity " + promisedDonationsItemQuantity);
+//			console.log("received quantity " + receivedQuantity);
+
+			if (requestedGoodsItemQuantity != 0) {
+				promisedPercentage = ((promisedDonationsItemQuantity + receivedQuantity) * 100) / requestedGoodsItemQuantity;
+//				console.log("promised percentage " + promisedPercentage);
+			}
+			if (promisedPercentage > 100) {
+				promisedPercentage = 100;
+			}
+
+			return parseInt(promisedPercentage);
+		}
