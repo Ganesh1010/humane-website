@@ -34,7 +34,6 @@
 		}
 
 		$.getJSON("http://vuramdevdb.vuram.com:8000/humane/donationDetail/?isweb=true&callback=?", function(data) {
-				loadPromisedDonationDetails(data);
 			}).done(function(data) {
 				loadPromisedDonationDetails(data);
 			})

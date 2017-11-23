@@ -33,24 +33,26 @@
 					<div class="panel with-nav-tabs panel-info">
 						<div class="panel-heading">
 							<ul class="nav nav-tabs">
-								<li class="active col-sm-2"><a href="#goodstab" data-toggle="tab">Goods</a></li>
-								<li class="col-sm-2"><a href="#servicetab" data-toggle="tab">Services</a></li>
+								<li class="active col-sm-2"><a href="#goodstab" data-toggle="tab" id="goods-anchor">Goods</a></li>
+								<li class="col-sm-2"><a href="#servicetab" data-toggle="tab" id="service-anchor">Services</a></li>
 							</ul>
 						</div>
 						<div class="panel-body">
 							<div class="tab-content">
+
 								<div class="tab-pane fade in active" id="goodstab">
-									<div class="loader"></div>
-
+									<div class="loader" id="goods-loader"></div>
 								</div>
+								<div id="goods-pagination"></div>
+
 								<div class="tab-pane fade " id="servicetab">
-									<div class="loader"></div>
-
+									<div class="loader" id="service-loader"></div>
 								</div>
+								<div id="service-pagination"></div>
+
 							</div>
 						</div>
 
-						<div id="goods-pagination"></div>
 					</div>
 
 					<div class="modal fade" id="myModal" role="dialog">
@@ -270,12 +272,26 @@
 </body>
 <script type="text/javascript">
 	$(document).ready(function() {
+		var firstServiceLoad = true;
 		var goodsDetailURL = "http://vuramdevdb.vuram.com:8000/humane/goodsHistoryDetail/?isweb=True&callback=?";
 		var serviceDetailURL = "http://vuramdevdb.vuram.com:8000/humane/serviceHistoryDetail/?isweb=True&callback=?";
 
-
 		loadGoodsDetail(goodsDetailURL);
-		loadServiceDetail(serviceDetailURL);
+
+		$("#service-anchor").click(function(e) {
+			if(firstServiceLoad){
+				loadServiceDetail(serviceDetailURL);
+				firstServiceLoad=false;
+			}
+			$('#service-pagination').show();
+			$('#goods-pagination').hide();
+
+		});
+		
+		$("#goods-anchor").click(function(e) {
+			$('#service-pagination').hide();
+			$('#goods-pagination').show();
+		});
 
 
 		function loadGoodsDetail(goodsDetailURL) {
@@ -285,7 +301,7 @@
 					var count = $.parseJSON(data)['count']
 					console.log("goods count " + count)
 					if (count > 10)
-						createGoodsPagination(count);
+						createPagination(count, goodsDetailURL, "goods-pagination", "#goodstab", 1);
 				})
 				.fail(function() {
 					console.log("error");
@@ -302,7 +318,7 @@
 					var count = $.parseJSON(data)['count']
 					console.log("service count " + count)
 					if (count > 10)
-						createServicePagination(count)
+						createPagination(count, serviceDetailURL, "service-pagination", "#servicetab", 2);
 				})
 				.fail(function() {
 					console.log("error");
@@ -311,145 +327,6 @@
 					console.log("service detail load complete");
 				});
 		}
-
-		function getGoodsdetail(data) {
-			var t = $.parseJSON(data)['results']
-			$('.loader').hide();
-			$.each(t, function(key, value) {
-				create_single_goods_card(value);
-
-			})
-		}
-
-		function getServiceDetail(data) {
-			var t = $.parseJSON(data)['results']
-			$('.loader').hide();
-			$.each(t, function(key, value) {
-				create_single_service_card(value);
-			});
-		}
-
-		function createGoodsPagination(count) {
-
-			var currentPage;
-			var page = 1;
-			var url = goodsDetailURL;
-			
-			currentPage=page;
-
-			var goodsPagination = document.createDocumentFragment();
-
-			var goodsNavigation = document.createElement("nav");
-
-			var pagination = document.createElement("ul");
-			pagination.className = "pagination"
-
-			var previousPage = document.createElement("li");
-			previousPage.className = "page-item";
-
-			var previousPageLink = document.createElement("a");
-			previousPageLink.className = "page-link"
-			//previousPageLink.setAttribute("href",page);
-			previousPageLink.addEventListener("click", function() {
-				loadNewGoodsPage("previous");
-			}, false);
-
-			var previousPageLinkSpan = document.createElement("span");
-			previousPageLinkSpan.setAttribute("aria-hidden", "true");
-			previousPageLinkSpan.innerHTML = "&laquo;";
-
-			previousPageLink.append(previousPageLinkSpan);
-			previousPage.append(previousPageLink);
-
-			pagination.append(previousPage);
-
-			while (count > 0) {
-
-				console.log("goods detail page no.", page)
-				var newPage = document.createElement("li");
-				newPage.className = "page-item";
-
-				var newPageLink = document.createElement("a");
-				newPageLink.className = "page-link"
-				newPageLink.setAttribute("id","newPage");
-				newPageLink.setAttribute("value",page);
-				newPageLink.addEventListener("click", function() {
-					loadNewGoodsPage("new");
-				}, false);
-				newPageLink.innerHTML = page;
-
-				newPage.append(newPageLink);
-
-				pagination.append(newPage);
-				count = count - 10;
-				page++;
-
-			}
-
-			var nextPage = document.createElement("li");
-			nextPage.className = "page-item";
-
-			var nextPageLink = document.createElement("a");
-			nextPageLink.className = "page-link";
-			//nextPageLink.setAttribute("href",page);
-			nextPageLink.addEventListener("click", function() {
-				loadNewGoodsPage("next");
-			}, false);
-			var nextPageLinkSpan = document.createElement("span");
-			nextPageLinkSpan.setAttribute("aria-hidden", "true");
-			nextPageLinkSpan.innerHTML = "&raquo;";
-
-			nextPageLink.append(nextPageLinkSpan);
-			nextPage.append(nextPageLink);
-			pagination.append(nextPage);
-
-			goodsPagination.appendChild(pagination);
-
-			document.getElementById("goods-pagination").appendChild(goodsPagination);
-
-
-			function loadNewGoodsPage(toLoad) {
-				
-				if (toLoad == "previous")
-					currentPage = parseInt(currentPage) - 1;
-				else if(toLoad == "new"){
-					currentPage = document.getElementById("newPage").getAttribute("value")
-					console.log("current page "+currentPage)
-				}
-				else if (toLoad == "next")
-					currentPage = parseInt(currentPage) + 1;
-
-				
-				url = goodsDetailURL + "&page=" + currentPage;
-				console.log("url to load " + url)
-				//console.log("current page "+currentPage)
-				$("#goodstab").empty();
-				$.getJSON(url, function(data) {
-					})
-					.done(function(data) {
-						getGoodsdetail(data);
-					})
-					.fail(function() {
-						console.log("error");
-					})
-					.always(function() {
-						console.log("goods detail particular page load complete");
-					});
-			}
-
-		}
-
-		function createServicePagination(count) {
-			var url = ""
-			var page = 1;
-			while (count >= 10) {
-				page++;
-				count = count - 10;
-				url = serviceDetailURL + "&page=" + page;
-				console.log("serviceUrl " + url)
-			}
-		}
-
 	});
 </script>
 
