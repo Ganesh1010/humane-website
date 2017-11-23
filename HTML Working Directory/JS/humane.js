@@ -137,6 +137,7 @@ function create_single_goods_card(item) {
 
 	var goodsCardOuterDiv = document.createElement("div");
 	goodsCardOuterDiv.className = "col-sm-3";
+	goodsCardOuterDiv.setAttribute('id', item.goods_id);
 
 	var goodsCardParentDiv = document.createElement("div");
 	goodsCardParentDiv.classList.add('panel');
@@ -173,12 +174,15 @@ function create_single_goods_card(item) {
 
 	goodsCardOuterDiv.addEventListener('click', function () {
 		var id = item.goods_id;
+		var link = "goodsDetailPage.html";
 		console.log("on click card", id);
+		
+		 link +=  "?id=" + $(this).attr('id');
+		console.log("url", link);
+		window.location.href = link;
+		
+		
 
-		//window.location.href = "goodsDetailPage.html";
-		sessionStorage.setItem("goodsId", id);
-		//window.open("result.html","_blank");
-		window.open('goodsDetailPage.html');
 	});
 
 	goodsPanelBody.appendChild(mainItemIcon);
@@ -433,7 +437,7 @@ function create_donation_item_details(item, donationlist) {
 		var itemName = getHeaderText(goodsItemList[i].sub_item_category_one + itemCategory, 4);
 		itemName.classList.add("media-heading");
 		itemName.classList.add("text-center");
-		
+
 
 		var required = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
 		var promised = getPromisedQuantity(donationlist, goodsItemList[i].goods_item_id);
@@ -927,9 +931,9 @@ function createGoodsItemDetailCard(donationlist, goodsItemDetail) {
 	goodsItemDetailDoc.append(goodsItemDetailCard);
 
 	document.getElementById("goods-item-card").appendChild(goodsItemDetailDoc);
-	
+
 	$("#decrement" + goodsItemId).hide();
-	
+
 	console.log("quantity " + document.getElementById("donationQuantity" + goodsItemId).value);
 
 	var balanceQuantity = Math.abs(requiredQuantity - receivedQuantity);
@@ -1330,7 +1334,7 @@ function getPromisedPercentage(goodsItemList, donationlist) {
 		var goodsItemDetail = value;
 		if (goodsItemDetail != null) {
 			goodsItemId = goodsItemDetail.goods_item_id;
-			requestedGoodsItemQuantity += goodsItemDetail.quantity;			
+			requestedGoodsItemQuantity += goodsItemDetail.quantity;
 			promisedDonationsItemQuantity += getPromisedQuantity(donationlist, goodsItemId);
 			receivedQuantity += getReceivedQuantity(donationlist, goodsItemId);
 		}
@@ -1350,6 +1354,7 @@ function getPromisedPercentage(goodsItemList, donationlist) {
 
 	return parseInt(promisedPercentage);
 }
+
 function setDonationQuantity(action, quantity, goodsItemId, balanceQuantity) {
 	quantity = parseInt(quantity);
 
