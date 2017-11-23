@@ -769,6 +769,7 @@ function userServiceInterestCard(item) {
 function createGoodsItemDetailCard(donationlist, goodsItemDetail) {
 	goodsItemDetailDoc = document.createDocumentFragment();
 
+	var goodsItemId = goodsItemDetail.goods_item_id;
 	goodsItemDetailCard = document.createElement("div");
 	goodsItemDetailCard.classList.add("card");
 	goodsItemDetailCard.classList.add("col-md-6");
@@ -889,11 +890,11 @@ function createGoodsItemDetailCard(donationlist, goodsItemDetail) {
 	if (promised == 0)
 		promised = "-";
 	else
-		promised = getPromisedQuantity(donationlist, goodsItemDetail.goods_item_id) + " (" + goodsItemDetail.unit + ")";
+		promised = getPromisedQuantity(donationlist, goodsItemId) + " (" + goodsItemDetail.unit + ")";
 	if (received == 0)
 		received = "-";
 	else
-		received = getReceivedQuantity(donationlist, goodsItemDetail.goods_item_id) + " (" + goodsItemDetail.unit + ")";
+		received = getReceivedQuantity(donationlist, goodsItemId) + " (" + goodsItemDetail.unit + ")";
 
 
 	var tableContent = createRow(required, promised, received);
