@@ -1038,7 +1038,6 @@ function createPromisedDonationcard(donationDetail) {
 	donationParentDiv.append(br);
 	donationParentDiv.append(hrEndLine);
 
-
 	donationOuterDiv.append(donationParentDiv);
 
 	promisedDonationDoc.append(donationOuterDiv);
