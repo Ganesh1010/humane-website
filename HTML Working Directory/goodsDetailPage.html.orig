@@ -75,7 +75,9 @@
 								<div class="card" id="user-detail-card">
 									<h3>Venky</h3>
 									<hr>
-									<h5>venky@gmail.com</h5>								</div>
+									<h5>venky@gmail.com</h5>
+								</div>
+<<<<<<< HEAD
 								<div id="user-selected-date">
 =======
 								<div class="card" id="user-selected-date">
@@ -144,11 +146,19 @@
 </body>
 <script type="text/javascript">
 	$(document).ready(function() {
-
+<<<<<<< HEAD
 			sample1();
 		function getGoodsItemDetails(data) {
 			
 			var goodsItemList = $.parseJSON(data)['goods_item_list']
+=======
+		var goodsItemList;
+
+		function getGoodsItemDetails(data) {
+			goodsItemList = $.parseJSON(data)['goods_item_list']
+>>>>>>> origin/master
+			var donationList = $.parseJSON(data)['donation_list']
+
 			$.each(goodsItemList, function(key, value) {
 				createGoodsItemDetailCard(donationList, value);
 			});

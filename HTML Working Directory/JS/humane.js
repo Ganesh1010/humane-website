@@ -78,6 +78,43 @@ function createRowWithTwoColumns(string1, string2) {
 	return row;
 }
 
+function getPromisedQuantity(donationlist, goodsItemId) {
+	var totalPromisedItemQuantity = 0;
+	if (donationlist != null) {
+		$.each(donationlist, function (key, value) {
+			var donationDetail = value;
+			var donationItemDetailArrayList = donationDetail.donation_item_list;
+
+			for (i = 0; i < donationItemDetailArrayList.length; i++) {
+				donationItemDetail = donationItemDetailArrayList[i];
+				if (donationItemDetail.goods_item == goodsItemId) {
+					if (!donationDetail.is_donation_completed)
+						totalPromisedItemQuantity += donationItemDetail.quantity;
+				}
+			}
+		});
+	}
+	return totalPromisedItemQuantity;
+}
+
+function getReceivedQuantity(donationlist, goodsItemId) {
+	var totalReceivedItemQuantity = 0;
+	if (donationlist != null) {
+		$.each(donationlist, function (key, value) {
+			var donationDetail = value;
+			var donationItemDetailArrayList = donationDetail.donation_item_list;
+
+			for (i = 0; i < donationItemDetailArrayList.length; i++) {
+				donationItemDetail = donationItemDetailArrayList[i];
+				if (donationItemDetail.goods_item == goodsItemId) {
+					if (donationDetail.is_donation_completed)
+						totalReceivedItemQuantity += donationItemDetail.quantity;
+				}
+			}
+		});
+	}
+	return totalReceivedItemQuantity;
+}
 
 function promisedDonationProgressBar(value) {
 	var promisedDonationProgressBar = document.createElement("div");
@@ -361,7 +398,7 @@ function createOrganisationPromisedDonationCard(item) {
 }
 
 
-function create_donation_item_details(item) {
+function create_donation_item_details(item, donationlist) {
 
 	var goodsItemList = item.goods_item_list
 
@@ -396,9 +433,20 @@ function create_donation_item_details(item) {
 		var itemName = getHeaderText(goodsItemList[i].sub_item_category_one + itemCategory, 4);
 		itemName.classList.add("media-heading");
 		itemName.classList.add("text-center");
+		
+
 		var required = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
-		var promised = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
-		var received = goodsItemList[i].quantity + " (" + goodsItemList[i].unit + ")";
+		var promised = getPromisedQuantity(donationlist, goodsItemList[i].goods_item_id);
+		var received = getReceivedQuantity(donationlist, goodsItemList[i].goods_item_id);
+
+		if (promised == 0)
+			promised = "-";
+		else
+			promised = getPromisedQuantity(donationlist, goodsItemList[i].goods_item_id) + " (" + goodsItemList[i].unit + ")";
+		if (received == 0)
+			received = "-";
+		else
+			received = getReceivedQuantity(donationlist, goodsItemList[i].goods_item_id) + " (" + goodsItemList[i].unit + ")";
 
 		tableContent[i] = createRow(required, promised, received);
 		tableContent[i].className = "table-data-font";
@@ -728,9 +776,10 @@ function userServiceInterestCard(item) {
 
 }
 
-function createGoodsItemDetailCard(goodsItemDetail) {
+function createGoodsItemDetailCard(donationlist, goodsItemDetail) {
 	goodsItemDetailDoc = document.createDocumentFragment();
 
+	var goodsItemId = goodsItemDetail.goods_item_id;
 	goodsItemDetailCard = document.createElement("div");
 	goodsItemDetailCard.classList.add("card");
 	goodsItemDetailCard.classList.add("col-md-6");
@@ -769,6 +818,7 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 	minusButton.classList.add("btn-number");
 	minusButton.setAttribute("type", "button");
 	minusButton.setAttribute("data-type", "minus");
+	minusButton.setAttribute("id", "decrement" + goodsItemId);
 	minusButton.setAttribute("data-field", "quant[2]");
 
 	var minusButtonIcon = document.createElement("span");
@@ -785,6 +835,7 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 	quantityText.setAttribute("type", "text");
 	quantityText.setAttribute("name", "quant[2]");
 	quantityText.setAttribute("value", "0");
+	quantityText.setAttribute("id", "donationQuantity" + goodsItemId);
 	quantityText.setAttribute("min", "1");
 	quantityText.setAttribute("max", "100");
 
@@ -798,6 +849,7 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 	plusButton.classList.add("btn-number");
 	plusButton.setAttribute("type", "button");
 	plusButton.setAttribute("data-type", "plus");
+	plusButton.setAttribute("id", "increment" + goodsItemId);
 	plusButton.setAttribute("data-field", "quant[2]");
 
 	var plusButtonIcon = document.createElement("span");
@@ -825,17 +877,35 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 
 	itemDetailTableBody.append(tableHeader);
 
-	var itemCategory = goodsItemDetail.sub_item_category_two;
-	if (itemCategory != null)
-		itemCategory = " (" + itemCategory + ")";
+	var itemCategoryOne = goodsItemDetail.sub_item_category_one;
+	var itemCategoryTwo = goodsItemDetail.sub_item_category_two;
+
+	if (itemCategoryTwo != null)
+		itemCategoryTwo = " (" + itemCategoryTwo + ")";
 	else
 		itemCategory = "";
-	var itemName = getHeaderText(goodsItemDetail.sub_item_category_one + itemCategory, 4);
+	var itemName = getHeaderText(itemCategoryOne, 4);
 	itemName.classList.add("media-heading");
+	itemName.setAttribute("id", "itemCategoryOne" + goodsItemId);
+	var itemCategory = getHeaderText(itemCategoryTwo, 4);
+	itemCategory.classList.add("media-heading");
+	itemCategory.setAttribute("id", "itemCategoryTwo" + goodsItemId);
 
-	var required = goodsItemDetail.quantity + " (" + goodsItemDetail.unit + ")";
-	var promised = goodsItemDetail.quantity + " (" + goodsItemDetail.unit + ")";
-	var received = goodsItemDetail.quantity + " (" + goodsItemDetail.unit + ")";
+	var requiredQuantity = goodsItemDetail.quantity;
+	var receivedQuantity = getReceivedQuantity(donationlist, goodsItemId);
+	var required = requiredQuantity + " (" + goodsItemDetail.unit + ")";
+	var promised = getPromisedQuantity(donationlist, goodsItemId);
+	var received = receivedQuantity;
+
+	if (promised == 0)
+		promised = "-";
+	else
+		promised = getPromisedQuantity(donationlist, goodsItemId) + " (" + goodsItemDetail.unit + ")";
+	if (received == 0)
+		received = "-";
+	else
+		received = getReceivedQuantity(donationlist, goodsItemId) + " (" + goodsItemDetail.unit + ")";
+
 
 	var tableContent = createRow(required, promised, received);
 	tableContent.className = "table-data-font";
@@ -846,6 +916,7 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 	var br = document.createElement("br");
 
 	goodsItemDetailHeader.appendChild(itemName);
+	goodsItemDetailHeader.appendChild(itemCategory);
 	goodsItemDetailHeader.appendChild(descriptipn);
 
 	goodsItemDetailCard.append(goodsItemDetailHeader);
@@ -856,6 +927,27 @@ function createGoodsItemDetailCard(goodsItemDetail) {
 	goodsItemDetailDoc.append(goodsItemDetailCard);
 
 	document.getElementById("goods-item-card").appendChild(goodsItemDetailDoc);
+	
+	$("#decrement" + goodsItemId).hide();
+	
+	console.log("quantity " + document.getElementById("donationQuantity" + goodsItemId).value);
+
+	var balanceQuantity = Math.abs(requiredQuantity - receivedQuantity);
+	console.log(balanceQuantity);
+
+	document.getElementById("increment" + goodsItemId).onclick = function () {
+		console.log(goodsItemId);
+		setDonationQuantity("inc", document.getElementById("donationQuantity" + goodsItemId).value, goodsItemId, balanceQuantity)
+	};
+
+	document.getElementById("decrement" + goodsItemId).onclick = function () {
+		console.log(goodsItemId);
+		setDonationQuantity("dec", document.getElementById("donationQuantity" + goodsItemId).value, goodsItemId, balanceQuantity)
+	};
+
+	document.getElementById("donationQuantity" + goodsItemId).addEventListener("focusout", function () {
+		setDonationQuantity("", document.getElementById("donationQuantity" + goodsItemId).value, goodsItemId, balanceQuantity);
+	});
 
 }
 
@@ -1235,39 +1327,12 @@ function getPromisedPercentage(goodsItemList, donationlist) {
 	var goodsItemId;
 	$.each(goodsItemList, function (key, value) {
 
-		var totalPromisedItemQuantity = 0;
-		var totalReceivedItemQuantity = 0;
 		var goodsItemDetail = value;
 		if (goodsItemDetail != null) {
 			goodsItemId = goodsItemDetail.goods_item_id;
-			requestedGoodsItemQuantity += goodsItemDetail.quantity;
-
-			if (donationlist != null) {
-				var receivedItemQuantity = 0,
-					promisedItemQuantity = 0;
-				$.each(donationlist, function (key, value) {
-					var donationDetail = value;
-					var donationItemDetailArrayList = donationDetail.donation_item_list;
-
-					for (i = 0; i < donationItemDetailArrayList.length; i++) {
-						donationItemDetail = donationItemDetailArrayList[i];
-						if (donationItemDetail.goods_item == goodsItemId) {
-							if (donationDetail.is_donation_completed) {
-								receivedItemQuantity += donationItemDetail.quantity;
-								totalReceivedItemQuantity = receivedItemQuantity
-							} else {
-								promisedItemQuantity += donationItemDetail.quantity;
-								totalPromisedItemQuantity = promisedItemQuantity;
-							}
-						}
-					}
-				});
-			}
-			promisedDonationsItemQuantity += totalPromisedItemQuantity;
-			receivedQuantity += totalReceivedItemQuantity;
-
-			//					console.log("promisedDonationsItemQuantity  " + totalPromisedItemQuantity)
-			//					console.log("receivedQuantity  " + totalReceivedItemQuantity)
+			requestedGoodsItemQuantity += goodsItemDetail.quantity;			
+			promisedDonationsItemQuantity += getPromisedQuantity(donationlist, goodsItemId);
+			receivedQuantity += getReceivedQuantity(donationlist, goodsItemId);
 		}
 
 	});
@@ -1284,4 +1349,57 @@ function getPromisedPercentage(goodsItemList, donationlist) {
 	}
 
 	return parseInt(promisedPercentage);
+}
+function setDonationQuantity(action, quantity, goodsItemId, balanceQuantity) {
+	quantity = parseInt(quantity);
+
+	if (action == "inc")
+		quantity = quantity + 1;
+
+	else if (action == "dec")
+		quantity = quantity - 1;
+
+	if (quantity < 0)
+		quantity = 0;
+
+	else if (quantity == 0)
+		$("#decrement" + goodsItemId).hide();
+
+	if (quantity > balanceQuantity)
+		quantity = balanceQuantity;
+
+	else if (quantity == balanceQuantity)
+		$("#increment" + goodsItemId).hide();
+
+	console.log("quantity " + quantity);
+	if (isNaN(quantity))
+		quantity = 0;
+
+	if (quantity > 0)
+		$("#decrement" + goodsItemId).show();
+	else
+		$("#decrement" + goodsItemId).hide();
+	if (quantity < balanceQuantity)
+		$("#increment" + goodsItemId).show();
+	else
+		$("#increment" + goodsItemId).hide();
+
+	$("#donationQuantity" + goodsItemId).val(quantity);
+}
+
+function getDonatedItemDetails(goodsItemList) {
+	donationItemlist = document.createDocumentFragment();
+	var tableContent = [];
+
+	for (i = 0; i < goodsItemList.length; i++) {
+		goodsItemId = goodsItemList[i].goods_item_id;
+		console.log("goods item id", goodsItemId)
+		if (parseInt(document.getElementById("donationQuantity" + goodsItemId).value) != 0) {
+			tableContent[i] = createRow(document.getElementById("itemCategoryOne" + goodsItemId).innerHTML, document.getElementById("itemCategoryTwo" + goodsItemId).innerHTML, document.getElementById("donationQuantity" + goodsItemId).value);
+			donationItemlist.appendChild(tableContent[i]);
+		}
+	}
+
+	$("#contribution-list").empty();
+	document.getElementById("contribution-list").append(donationItemlist);
 }

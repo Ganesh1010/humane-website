@@ -75,14 +75,15 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		function getDonationItemDetails(data) {
-			var t = $.parseJSON(data)
-			create_donation_item_details(t);
+			var goodsItemData = $.parseJSON(data)
+			var donationList = $.parseJSON(data)['donation_list']
+			create_donation_item_details(goodsItemData,donationList);
 		}
 
 		function getDonatingUserDetail(data) {
-			var t = $.parseJSON(data)['donation_list']
+			var donationList = $.parseJSON(data)['donation_list']
 			$('.loader').hide();
-			$.each(t, function(key, value) {
+			$.each(donationList, function(key, value) {
 				createDonationDetails(value);
 
 			});
