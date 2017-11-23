@@ -22,14 +22,15 @@
 			background: url('https://loading.io/assets/img/landing/curved-bars.svg') 50% 50% no-repeat rgb(249, 249, 249);
 			opacity: .8;
 		}
+
 	</style>
 </head>
 
 <body>
 	<div id="main">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
+			<div class="row ">
+				<div class="col-md-12 ">
 					<div class="panel with-nav-tabs panel-info">
 						<div class="panel-heading">
 							<ul class="nav nav-tabs">
@@ -37,20 +38,24 @@
 								<li class="col-sm-2"><a href="#servicetab" data-toggle="tab" id="service-anchor">Services</a></li>
 							</ul>
 						</div>
-						<div class="panel-body">
-							<div class="tab-content">
+						<div class="panel-body ">
+							<div class="tab-content ">
 
 								<div class="tab-pane fade in active" id="goodstab">
 									<div class="loader" id="goods-loader"></div>
 								</div>
-								<div id="goods-pagination"></div>
+
 
 								<div class="tab-pane fade " id="servicetab">
 									<div class="loader" id="service-loader"></div>
 								</div>
-								<div id="service-pagination"></div>
 
 							</div>
+						</div>
+						<div class="panel-footer text-center">
+							<div id="goods-pagination"></div>
+							<div id="service-pagination"></div>
+
 						</div>
 
 					</div>
@@ -279,15 +284,15 @@
 		loadGoodsDetail(goodsDetailURL);
 
 		$("#service-anchor").click(function(e) {
-			if(firstServiceLoad){
+			if (firstServiceLoad) {
 				loadServiceDetail(serviceDetailURL);
-				firstServiceLoad=false;
+				firstServiceLoad = false;
 			}
 			$('#service-pagination').show();
 			$('#goods-pagination').hide();
 
 		});
-		
+
 		$("#goods-anchor").click(function(e) {
 			$('#service-pagination').hide();
 			$('#goods-pagination').show();
@@ -328,6 +333,7 @@
 				});
 		}
 	});
+
 </script>
 
 </html>
