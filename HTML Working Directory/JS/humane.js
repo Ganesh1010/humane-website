@@ -159,9 +159,12 @@ function create_single_goods_card(item) {
 	orgCity.innerHTML = item.organisation_detail.city + " - " + item.organisation_detail.postal_code;
 
 
+	var progressBarDiv = document.createElement("div");
+	progressBarDiv.classList.add("promised-donation-progressbar");
 	var promisedDonationProgressValue = promisedDonationProgressBar(getPromisedPercentage(item.goods_item_list, item.donation_list));
 	var br = document.createElement("br");
 
+	progressBarDiv.append(promisedDonationProgressValue);
 	var donateButton = document.createElement("button");
 	donateButton.classList.add('btn');
 	donateButton.classList.add('btn-donor');
@@ -183,7 +186,7 @@ function create_single_goods_card(item) {
 	goodsPanelBody.appendChild(mainItemIcon);
 	goodsPanelBody.appendChild(orgName);
 	goodsPanelBody.appendChild(orgCity);
-	goodsPanelBody.appendChild(promisedDonationProgressValue);
+	goodsPanelBody.appendChild(progressBarDiv);
 	goodsPanelBody.appendChild(br);
 	goodsPanelBody.appendChild(donateButton);
 	goodsCardParentDiv.appendChild(goodsPanelHeading);
@@ -200,18 +203,6 @@ function create_single_service_card(service) {
 
 	var serviceCardOuttertDiv = document.createElement("div");
 	serviceCardOuttertDiv.className = "col-sm-3";
-	
-	serviceCardOuttertDiv.addEventListener('click', function () {
-		var id = service.service_id;
-		var link = "ServiceInterestExpressed.html";
-		console.log("on click service card", id);
-
-		link += "?id=" + id;
-		console.log("url", link);
-		window.location.href = link;
-
-	});
-
 
 	var serviceCardParentDiv = document.createElement("div");
 	serviceCardParentDiv.classList.add('panel');
