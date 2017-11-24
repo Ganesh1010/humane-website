@@ -160,7 +160,7 @@ function create_single_goods_card(item) {
 
 
 	var promisedDonationProgressValue = promisedDonationProgressBar(getPromisedPercentage(item.goods_item_list, item.donation_list));
-
+	var br = document.createElement("br");
 
 	var donateButton = document.createElement("button");
 	donateButton.classList.add('btn');
@@ -171,7 +171,7 @@ function create_single_goods_card(item) {
 
 	goodsCardOuterDiv.addEventListener('click', function () {
 		var id = item.goods_id;
-		var link = "goodsDetailPage.html";
+		var link = "/html/goodsDetailPage";
 		console.log("on click card", id);
 
 		link += "?id=" + id;
@@ -184,6 +184,7 @@ function create_single_goods_card(item) {
 	goodsPanelBody.appendChild(orgName);
 	goodsPanelBody.appendChild(orgCity);
 	goodsPanelBody.appendChild(promisedDonationProgressValue);
+	goodsPanelBody.appendChild(br);
 	goodsPanelBody.appendChild(donateButton);
 	goodsCardParentDiv.appendChild(goodsPanelHeading);
 	goodsCardParentDiv.appendChild(goodsPanelBody);
@@ -1181,3 +1182,23 @@ function getPromisedPercentage(goodsItemList, donationlist) {
 
 	return parseInt(promisedPercentage);
 }
+
+function loadUserDetail(userDetailURL) {
+			$.getJSON(userDetailURL, function(data) {})
+				.done(function(data) {
+						
+					var userProfile = $.parseJSON(data)
+					
+					if (userProfile != null){
+						console.log("userProfile home page" + userProfile.mobile)
+						setLoggedInUserDetail(userProfile)
+					}
+				console.log("commom user profile in home page "+USER_PROFILE.mobile);
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("goods detail load complete");
+				});
+		}

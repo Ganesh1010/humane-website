@@ -1,12 +1,15 @@
-<html>
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="CSS/humane.css">
-	<script src="JS/humane.js"></script>
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/donation.js"%}"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
 	<style>
 		.progress-bar {
 			height: auto
@@ -22,7 +25,6 @@
 			background: url('https://loading.io/assets/img/landing/curved-bars.svg') 50% 50% no-repeat rgb(249, 249, 249);
 			opacity: .8;
 		}
-
 	</style>
 </head>
 
@@ -278,8 +280,8 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var firstServiceLoad = true;
-		var goodsDetailURL = "http://vuramdevdb.vuram.com:8000/humane/goodsDetail/?isweb=True&callback=?";
-		var serviceDetailURL = "http://vuramdevdb.vuram.com:8000/humane/serviceDetail/?isweb=True&callback=?";
+		var goodsDetailURL = "/humane/goodsDetail/?isweb=True&callback=?";
+		var serviceDetailURL = "/humane/serviceDetail/?isweb=True&callback=?";
 
 		loadGoodsDetail(goodsDetailURL);
 
@@ -298,7 +300,7 @@
 			$('#goods-pagination').show();
 		});
 
-
+		
 		function loadGoodsDetail(goodsDetailURL) {
 			$.getJSON(goodsDetailURL, function(data) {})
 				.done(function(data) {
@@ -333,7 +335,6 @@
 				});
 		}
 	});
-
 </script>
 
 </html>

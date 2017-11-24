@@ -1,3 +1,16 @@
+var USER_PROFILE;
+
+function setLoggedInUserDetail(userProfile)
+{
+	USER_PROFILE = userProfile;
+	console.log("commom user profile "+USER_PROFILE);
+}
+
+function getLoggedInUserDetail()
+{
+	return USER_PROFILE;
+}
+
 function createGoodsItemDetailCard(donationlist, goodsItemList, goodsItemDetail) {
 	goodsItemDetailDoc = document.createDocumentFragment();
 
@@ -150,8 +163,8 @@ function createGoodsItemDetailCard(donationlist, goodsItemList, goodsItemDetail)
 
 	document.getElementById("goods-item-card").appendChild(goodsItemDetailDoc);
 
-	document.getElementById("decrement"+goodsItemId).disabled = true;
-	
+	document.getElementById("decrement" + goodsItemId).disabled = true;
+
 	var balanceQuantity = Math.abs(requiredQuantity - receivedQuantity);
 	console.log(balanceQuantity);
 
@@ -165,7 +178,7 @@ function createGoodsItemDetailCard(donationlist, goodsItemList, goodsItemDetail)
 		checkIfItemsAdded(goodsItemList);
 	};
 
-	document.getElementById("donationQuantity" + goodsItemId).addEventListener("focusout", function () {
+	document.getElementById("donationQuantity" + goodsItemId).addEventListener("keyup", function () {
 		setDonationQuantity("", document.getElementById("donationQuantity" + goodsItemId).value, goodsItemId, balanceQuantity);
 		checkIfItemsAdded(goodsItemList);
 	});
@@ -185,28 +198,28 @@ function setDonationQuantity(action, quantity, goodsItemId, balanceQuantity) {
 		quantity = 0;
 
 	else if (quantity == 0)
-		document.getElementById("decrement"+goodsItemId).disabled = true;
+		document.getElementById("decrement" + goodsItemId).disabled = true;
 
 
 	if (quantity > balanceQuantity)
 		quantity = balanceQuantity;
 
 	else if (quantity == balanceQuantity)
-		document.getElementById("increment"+goodsItemId).disabled = true;
+		document.getElementById("increment" + goodsItemId).disabled = true;
 
 	console.log("quantity " + quantity);
 	if (isNaN(quantity))
 		quantity = 0;
 
 	if (quantity > 0)
-		document.getElementById("decrement"+goodsItemId).disabled = false;
+		document.getElementById("decrement" + goodsItemId).disabled = false;
 	else
-		document.getElementById("decrement"+goodsItemId).disabled = true;
+		document.getElementById("decrement" + goodsItemId).disabled = true;
 
 	if (quantity < balanceQuantity)
-		document.getElementById("increment"+goodsItemId).disabled = false;
+		document.getElementById("increment" + goodsItemId).disabled = false;
 	else
-		document.getElementById("increment"+goodsItemId).disabled = true;
+		document.getElementById("increment" + goodsItemId).disabled = true;
 
 	$("#donationQuantity" + goodsItemId).val(quantity);
 }
@@ -221,8 +234,8 @@ function getDonatedItemDetails(goodsItemList) {
 		if (parseInt(document.getElementById("donationQuantity" + goodsItemId).value) != 0) {
 			var itemname = document.getElementById("itemCategoryOne" + goodsItemId).innerHTML;
 			var itemCategory = document.getElementById("itemCategoryTwo" + goodsItemId).innerHTML;
-			if(itemCategory=="")
-				itemCategory="--";
+			if (itemCategory == "")
+				itemCategory = "--";
 			tableContent[i] = createRow(itemname, itemCategory, document.getElementById("donationQuantity" + goodsItemId).value);
 			donationItemlist.appendChild(tableContent[i]);
 		}
@@ -230,6 +243,12 @@ function getDonatedItemDetails(goodsItemList) {
 
 	$("#contribution-list").empty();
 	document.getElementById("contribution-list").append(donationItemlist);
+	
+	console.log("user name "+USER_PROFILE.first_name)
+	console.log("user email "+USER_PROFILE.email)
+	
+	document.getElementById("user-first-name").innerHTML = USER_PROFILE.first_name
+	document.getElementById("user-email").innerHTML = USER_PROFILE.email
 }
 
 function checkIfItemsAdded(goodsItemList) {
@@ -241,7 +260,65 @@ function checkIfItemsAdded(goodsItemList) {
 			itemsAdded = true;
 	}
 	if (itemsAdded)
-			$("#donation-detail-btn").show();
-		else
-			$("#donation-detail-btn").hide();
+		$("#donation-detail-btn").show();
+	else
+		$("#donation-detail-btn").hide();
+}
+
+function getCookie(name) {
+	var cookieValue = null;
+	if (document.cookie && document.cookie != '') {
+		var cookies = document.cookie.split(';');
+		for (var i = 0; i < cookies.length; i++) {
+			var cookie = jQuery.trim(cookies[i]);
+			// Does this cookie string begin with the name we want?
+			if (cookie.substring(0, name.length + 1) == (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+			}
+		}
+	}
+	console.log("csrf token " + cookieValue)
+	return cookieValue;
+}
+
+function postDonationDetail(goodsItemList, goodsId) {
+
+	var itemList = [];
+	for (i = 0; i < goodsItemList.length; i++) {
+		goodsItemId = goodsItemList[i].goods_item_id;
+		console.log("goods item id", goodsItemId)
+		if (parseInt(document.getElementById("donationQuantity" + goodsItemId).value) != 0) {
+
+			var item = {
+				goods_item: goodsItemId,
+				quantity: parseInt(document.getElementById("donationQuantity" + goodsItemId).value),
+				unit: 3
+			}
+			itemList[i] = item
+		}
+	}
+
+	var donationDetail = {
+		goods: goodsId,
+		promised_date: "2017-11-25T10:08:36.3060Z",
+		is_volunteer_required: "false",
+		donation_item_list: itemList
+	}
+
+	console.log("data " + JSON.stringify(donationDetail));
+	$.ajax({
+		url: '/humane/donationDetail/',
+		type: 'post',
+		headers: {
+			"X-CSRFToken": getCookie("csrftoken")
+		},
+		dataType: 'json',
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+			alert("success");
+		},
+		data: JSON.stringify(donationDetail)
+
+	});
 }
