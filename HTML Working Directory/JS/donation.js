@@ -262,7 +262,7 @@ function checkIfItemsAdded(goodsItemList) {
 	if (itemsAdded)
 		$("#donation-detail-btn").show();
 	else
-		$("#donation-detail-btn").hide();
+		$("#donation-detail-btn").disabled=true;
 }
 
 function getCookie(name) {
@@ -292,21 +292,35 @@ function postDonationDetail(goodsItemList, goodsId) {
 
 			var item = {
 				goods_item: goodsItemId,
-				quantity: parseInt(document.getElementById("donationQuantity" + goodsItemId).value),
-				unit: 3
+				quantity: parseInt(document.getElementById("donationQuantity" + goodsItemId).value)
 			}
 			itemList[i] = item
 		}
 	}
 
+	var volunteerRequired;
+	if ($('#volunteer').is(":checked"))
+	{
+		volunteerRequired = true;
+	}
+	else {
+		volunteerRequired = false;
+	}
+	console.log("promised date"+document.getElementById("promised-date").value)
+	var localFormatDate = document.getElementById("promised-date").value
+	var date = new Date(localFormatDate)
+	var serverFormatDate = new Date( date.getTime() + Math.abs(date.getTimezoneOffset()*60000)).toJSON();
+	console.log("server date"+serverFormatDate)
+	
 	var donationDetail = {
 		goods: goodsId,
-		promised_date: "2017-11-25T10:08:36.3060Z",
-		is_volunteer_required: "false",
+		promised_date: serverFormatDate,
+		is_volunteer_required: volunteerRequired,
 		donation_item_list: itemList
 	}
 
 	console.log("data " + JSON.stringify(donationDetail));
+	console.log("volunteerRequired "+volunteerRequired)
 	$.ajax({
 		url: '/humane/donationDetail/',
 		type: 'post',

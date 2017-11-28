@@ -282,6 +282,7 @@
 		loadGoodsDetail(goodsDetailURL);
 
 		$("#service-anchor").click(function(e) {
+		console.log("firstServiceLoad"+firstServiceLoad)
 			if (firstServiceLoad) {
 				loadServiceDetail(serviceDetailURL);
 				firstServiceLoad = false;
@@ -313,12 +314,53 @@
 					console.log("goods detail load complete");
 				});
 		}
+		function VerifyInput(input){
+    for(var x=0; x<input.length; ++x){
+        let c = input.charCodeAt(x);
+        if(c >= 0 && c <= 31){
+            throw 'problematic character found at position ' + x +c;
+        }
+    }
+}		 function stringToJson(input) {
+              var result = [];
 
+              //replace leading and trailing [], if present
+              input = input.replace(/^\[/,'');
+              input = input.replace(/\]$/,'');
+
+              //change the delimiter to 
+              input = input.replace(/},{/g,'};;;{');
+
+              // preserve newlines, etc - use valid JSON
+              //https://stackoverflow.com/questions/14432165/uncaught-syntaxerror-unexpected-token-with-json-parse
+            input = input.replace(/\\n/g, "\\n")  
+            .replace(/\\'/g, "\\'")
+            .replace(/\\"/g, '\\"')
+            .replace(/\\&/g, "\\&")
+            .replace(/\\r/g, "\\r")
+            .replace(/\\t/g, "\\t")
+            .replace(/\\b/g, "\\b")
+            .replace(/\\f/g, "\\f");
+            // remove non-printable and other non-valid JSON chars
+            input = input.replace(/[\u0000-\u0019]+/g,""); 
+
+              input = input.split(';;;');
+
+              input.forEach(function(element) {
+                // console.log(JSON.stringify(element));
+
+                result.push(JSON.parse(element));
+              }, this);
+
+              return result;
+            }
 		function loadServiceDetail(serviceDetailURL) {
+		console.log("service url called");
 			$.getJSON(serviceDetailURL, function(data) {})
-				.done(function(data) {
-					getServiceDetail(data);
-					var count = $.parseJSON(data)['count']
+				.done(function(serviceData) {
+				//console.log(VerifyInput(serviceData));
+					getServiceDetail(serviceData);
+					var count = $.parseJSON(JSON.stringify(serviceData))['count']
 					console.log("service count " + count)
 					if (count > 10)
 						createPagination(count, serviceDetailURL, "service-pagination", "#servicetab", 2);

@@ -247,6 +247,16 @@ function create_single_service_card(service) {
 	serviceCardParentDiv.appendChild(servicePanelBody);
 	serviceCardOuttertDiv.appendChild(serviceCardParentDiv);
 	serviceCard.appendChild(serviceCardOuttertDiv);
+	
+	serviceCardOuttertDiv.addEventListener('click', function () {		
+			console.log("on click service card", id);		
+			var id = service.service_id;		
+			var link = "/html/serviceInterestExpressed";		
+			link += "?id=" + id;		
+			console.log("url", link);		
+			window.location.href = link;		
+			
+		});	
 
 	document.getElementById("servicetab").appendChild(serviceCard);
 }
@@ -1126,15 +1136,22 @@ function loadMoreData(pageToLoad, url) {
 }
 
 function getGoodsdetail(data) {
+	console.log("goods detail befor parse "+data)
 	var t = $.parseJSON(data)['results']
+	console.log("goods detail after parse "+t)
 	$.each(t, function (key, value) {
 		create_single_goods_card(value);
 	});
 	$('#goods-loader').hide();
 }
 
-function getServiceDetail(data) {
-	var t = $.parseJSON(data)['results']
+function getServiceDetail(serviceData) {
+	function jsonEscape(str)  {
+    return str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
+}
+	console.log("service detail befor parse "+jsonEscape(serviceData))
+	var t = JSON.parse(jsonEscape(serviceData))['results']
+	console.log("service detail after parse "+t)
 	$.each(t, function (key, value) {
 		create_single_service_card(value);
 	});
