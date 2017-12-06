@@ -1,0 +1,316 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+
+	<style>
+		td {
+			border: none!important;
+			color: #4CAF50;
+		}
+
+		.data {
+			color: #7E57C2;
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<div class="container">
+		<div class='loader'></div>
+
+		<div class=" col-md-12 center-block">
+			<h3 class="text-center">Organisation Details</h3>
+			<hr>
+			<table class="table table-striped table-responsive">
+				<tbody>
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Organisation Logo</h4>
+						</td>
+						<td><img id="org_logo" style="width: 50px; height:50px;"> </td>
+					</tr>
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Organisation Name</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="org_name"></h4>
+						</td>
+
+					</tr>
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Organisation Registration Number</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="org_reg_no"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Organisation Type</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="org_type"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Email</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="org_email"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Mobile</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="org_mobile"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Official Site</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="official_site"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Facebook Link</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="facebook_link"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Twitter Id</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="twitter_id"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Annual Cost</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="annual_cost"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Postal Code</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="postal_code"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>People Count</h4>
+						</td>
+						<td class=" col-md-3  data">
+							<h4 id="people_count"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Organisation Description</h4>
+						</td>
+						<td class=" col-md-3  data">
+							<h4 id="org_desc"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Street</h4>
+						</td>
+						<td class=" col-md-3  data">
+							<h4 id="street"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>City</h4>
+						</td>
+						<td class=" col-md-3  data">
+							<h4 id="city"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>State</h4>
+						</td>
+						<td class=" col-md-3 data ">
+							<h4 id="state"></h4>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td class="col-md-3 ">
+							<h4>Country</h4>
+						</td>
+						<td class=" col-md-3  data">
+							<h4 id="country"></h4>
+						</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+			<hr>
+			<h3>Coordinator Details</h3>
+			<hr>
+			<div id="coordinator">
+			</div>
+
+		</div>
+		<div class="col-md-12">
+			<hr>
+			<button type="button" class="col-md-1 btn btn-success pull-right" id="verify-org-btn">Verify</button>
+			<br><br><br>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			function createCoordinatorDetailCard(coordinator) {
+
+				var coordinatorDoc = document.createDocumentFragment();
+
+				var coordinatorDiv = document.createElement("div");
+				coordinatorDiv.classList.add("col-md-4");
+				coordinatorDiv.classList.add("card");
+
+				var name = document.createElement("h4");
+				name.innerHTML = coordinator.name;
+
+				var email = document.createElement("h4");
+				email.innerHTML = coordinator.email;
+
+				var mobile = document.createElement("h4");
+				mobile.innerHTML = (coordinator.mobile == null) ? "--" : coordinator.mobile;
+
+				coordinatorDiv.append(name);
+				coordinatorDiv.append(email);
+				coordinatorDiv.append(mobile);
+
+				coordinatorDoc.appendChild(coordinatorDiv);
+				document.getElementById('coordinator').append(coordinatorDoc);
+
+			}
+
+
+			function loadOrganisationCoordinatorDetail(orgDetail) {
+				console.log('orgdetail ' + orgDetail)
+				document.getElementById('org_reg_no').innerHTML = orgDetail.org_reg_no
+				document.getElementById('org_name').innerHTML = orgDetail.org_name
+				document.getElementById('org_mobile').innerHTML = (orgDetail.mobile == null) ? "--" : orgDetail.mobile
+				document.getElementById('org_email').innerHTML = orgDetail.org_email
+				document.getElementById('street').innerHTML = orgDetail.street
+				document.getElementById('state').innerHTML = orgDetail.state
+				document.getElementById('city').innerHTML = orgDetail.city
+				document.getElementById('country').innerHTML = orgDetail.country
+				document.getElementById('official_site').innerHTML = (orgDetail.offical_site == null) ? "--" : orgDetail.offical_site
+				document.getElementById('facebook_link').innerHTML = (orgDetail.facebook_link == null) ? "--" : orgDetail.facebook_link
+				document.getElementById('twitter_id').innerHTML = (orgDetail.twitter_id == null) ? "--" : orgDetail.twitter_id
+				document.getElementById('annual_cost').innerHTML = (orgDetail.annual_cost_for_running == null) ? "--" : orgDetail.annual_cost_for_running
+				document.getElementById('postal_code').innerHTML = orgDetail.postal_code
+				document.getElementById('org_desc').innerHTML = orgDetail.org_desc
+				document.getElementById('people_count').innerHTML = orgDetail.people_count
+				document.getElementById('org_type').innerHTML = orgDetail.org_type
+				document.getElementById('org_logo').setAttribute("src", orgDetail.org_logo)
+
+				users = orgDetail.users
+				for (i = 0; i < users.length; i++)
+					createCoordinatorDetailCard(users[i]);
+				$(".loader").hide()
+
+			}
+
+			var baseUrl = document.URL;
+			var id = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
+			$.getJSON("/appAdmin/OrgVerificationList/" + id + "/?isweb=true&callback=?", function(data) {
+
+				}).done(function(data) {
+					var orgDetail = JSON.parse(jsonEscape(data))
+					loadOrganisationCoordinatorDetail(orgDetail)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("Loaded Organisation details");
+				});
+
+
+
+			function verifyOrganisation(org_id) {
+				
+				organisationId = {
+					org_id : org_id
+				}
+				$.ajax({
+					url: '/appAdmin/VerifyOrganisation/',
+					type: 'post',
+					headers: {
+						"X-CSRFToken": getCookie("csrftoken")
+					},
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8",
+					success: function(data) {
+						alert("success");
+					},
+					data: JSON.stringify(organisationId)
+
+				});
+			}
+			document.getElementById('verify-org-btn').onclick = function(){verifyOrganisation(id)};
+
+		});
+
+	</script>
+
+</body>

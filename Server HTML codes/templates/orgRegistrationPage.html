@@ -1,0 +1,449 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Organisation Registration Form</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="http://blazeworx.com/flags.css" rel="stylesheet">
+	<script src="http://blazeworx.com/jquery.flagstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+	
+	
+	<script src="{% static "assests/JS/orgRegistration.js"%}"></script>
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<link rel="stylesheet " href="{% static "assests/CSS/humane.css"%}">
+	<style>
+	 
+	    .form-group.required .control-label:after {
+        content:" *";
+        color:red;
+         }
+		textarea {
+			resize: none;
+		}
+
+		.panel-heading span {
+			margin-top: -26px;
+			font-size: 15px;
+			margin-right: -12px;
+		}
+
+		.clickable {
+			background: rgba(0, 0, 0, 0.15);
+			display: inline-block;
+			padding: 6px 12px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+	</style>
+</head>
+
+<body>
+	<form class="form" id="orgForm" method="post" enctype="multipart/form-data">
+		<div class="container">
+			<div class="col-lg-10">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						Organisation Registration form
+					</div>
+					<div class="panel-group panel-body" id="accordion" aria-multiselectable="true">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse_contact_details">Contact Details</a>
+								</h4>
+							</div>
+							
+							
+							<div id="collapse_contact_details" class="panel-collapse collapse in">
+								<div class="panel-body">
+								
+								    <div class="form-horizontal">
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="name">Organisation Name</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="orgName" placeholder="Organisation Name" name="name">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="reg_no">Registration Number</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="registrationNumber" placeholder="Registration Number" name="reg_no">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="org_type">Organisation Type</label>
+											<div class="col-sm-8">
+												<select required="required" class="form-control required" id="orgType">
+					
+												</select>
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="email">Email</label>
+											<div class="col-sm-8">
+												<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+											</div>
+										</div>
+										
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="country">Country</label>
+											<div class="col-sm-8">
+												<select class="form-control" id="country" onchange="getStateList()">
+
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="state">State</label>
+											<div class="col-sm-8">
+												<select class="form-control" id="state" onchange="getCityList()">
+							
+												</select>
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="city">City</label>
+											<div class="col-sm-8">
+												<select class="form-control" id="city">
+						
+												</select>
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="street">Street</label>
+											<div class="col-sm-8">
+												<textarea class="form-control required" rows="3" id="street" placeholder="Street"></textarea>
+											</div>
+										</div>
+										
+										<!-- <div class="form-group"> -->
+											<!-- <label class="control-label col-sm-4" for="country_code">Country Code:</label> -->
+											<!-- <div class="input-group col-sm-4"> -->
+												<!-- <div class="flagstrap" id="select_country" data-input-name="NewBuyer_country" data-selected-country="" style="margin-left: 9%;"> -->
+													<!-- <script> -->
+														<!-- $(document).ready(function() { -->
+															<!-- $('#select_country').attr('data-selected-country', 'IN'); -->
+															<!-- $('#select_country').flagStrap(); -->
+														<!-- }); -->
+
+													<!-- </script> -->
+
+												<!-- </div> -->
+											<!-- </div> -->
+										<!-- </div> -->
+										
+										
+										<div class="form-group required">
+											<label class="control-label col-sm-4 " for="postalCode">Postal Code</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" rows="3" id="postalCode" placeholder="Postal Code"></textarea>
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="mobile">Phone</label>
+											<div class="col-sm-8">
+												<input type="tel" class="form-control" id="mobile" placeholder="Mobile number" name="mobile">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="description">Description</label>
+											<div class="col-sm-8">
+												<textarea class="form-control required" rows="4" id="description" placeholder="Description"></textarea>
+											</div>
+										</div>
+										
+    									<div class="form-group">
+											<button type="button" id="org-details-submit" class="btn btn-default pull-right continue" data-toggle="collapse" data-parent="#accordion" value="validate" href="#collapse2">
+					Continue
+					</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default" id="bank-detail-hidden">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Banking Details</a>
+								</h4>
+							</div>
+							<div id="collapse2" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div id="org_bank_details_form" class="form-horizontal">
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="branch">Bank name</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="bankName" placeholder="Bank Name">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="count">Account No</label>
+											<div class="col-sm-8">
+												<input type="number" class="form-control required" id="accountNumber" placeholder="Account No">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="ifscCode">IFSC Code</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="ifscCode" placeholder="IFSC Code">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="branchName">Branch Name</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="branchName" placeholder="Branch Name">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="branchCode">Branch Code</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="branchCode" placeholder="Branch Code">
+											</div>
+										</div>
+										<!-- <div class="form-group"> -->
+											<!-- <label class="control-label col-sm-4" for="merchantId">Merchant Id:</label> -->
+											<!-- <div class="col-sm-8"> -->
+												<!-- <input type="text" class="form-control" id="merchantId" placeholder="Merchant Id Name"> -->
+											<!-- </div> -->
+										<!-- </div> -->
+										<!-- <div class="form-group"> -->
+											<!-- <label class="control-label col-sm-4" for="salt">Salt</label> -->
+											<!-- <div class="col-sm-8"> -->
+												<!-- <input type="text" class="form-control " id="salt" placeholder="salt"> -->
+											<!-- </div> -->
+										<!-- </div> -->
+										<!-- <div class="form-group"> -->
+											<!-- <label class="control-label col-sm-4" for="key"> Key:</label> -->
+											<!-- <div class="col-sm-8"> -->
+												<!-- <input type="text" class="form-control " id="key" placeholder="Key "> -->
+											<!-- </div> -->
+										<!-- </div> -->
+										<div class="form-group">
+											<button type="button" id="org-bank-detail-submit" class="btn btn-default pull-right continue" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+					Continue
+					</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default" id="additional-detail-panel-hidden">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Additional Details</a>
+								</h4>
+							</div>
+							<div id="collapse3" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div id="org_additional_details_form" class="form-horizontal">
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="count">Organisation People Count</label>
+											<div class="col-sm-8">
+												<input type="number" class="form-control required" id="count" placeholder="People Count">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="official_site">Official Site</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control " id="officialSite" placeholder="Official Website address">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="facebookLink">Facebook link</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="facebookLink" placeholder="Facebook link">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="twitter_id">Twitter id</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="twitterId" placeholder="Twitter id">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="annual_cost">Annual Cost for Running</label>
+											<div class="col-sm-4">
+												<input type="number" class="form-control" id="annualCost" placeholder="Annual Cost">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<button type="button" id="org-additional-detail-submit" class="btn btn-default pull-right continue" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+					Continue
+					</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel panel-default" id="person-detail-panel-hidden">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Person Details</a>
+								</h4>
+							</div>
+							<div id="collapse4" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div id="person_details_form" class="form-horizontal">
+
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="personName">Name</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="personName" data-minlength="4" placeholder="Your name" name="name">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4 required" for="personEmail">Email</label>
+											<div class="col-sm-8">
+												<input type="email" class="form-control required" id="personEmail" placeholder="Enter email" name="email">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="personMobile">Phone</label>
+											<div class="col-sm-8">
+												<input type="tel" class="form-control required" id="personMobile" placeholder="Enter Mobile number" name="personMobile">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="role">Role</label>
+											<div class="col-sm-8">
+												<input type="tel" class="form-control" id="role" value="Coordinator" name="role" disabled>
+											</div>
+										</div>
+										<button type="button" id="submit" class="btn btn-default pull-right continue">Submit</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+<script>
+
+	$.validator.addMethod('mobileValidation', function (value, element) {
+		console.log("mobile",this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value))
+			return this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value);
+		},"enter a valid  mobile number");
+			
+	$(document).ready(function() {
+	
+		$('#bank-detail-hidden').hide();
+		$('#additional-detail-panel-hidden').hide();
+		$('#person-detail-panel-hidden').hide();
+		
+		
+	    	$.getJSON("/humane/orgtypelookup/?isweb=true&callback=?", function(data) {
+
+				}).done(function(data) {
+				console.log("data",data);
+								
+								var orgTypeList =  JSON.parse(jsonEscape(data));
+					getDropDownList(orgTypeList,'orgType','org_type_id','org_type');
+					
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("Loaded org type list");
+				});
+		
+		getCountryList();
+		
+		
+		var emailValidation = {
+					required: true,
+					email: true,
+			};
+			
+		var mobileValidation =  {
+				required:true,
+				mobileValidation:true,
+				};
+
+
+		
+		$('.continue').click(function(e) {
+
+			e.stopPropagation();
+			var sectionValid = true;
+			var id = $(this).attr('id');
+			var collapse = $(this).closest('.panel-collapse.collapse');
+			
+			console.log("collpase",collapse);
+			$.each(collapse.find('input, select, textarea'), function() {
+				if (!$(this).valid()) {
+					sectionValid = false;
+				}
+			});
+			console.log("section valid org", sectionValid)
+			if (sectionValid) {
+				
+
+				if (id == 'org-details-submit') {
+					$('#bank-detail-hidden').show();
+
+				} else if (id == 'org-bank-detail-submit') {
+					$('#additional-detail-panel-hidden').show();
+				} else if (id == 'org-additional-detail-submit') {
+					$('#person-detail-panel-hidden').show();
+				}else if(id =='submit'){
+				  postOrganisationRegisteredDetails();
+				}
+
+				collapse.collapse('toggle');
+				collapse.parents('.panel').next().find('.panel-collapse.collapse').collapse('toggle');
+			}
+
+		});
+		
+		
+		
+
+		$("#orgForm").validate({
+			errorClass: "error text-warning",
+			validClass: "success text-success",
+			highlight: function(element, errorClass) {
+
+			},
+			
+			rules: {
+				name: "required",
+				email:emailValidation,
+				orgName: "required",
+				registrationNumber: "required",
+				personEmail:emailValidation,
+				mobile:mobileValidation,
+				postalCode:"required",
+				orgType:"required",
+				description: "required",
+				bankName: "required",
+				accountNumber: "required",
+				ifscCode: "required",
+				branchName: "required",
+				branchCode:"required",
+				count:"required",
+				officialSite:"required",
+				personMobile:mobileValidation,
+				street:"required",
+				
+			},
+			
+		});
+
+	});
+
+</script>
+
+</html>

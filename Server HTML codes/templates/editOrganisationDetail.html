@@ -1,0 +1,469 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Edit Organisation and Bank Details</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="http://blazeworx.com/flags.css" rel="stylesheet">
+	<script src="http://blazeworx.com/jquery.flagstrap.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
+
+	<script src="{% static "assests/JS/editOrgDetail.js"%}"></script>
+	<script src="{% static "assests/JS/orgRegistration.js"%}"></script>
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<link rel="stylesheet " href="{% static "assests/CSS/humane.css"%}">
+	<style>
+	
+	     .form-group.required .control-label:after {
+			 content:" *";
+			 color:red;
+         }
+		
+		textarea {
+			resize: none;
+		}
+
+		.panel-heading span {
+			margin-top: -26px;
+			font-size: 15px;
+			margin-right: -12px;
+		}
+
+		.clickable {
+			background: rgba(0, 0, 0, 0.15);
+			display: inline-block;
+			padding: 6px 12px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+	</style>
+</head>
+
+<body>
+	<form class="form" id="editOrgForm" method="post" enctype="multipart/form-data">
+		<div class="container">
+			<div class="col-lg-9">
+				<div class="panel panel-primary">
+
+					<div class="panel-heading">
+						Organisation Registration form
+					</div>
+
+					<div class="panel-group panel-body" id="accordion" aria-multiselectable="true">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse_contact_details">Contact Details</a>
+								</h4>
+							</div>
+
+							<div id="collapse_contact_details" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<div id="org_details_form" name="organisation-details" class="form-horizontal">
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="name">Organisation Name</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="orgName" onchange="editOrgData(this)" placeholder="Organisation Name" name="name">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="reg_no">Registration Number:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="registrationNumber" onchange="editOrgData(this)" placeholder="Registration Number" name="reg_no">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="org_type">Organisation Type:</label>
+											<div class="col-sm-8">
+												<select required="required" class="form-control required" onchange="editOrgData(this)" id="orgType">
+					
+												</select>
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="email">Email:</label>
+											<div class="col-sm-8">
+												<input type="email" onchange="editOrgData(this)" class="form-control" id="email" placeholder="Enter email" name="email">
+											</div>
+										</div>
+
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="country">Country:</label>
+											<div class="col-sm-8">
+												<select class="form-control"  onchange="editOrgData(this);getStateList();" id="country">
+
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="state">State:</label>
+											<div class="col-sm-8">
+												<select class="form-control" onchange="editOrgData(this);getCityList();" id="state" >
+							
+												</select>
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="city">City:</label>
+											<div class="col-sm-8">
+												<select class="form-control" onchange="editOrgData(this)" id="city">
+						
+												</select>
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="street">Street</label>
+											<div class="col-sm-8">
+												<textarea class="form-control" rows="3" onchange="editOrgData(this)" id="street" placeholder="Street"></textarea>
+											</div>
+										</div>
+
+
+
+										<div class="form-group required">
+											<label class="control-label col-sm-4 " for="postalCode">Postal Code</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" onchange="editOrgData(this)" rows="3" id="postalCode" placeholder="Postal Code">
+											</div>
+										</div>
+
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="mobile">Phone:</label>
+											<div class="col-sm-8">
+												<input type="tel" class="form-control" id="mobile" onchange="editOrgData(this)" placeholder="Mobile number" name="mobile">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="description">Description:</label>
+											<div class="col-sm-8">
+												<textarea class="form-control required" onchange="editOrgData(this)" rows="4" id="description" placeholder="Description"></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="orgLogo">Organisation Logo</label>
+											<div class="col-sm-8">
+												<input type='file' required id='orgLogo' name="orgLogo" accept="image/*" data-type='image' />
+											</div>
+										</div>
+
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="count">Organisation People Count:</label>
+											<div class="col-sm-8">
+												<input type="number" class="form-control required" onchange="editOrgData(this)" id="count" placeholder="People Count">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="official_site">Official Site:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control " id="officialSite" onchange="editOrgData(this)" placeholder="Official Website address">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="facebookLink">Facebook link:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="facebookLink" onchange="editOrgData(this)" placeholder="Facebook link">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="twitter_id">Twitter id:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="twitterId" placeholder="Twitter id" onchange="editOrgData(this)">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="annual_cost">Annual Cost for Running:</label>
+											<div class="col-sm-4">
+												<input type="number" onchange="editOrgData(this)" class="form-control" id="annualCost" placeholder="Annual Cost">
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default" id="bank-detail-hidden">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Banking Details</a>
+									</h4>
+								</div>
+								<div id="collapse2" class="panel-collapse collapse in ">
+									<div class="panel-body">
+										<div id="org_bank_details_form" class="form-horizontal">
+											<div class="form-group required">
+												<label class="control-label col-sm-4" for="branch">Bank name:</label>
+												<div class="col-sm-8">
+													<input type="text" onchange="editBankData(this)" class="form-control required" id="bankName" placeholder="Bank Name">
+												</div>
+											</div>
+											<div class="form-group required">
+												<label class="control-label col-sm-4" for="count">Account No:</label>
+												<div class="col-sm-8">
+													<input type="number" class="form-control required" onchange="editBankData(this)" id="accountNumber" placeholder="Account No">
+												</div>
+											</div>
+											<div class="form-group required">
+												<label class="control-label col-sm-4" for="ifscCode">IFSC Code:</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control required" onchange="editBankData(this)" id="ifscCode" placeholder="IFSC Code">
+												</div>
+											</div>
+											<div class="form-group required">
+												<label class="control-label col-sm-4" for="branchName">Branch Name:</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control required" onchange="editBankData(this)" id="branchName" placeholder="Branch Name">
+												</div>
+											</div>
+											<div class="form-group required">
+												<label class="control-label col-sm-4" for="branchCode">Branch Code:</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control required" onchange="editBankData(this)" id="branchCode" placeholder="Branch Code">
+												</div>
+											</div>
+											<!-- <div class="form-group"> -->
+											<!-- <label class="control-label col-sm-4" for="merchantId">Merchant Id:</label> -->
+											<!-- <div class="col-sm-8"> -->
+											<!-- <input type="text" class="form-control" onchange="editBankData(this)" id="merchantId" placeholder="Merchant Id Name"> -->
+											<!-- </div> -->
+											<!-- </div> -->
+											<!-- <div class="form-group"> -->
+											<!-- <label class="control-label col-sm-4" for="salt">Salt</label> -->
+											<!-- <div class="col-sm-8"> -->
+											<!-- <input type="text" class="form-control " onchange="editBankData(this)" id="salt" placeholder="salt"> -->
+											<!-- </div> -->
+											<!-- </div> -->
+											<!-- <div class="form-group"> -->
+											<!-- <label class="control-label col-sm-4" for="key"> Key:</label> -->
+											<!-- <div class="col-sm-8"> -->
+											<!-- <input type="text" class="form-control " id="key" onchange="editBankData(this)" placeholder="Key "> -->
+											<!-- </div> -->
+											<!-- </div> -->
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+					<div class="panel-footer">
+
+						<div class="form-group">
+							<button type="button" id="save" class="btn btn-default pull-right continue" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+					Save
+					</button>
+						</div><br>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</form>
+</body>
+<script>
+	var orgEdited = false;
+	var bankEdited =false;
+	var orgDetails;
+	$.validator.addMethod('mobileValidation', function(value, element) {
+		console.log("mobile", this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value))
+		return this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value);
+	}, "enter a valid  mobile number");
+	
+	
+
+	
+	$(document).ready(function() {
+
+	    
+		var selectOrgTypeId = document.getElementById("orgType");
+		$.getJSON("/humane/orgtypelookup/?isweb=true&callback=?", function(data) {
+
+			}).done(function(data) {
+				console.log("data", data);
+				console.log("select id", selectOrgTypeId);
+				var orgTypeList = JSON.parse(jsonEscape(data));
+				getDropDownList(orgTypeList,'orgType','org_type_id','org_type');
+
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("Loaded org type list");
+			});
+
+		getCountryList();
+		
+
+
+		var orgName = $('#orgName')
+		var orgRegNo = $('#registrationNumber')
+		var orgType = $('#orgType')
+		var orgEmail = $('#email')
+		var street = $('#street')
+		var city = $('#city')
+		var state = $('#state')
+		var postalCode = $('#postalCode')
+		var country = $('#country')
+		var mobile = $('#mobile')
+		var orgDesc = $('#description')
+		var bankName = $('#bankName')
+		var accountNumber = $('#accountNumber')
+		var ifscCode = $('#ifscCode');
+		var branchCode = $('#branchCode')
+		var branchName = $('#branchName')
+		var merchantId = $('#merchantId')
+		var salt = $('#salt');
+		var key = $('#key');
+		var orgPeopleCount = $('#count')
+		var officialSite = $('#officialSite');
+		var facebookLink = $('#facebookLink');
+		var twitterId = $('#twitterId');
+		var annualCost = $('#annualCost');
+
+		$.getJSON("/humane/organisationbankdetail/10/?isweb=true&callback=?", function(data) {
+
+			}).done(function(data) {
+				console.log("loaded organisation details", data);
+				orgDetails = JSON.parse(jsonEscape(data))
+
+
+				orgName.val(orgDetails.org_name);
+				orgRegNo.val(orgDetails.org_reg_no);
+				orgEmail.val(orgDetails.org_email);
+				street.val(orgDetails.street);
+				city.val(orgDetails.city);
+				state.val(orgDetails.state);
+				postalCode.val(orgDetails.postal_code);
+				country.val(orgDetails.country);
+				mobile.val(orgDetails.mobile);
+				orgDesc.val(orgDetails.org_desc);
+				orgPeopleCount.val(orgDetails.people_count);
+				officialSite.val(orgDetails.offical_site);
+				facebookLink.val(orgDetails.facebook_link);
+				twitterId.val(orgDetails.twitter_id);
+				annualCost.val(orgDetails.annual_cost_for_running);
+
+				
+				for (var i = 0; i < orgDetails.bank_details.length; i++) {
+					accountNumber.val(orgDetails.bank_details[i].account_number);
+					ifscCode.val(orgDetails.bank_details[i].ifsc_code);
+					bankName.val(orgDetails.bank_details[i].bank_name);
+					branchName.val(orgDetails.bank_details[i].branch_name);
+					branchCode.val(orgDetails.bank_details[i].branch_code);
+					//					merchantId.val(orgDetails.bank_details[i].merchant_id);
+					//					salt.val(orgDetails.bank_details[i].salt);
+					//					key.val(orgDetails.bank_details[i].key);
+					//					
+
+				}
+
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("Loaded Organisation list");
+			});
+		
+	
+		$(":file").on("change", function(e) {
+			file = this.files[0];
+			name = file.name;
+			size = file.size;
+			type = file.type;
+			console.log(this.files[0].type);
+			if ((type != "image/png") && (type != "image/jpeg") && (type != "image/jpg")) {
+				alert("Image type should be jpg,png,jpeg");
+				this.value = '';
+			}
+		});
+
+
+		var emailValidation = {
+			required: true,
+			email: true,
+		};
+
+		var mobileValidation = {
+			required: true,
+			mobileValidation: true,
+		};
+
+
+		  $('#save').click(function(){
+		
+			  var sectionValid = true;
+			$.each($("#editOrgForm").find('input, select, textarea'), function() {
+			if (!$(this).valid()) {
+				sectionValid = false;
+			 }
+			});
+		console.log("section valid org", sectionValid);
+
+
+		 if(sectionValid){  
+			  if(orgEdited && bankEdited){
+		          	alert("save clicked");
+				  updateOrgDetails();
+				  updateBankDetails();
+				  uploadOrgLogo();
+				  }else if(orgEdited){
+					  updateOrgDetails();
+					    uploadOrgLogo();
+			      }else if(bankEdited){
+				   updateBankDetails();
+			      }else{
+				  alert("No Changes are made")
+			  }
+		    }else{
+				alert("You have Validation error");
+			}
+		  });
+		
+		$("#editOrgForm").validate({
+			errorClass: "error text-warning",
+			validClass: "success text-success",
+			highlight: function(element, errorClass) {
+
+			},
+
+			rules: {
+				name: "required",
+				email: emailValidation,
+				orgName: "required",
+				registrationNumber: "required",
+				personEmail: emailValidation,
+				mobile: mobileValidation,
+				postalCode: "required",
+				orgType: "required",
+				description: "required",
+				bankName: "required",
+				accountNumber: "required",
+				ifscCode: "required",
+				branchName: "required",
+				branchCode: "required",
+				count: "required",
+				personMobile: mobileValidation,
+
+			},
+
+		});
+
+	});
+	
+	
+
+</script>
+
+</html>
