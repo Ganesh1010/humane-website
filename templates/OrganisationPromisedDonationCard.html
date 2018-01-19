@@ -1,0 +1,141 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - Organisation Promised Donation </title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<script src="{% static "assests/JS/markDonationReceived.js"%}"></script>
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/navigation.js"%}"></script>
+
+</head>
+
+<body>
+{% include "common\navigation-bar.html" %}
+	<div class="container">
+
+		<div class="row" id="promised-donation-card">
+			<div class="loader"></div>
+		</div>
+		   
+		<div class="text-center" id = "promised_donation_pagination"></div>
+			<div class="modal fade" id="donation-detail-modal" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+						<div class="container">
+							<div class="col-md-9">
+								
+								  <div class="media ">
+									  <div class="pull-right">
+										  <h4 style="margin-bottom: 0px;">Promised Date</h4> 
+										  <h5 class="text-center" id="user_promised_date"></h5> 
+									  </div>
+									  <div class="media-left media-bottom">
+										  <img id="user_image" class="media-object thumbnail"  style="width:100px; height: 100px;margin-right:6px"> 
+            							</div>
+									  <div class="media-body ">
+										     <h4 id="user_name"></h4>
+											<h5 id = "user_email"></h5>
+											<h5 id = "user_mobile"></h5>
+											<h5 id = "donation_id"></h5>
+											<h5 id = "status"></h5>
+           
+               
+									  </div>
+								</div>
+									
+								<hr>
+							
+										<h4 class="text-center">Contribution List</h4>
+										<table class="table table-responsive table-bordered">
+											<thead>
+												<tr>
+													<th class="text-center">Sub Category One</th>
+													<th class="text-center">Sub Category Two</th>
+													<th class="text-center">Quantity</th>
+												</tr>
+											</thead>
+											<tbody id="contribution-list"></tbody>
+										</table>
+								
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-success" id="received_btn">Received</button>
+					</div>
+				</div>
+				</div>
+		</div>
+	
+	</div>
+</body>
+<script type="text/javascript">
+	
+	var url = "/humane/donationDetail/?is_donation_completed=3&isweb=true&callback=?";
+	$(document).ready(function() {
+		
+		{% if user.is_authenticated %}
+		if( {{user.role.user_role_id}} !=REGISTERED_COORDINATOR )
+		{
+			alert("You must be logged in as a registered coordinator");
+			window.location.href = "/login";
+		}
+			
+	{% else %} 
+		alert("You must be logged in as a registered coordinator");
+			window.location.href = "/login";
+	{% endif %}
+		
+			$.getJSON(url, function(data) {})
+				.done(function(data) {
+
+					var count = $.parseJSON(data)['count']
+					console.log("donation count " + count)
+					if (parseInt(count) != 0)
+						loadPromisedDonationDetails(data);
+					else {
+						$('.loader').hide();
+					}
+					if (count > 10)
+						createPagination(count, url, "promised_donation_pagination", "#promised-donation-card", 7);
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("Promised Donation load complete");
+				});
+
+	
+//
+//		$.getJSON("/humane/donationDetail/?isweb=true&callback=?", function(data) {
+//			}).done(function(data) {
+//				loadPromisedDonationDetails(data);
+//			})
+//			.fail(function() {
+//				console.log("error");
+//			})
+//			.always(function() {
+//				console.log("Loading Organisation Promised Donation Card Deatil Complete");
+//			});
+
+
+	});
+
+</script>
+
+</html>

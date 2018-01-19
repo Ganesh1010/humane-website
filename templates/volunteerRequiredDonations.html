@@ -1,0 +1,83 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - Volunteer Required Donations</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/volunteerDonation.js"%}"></script>
+
+	<style>
+		.container {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<div class="container-fluid ">
+
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">Donations for which Volunteers required</div>
+			<div class="panel-body">
+				<form class="form-horizontal" id="new-goods-form">
+					<div class="loader"></div>
+					<table class="table table-responsive table-bordered">
+						<thead>
+							<tr>
+								<th class="text-center">Donation Id</th>
+								<th class="text-center">Donation Name</th>
+								<th class="text-center">Donor Email</th>
+								<th class="text-center">Donor Mobile</th>
+								<th class="text-center">Organisation Name</th>
+								<th class="text-center">Organisation Mobile</th>
+								<th class="text-center">Donation Date</th>
+								<th class="text-center">Pickup Addrress</th>
+								<th class="text-center">Assign Volunteer</th>
+							</tr>
+						</thead>
+						<tbody id="vol-donation-table">
+						</tbody>
+					</table>
+					<hr>
+				</form>
+			</div>
+		</div>
+		<div class="text-center" id="donation-pagination"></div>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+	{%	if user.is_authenticated %}
+		{%	if user.is_superuser %} 
+			var volunteerDonationUrl = "/appAdmin/volunteerDonations/?callback=?";
+			loadVolunteerDonationDetails(volunteerDonationUrl);
+		{% else %}
+			$(".loader").hide()
+			window.location.href = "/html/pageNotFound/"
+		{% endif %}
+	{% else %}
+		$(".loader").hide()
+		window.location.href = "/html/pageNotFound/"
+	{% endif %}
+        
+	});
+
+</script>
+
+</html>

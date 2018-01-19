@@ -1,0 +1,388 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - New Service Post Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+
+	<link href="{% static "assests/CSS/bootstrap-slider.css"%}" rel="stylesheet">
+	<script src="{% static "assests/JS/bootstrap-slider.js"%}"></script>
+	
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/servicePost.js"%}"></script>
+
+
+	<style>
+		.container {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+
+		.checkbox {
+			padding-left: 40px;
+		}
+
+	</style>
+</head>
+
+<body>
+	{% include "common\navigation-bar.html" %}
+	<div class="container ">
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">New Service Post</div>
+			<div class="panel-body">
+				<div class="loader"></div>
+				<form class="form-horizontal" id="new-service-form">
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="main_service_category">Main Service Category:</label>
+						<div class="col-sm-4">
+							<select id="main_service_category" required name="main-service-category" class="form-control" onchange="loadSubServiceDetails();">
+                        </select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="sub-service-category-one">Sub Service Category One:</label>
+						<div class="col-sm-4">
+							<select id="sub-service-category-one" required disabled name="sub-service-category-one" class="form-control" onchange="loadSubServiceTwoDetails();">
+                        </select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="sub-service-category-two">Sub Item Category:</label>
+						<div class="col-sm-4">
+							<select id="sub-service-category-two" disabled name="sub-service-category-two" class="form-control">
+                        </select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="service-desc">Description:</label>
+						<div class="col-sm-4">
+							<textarea rows="4" cols="50" class="form-control" required id="service-desc" placeholder="Enter Your Description" onfocusout="checkDescLength()" oninput="descValidation()"></textarea>
+							<h6 id="desc-error" class="hidden error-cllor">Minimum 10 characters required.</h6>
+						</div>
+					</div>
+					<hr>
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="service-start-date">Service Start Date:</label>
+						<div class="col-sm-4">
+							<div class="input-group date" data-date-format="yyyy-mm-dd" id="service-start-date">
+								<input type="text" class="form-control" required id="start-date" placeholder="Select start date" />
+								<span class="input-group-addon">
+                           <span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</div>
+						<script type="text/javascript">
+							$(function() {
+								var todayDate = new Date();
+								var endDate = todayDate.setMonth(todayDate.getMonth() + 3);
+								console.log("end date " + new Date(endDate))
+								$('#service-start-date').datepicker({
+									calendarWeeks: true,
+									todayHighlight: true,
+									autoclose: true,
+									startDate: new Date(),
+									endDate: new Date(endDate)
+								});
+							});
+
+						</script>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="service-end-date">Service End Date:</label>
+						<div class="col-sm-4">
+							<div class="input-group date" data-date-format="yyyy-mm-dd" id="service-end-date">
+								<input type="text" class="form-control" required id="end-date" placeholder="Select end date" />
+								<span class="input-group-addon">
+                           <span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</div>
+						<script type="text/javascript">
+							$(function() {
+								$('#service-end-date').datepicker({
+									calendarWeeks: true,
+									todayHighlight: true,
+									autoclose: true,
+								});
+							});
+
+						</script>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="deadline-time">Service Requested From:</label>
+						<div class="col-sm-4">
+							
+							<input id="input" type="text" class="span2" value="295,450" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]" data-value="295,450" style="display: none;">
+							<h6 id="time-error" class="hidden error-cllor">Sart time and end time cannot be same.</h6>
+						</div>
+					</div>
+					<div class="collapse" id="service-days">
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="deadline-time">Service Required Days:</label>
+							<div class="col-sm-4">
+								<div id="accordion">
+									<div class="radio">
+										<label><input type="radio" name="optradio" id="allDays" data-toggle="collapse" data-target="#all-days" data-parent="#accordion" onclick="addServicesDayslist(this)">All Days</label>
+										<div class="collapse" id="all-days">
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="all-days-1" value="1">Monday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="all-days-2" value="2">Tuesday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox"onchange="checkDaysValidation()" id ="all-days-3" value="3">Wednesday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="all-days-4" value="4">Thursday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="all-days-5" value="5">Friday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="all-days-6" value="6">Saturday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="all-days-7" value="7">Sunday</label>
+											</div>
+										</div>
+									</div>
+									<div class="radio">
+										<label><input type="radio" name="optradio" id="weekDays" data-toggle="collapse" data-target="#week-days" data-parent="#accordion" onclick="addServicesDayslist(this)">Week Days</label>
+										<div class="collapse" id="week-days">
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="week-days-1" value="1">Monday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="week-days-2"value="2">Tuesday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="week-days-3" value="3">Wednesday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="week-days-4" value="4">Thursday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="week-days-5" value="5">Friday</label>
+											</div>
+										</div>
+									</div>
+									<div class="radio">
+										<label><input type="radio" name="optradio" id="weekEnds" data-toggle="collapse" data-target="#week-ends" data-parent="#accordion" onclick="addServicesDayslist(this)">Week Ends</label>
+										<div class="collapse" id="week-ends">
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="week-ends-1"  value="6">Saturday</label>
+											</div>
+											<div class="checkbox">
+												<label><input type="checkbox" onchange="checkDaysValidation()" id ="week-ends-2" value="7">Sunday</label>
+											</div>
+										</div>
+									</div>
+									<h6 id="days-error" class="hidden error-cllor">Select the service days.</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-offset-5 col-sm-10 ">
+							<button type="submit" class="btn btn-success text-center" data-toogle="tooltip" title="Click to publish the goods." id = "publish-service-btn" onclick="publishService()">Publish</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+	
+	{% if user.is_authenticated %}
+		if( {{user.role.user_role_id}} !=REGISTERED_COORDINATOR )
+		{
+			alert("You must be logged in as a registered coordinator");
+			window.location.href = "/login";
+		}
+		
+			
+	{% else %} 
+		alert("You must be logged in as a registered coordinator");
+			window.location.href = "/login";
+	{% endif %}
+	
+	
+		var startHourPeriod;
+	  var endHourPeriod;
+
+$("#input").slider({
+
+  // the id of the slider element
+  id: "",
+
+  // minimum value
+  min: 9,
+
+  // maximum value
+  max: 22,
+
+  // increment step
+  step: 1,
+
+  // the number of digits shown after the decimal.
+  precision: 0,
+
+  // 'horizontal' or 'vertical'
+  orientation: 'horizontal',
+
+  // initial value
+  value: 9,
+
+  // enable range slider
+  range: true,
+
+  // selection placement. 
+  // 'before', 'after' or 'none'. 
+  // in case of a range slider, the selection will be placed between the handles
+  selection: 'before',
+
+  // 'show', 'hide', or 'always'
+  tooltip: 'show',
+
+  // show two tooltips one for each handler
+  tooltip_split: false,
+
+  // 'round', 'square', 'triangle' or 'custom'
+  handle: 'round',
+
+  // whether or not the slider should be reversed
+  reversed: false,
+
+  // whether or not the slider is initially enabled
+  enabled: true,
+
+  // callback
+  formatter: function formatter(val) {
+	  var tempStartHour,tempEndHour;
+    if (Array.isArray(val)) {
+		startHour = val[0];
+		endHour  =val[1];
+		tempStartHour = startHour;
+		tempEndHour = endHour;
+		
+		if(tempStartHour>12){
+			tempStartHour-=12
+			startHourPeriod = " PM";
+		}
+		else if(tempStartHour==12)
+			startHourPeriod = " PM";
+		else
+			startHourPeriod = " AM";
+		
+		if(tempEndHour>12){
+			tempEndHour-=12
+			endHourPeriod = " PM";
+		}
+		else if(tempEndHour==12)
+			endHourPeriod = " PM";
+		else
+			endHourPeriod = " AM";
+		
+		if ($("#time-error").is(":visible")) 
+		   $("#time-error").addClass("hidden");
+		
+      return tempStartHour +startHourPeriod+"  to  "+tempEndHour+endHourPeriod;
+    } else {
+      return val;
+    }
+  },
+
+  // The natural order is used for the arrow keys. 
+  // Arrow up select the upper slider value for vertical sliders, arrow right the righter slider value for a horizontal slider - no matter if the slider was reversed or not. 
+  // By default the arrow keys are oriented by arrow up/right to the higher slider value, arrow down/left to the lower slider value.
+  natural_arrow_keys: false,
+
+  // Used to define the values of ticks. 
+  // Tick marks are indicators to denote special values in the range. 
+  // This option overwrites min and max options.
+  ticks: [],
+
+  // Defines the positions of the tick values in percentages. 
+  // The first value should always be 0, the last value should always be 100 percent.
+  ticks_positions: [],
+
+  // Defines the labels below the tick marks. Accepts HTML input.
+  ticks_labels: [],
+
+  // Used to define the snap bounds of a tick. 
+  // Snaps to the tick if value is within these bounds.
+  ticks_snap_bounds: 0,
+
+  // Used to allow for a user to hover over a given tick to see it's value.
+  ticks_tooltip: false,
+
+  // Position of tooltip, relative to slider. 
+  // Accepts 'top'/'bottom' for horizontal sliders and 'left'/'right' for vertically orientated sliders. 
+  // Default positions are 'top' for horizontal and 'right' for vertical slider.
+  tooltip_position: null,
+
+  // Set to 'logarithmic' to use a logarithmic scale.
+  scale: 'linear',
+
+  // Focus the appropriate slider handle after a value change.
+  focus: false,
+
+  // ARIA labels for the slider handle's, Use array for multiple values in a range slider.
+  labelledby: null,
+
+  // Defines a range array that you want to highlight
+  rangeHighlights: []
+  
+});
+		
+		$("#new-service-form").submit(function() {
+			console.log("here in submit");
+			return false;
+		});
+
+		$("#service-start-date").datepicker().on("changeDate", function(e) {
+			var selectedDate = new Date(e.date.valueOf());
+			var endDate = selectedDate.setMonth(selectedDate.getMonth() + 3);
+			$('#service-end-date').datepicker('setStartDate', new Date(e.date.valueOf()));
+			$('#service-end-date').datepicker('setEndDate', new Date(endDate.valueOf()));
+			$('#service-end-date').datepicker('setDate', null);
+		});
+		$("#service-end-date").datepicker().on("changeDate", function(e) {
+			var startDate = $("#service-start-date").datepicker('getDate')
+			var endDate = $("#service-end-date").datepicker('getDate')
+			var days = DifferenceInDays(startDate, endDate)
+			
+			if (days >= 7)
+				$("#service-days").addClass("in");
+
+			else {
+				daysCount = -1;
+				serviceDays = []
+				unCheckCheckBoxex("all-days", 7);
+				unCheckCheckBoxex("week-days", 5);
+				unCheckCheckBoxex("week-ends", 2);
+				$("#service-days").removeClass("in");
+			}
+		});
+
+		var mainServiceUrl = "/humane/mainItemDetails/?request=2&isweb=True&callback=?";
+		loadMianervice(mainServiceUrl);
+
+	});
+
+</script>
+
+</html>

@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Humane User Registration</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="{% static "assests/css/form-elements.css"%}">
+	<link rel="stylesheet" href="{% static "assests/css/style.css"%}">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+
+	
+	<script src="{% static "assests/js/jquery-1.11.1.min.js"%}"></script>
+	<script src="{% static "assests/js/bootstrap.min.js"%}"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+	
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+	<script src="{% static "assests/JS/userRegistration.js"%}"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+
+
+</head>
+
+<body style="background: rgba(0, 0, 0, 0.3);">
+
+	<!-- Top content -->
+	<div class="top-content">
+
+		<div class="loader"></div>
+		<div class="inner-bg">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-8 col-sm-offset-2 text">
+						<h1> Registration Form</h1>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 col-sm-offset-3 form-box">
+						<div class="form-top">
+							<div class="form-top-left">
+								<h3>Register to Humane</h3>
+							</div>
+							<div class="form-top-right">
+								<i class="fa fa-lock"></i>
+							</div>
+						</div>
+						<div class="form-bottom">
+							<form role="form" action="" method="post" class="login-form" id="regsiterForm">
+								{% csrf_token %}
+								<div class="form-group">
+									<label>First Name</label>
+									<label class="sr-only" for="form-first-name">First Name</label>
+									<input type="text" placeholder="First Name" class="form-first-name form-control" id="first_name" name="first_name">
+								</div>
+								<div class="form-group">
+									<label>Email</label>
+									<label class="sr-only" for="form-email">Email</label>
+									<input type="text" placeholder="Email" class="form-control"  oninput="emailTextChanged()" name="email" id="email" >
+								</div>
+								<div class="form-group">
+									<label>Mobile</label>
+									<label class="sr-only" for="form-mobile">Mobile</label>
+									<input type="text" placeholder="Mobile" class="form-mobile form-control" name="mobile" id="mobile">
+								</div>
+
+								<div class="form-group">
+									<label>Date of Birth</label>
+										<div class="input-group date" data-date-format="yyyy-mm-dd" id="user-dob-picker">
+											<input type="text" class="form-dob form-control" id="dob" name="dob" placeholder="DOB" />
+											<span class="input-group-addon">
+                       <span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+							
+
+									<script type="text/javascript">
+										$(function() {
+											var todayDate = new Date();
+											$('#user-dob-picker').datepicker({
+												calendarWeeks: true,
+												todayHighlight: true,
+												autoclose: true,
+												endDate: todayDate
+											});
+										});
+
+									</script>
+								
+								</div>
+								<div class="form-group">
+									<label>Password</label>
+									<label class="sr-only" for="form-password">Password</label>
+									<input type="password" placeholder="Password" class="form-password form-control" name="password" id="password">
+								</div>
+								<div class="form-group">
+									<label>Confirm Password</label>
+									<label class="sr-only" for="form-password">Confirm Password</label>
+									<input type="password" placeholder="Confirm Password" class="form-password form-control" name="confirm_password" id="confirm_password">
+								</div>
+								<br>
+								<div class="text-center" style="color: white;" id="email_exists_error">
+								<label >Email Already Exists.</label>
+									<label>	Either <a style="color: greenyellow;" href="/login">Login</a>&nbsp;&nbsp; or use <a style="color: greenyellow;" href="/login">Forgot Password</a> to reset the Password</label>
+								</div>
+								<button type="button" id="register-btn" class="btn" onclick="register()">Register</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Javascript -->
+	<script>
+		
+	$.validator.addMethod('mobileValidation', function(value, element) {
+		console.log("mobile", this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value))
+		return this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value);
+	}, "enter a valid  mobile number");
+		
+		$.validator.addMethod('confirmPassword', function(value, element) {
+		return $('#password').val()==$('#confirm_password').val();
+	}, "confirm password mismatch");
+		
+	$(document).ready(function() {
+		$(".loader").hide();
+		$("#email_exists_error").hide();
+		
+		var mobileValidation = {
+			mobileValidation: true,
+		};
+		
+		var emailValidation = {
+					required: true,
+					email: true,
+			};
+
+		var confirmPasswordVerification = {
+			required : true,
+			confirmPassword : true,
+		}
+		validator = $("#regsiterForm").validate({
+
+			errorClass: "error text-warning",
+			validClass: "success text-success",
+			highlight: function(element, errorClass) {
+
+			},
+
+			rules: {
+				first_name: {
+					required: true,
+					rangelength: [3, 500]
+				},
+				email:emailValidation,
+				mobile: mobileValidation,
+				password: "required",
+				confirm_password: confirmPasswordVerification
+			},
+
+		});
+	});
+		function register() {
+			if ($('#regsiterForm').valid()) {	
+				registerUser();
+			}
+		}
+		
+		function emailTextChanged()
+		{
+			$("#email_exists_error").hide();
+		}
+	</script>
+
+</body>
+
+</html>

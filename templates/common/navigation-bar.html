@@ -1,0 +1,363 @@
+{% load static%}
+<!-- loadNotificationDetails -->
+<script>
+var isSendClicked = false;
+		
+	
+		function loadNotifications(commonUserProfile){
+		{% if user.is_authenticated %}
+		
+			
+		$.getJSON("/humane/getNotificationDetails/?isweb=true&callback=?", function(data) {
+
+			}).done(function(data) {
+				console.log("common user pofile",commonUserProfile)
+				loadNavigationNotificationDetails(data,commonUserProfile);
+				$('#notification_menu').show();
+			
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("Notification details loaded");
+			});
+			
+			
+			<!-- } -->
+			{% else %}
+			<!-- console.log("notification menu", $('#notification_menu')); -->
+			 $('#notification_menu').hide();
+			 
+			{% endif %}
+			}
+			
+		
+	$(document).ready(function() {
+	
+			var userProfileJson = `{{user_json|safe}}`
+		if (userProfileJson != "" || userProfileJson != null) {
+			try {
+				var userProfile = $.parseJSON(userProfileJson)
+				commonUserProfile = userProfile
+				
+				<!-- if(userProfile.role==REGISTERED_COORDINATOR) -->
+					<!-- $("#newGoodsServicePostfab").show(); -->
+				<!-- else -->
+					<!-- $("#newGoodsServicePostfab").hide(); -->
+
+			} catch (e){
+				console.log("error while parsing the user profile ", e.message)
+			}
+		}
+
+	{% if user.is_authenticated %}
+	
+		loadNotifications(commonUserProfile);
+		console.log("navigation called")
+	 {% endif %}
+	
+			
+			$('#feedback_modal').on('hidden.bs.modal', function(){
+					$('#feedback-text').val('');
+				$('#feedback-text').removeClass('redBorder');
+					$('#feedback_error').addClass('hidden');
+					isSendClicked = false;
+					
+				
+				});
+				
+				 
+				 $("#sigin_modal").validate({
+			errorClass: "error text-warning",
+			validClass: "success text-success",
+			ignore: [],
+			highlight: function(element, errorClass) {
+
+			},
+
+			
+			rules: {
+				username:{
+					required:true,
+					minlength: 3,
+            		maxlength: 150,
+					email:true,
+				} ,
+				password:{
+					required:true,
+					minlength: 8,
+            		maxlength: 50,
+				},
+			},
+					 messages:{
+				username:"Enter a Valid email(eg.example@humane.com)",
+				password:"Enter a valid password with min 8 characters ",
+				
+			},
+			
+				 
+				
+				
+				  
+		
+				 });
+			
+		
+		});
+		
+			
+				 function loginModal()
+
+    {
+
+		
+       var x=$('#sigin_modal').serialize();
+		
+		console.log("login - from modal",x)
+        $.ajax({
+    type:"POST",
+    url: '/html/login/'+window.location.search,
+    data: x,
+    success: function(response){
+		var json = $.parseJSON(response);
+		<!-- alert(json['status']); -->
+		if (json['status']=='true')
+		{
+		window.location.replace("/html/homePage")
+		<!-- window.location = "/html/homePage"; -->
+
+		}else{
+			successAlert("Error",json['reason'],"error","#");
+			$("#password").val("");
+		}
+     },
+	
+		});
+	}
+			
+			 function loginClicked(){
+					if($("#sigin_modal").valid()){
+					  loginModal();
+				 }
+					 else{
+						 console.log("cannot login");
+					 }
+				 
+				 }
+    
+
+</script>
+
+
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+  <script src="{% static "assests/JS/sweetalert.min.js"%}"></script>
+  <link rel="stylesheet " href="{% static "assests/CSS/sweetalert.css"%}">
+
+<nav class="navbar navbar-default navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/html/homePage">The Humane Project</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-right ">
+	
+        <li class="dropdown">
+		
+            {% if user.is_authenticated %}
+						
+            <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			Notification (<b id="notification_count"></b>)</a>
+			<ul class="dropdown-menu notification-bg-color"  style="width:350px;background-color:#fff;" >
+              <div class="notify-drop-title" >
+			 
+                <!-- ss              </div>
+              <!-- end notify title -->
+              <!-- notify content -->
+              <div class="drop-content">
+			   <div id="nv-bar-notification-card-id">
+				<div class="loader"></div>
+				  </div>
+			</div>
+            
+            
+              <div id="nv_expand" class="notify-drop-footer text-center">
+                <a href="/html/notificationCard"><i class="fa fa-eye"></i>Expand</a>
+              </div>
+            </ul>
+			
+            <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.get_username}} <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+<!--			  {{user.role.user_role_id}}-->
+			  {% if user.role.user_role_id == 1  %} 
+			   <li><a href="/html/organisationPromisedDonationCard">Promised Donations</a></li>
+			   <li><a href="/html/organisationServiceInterestCard">Service Interest Expressed</a></li>
+			   <li><a href="/html/orgHistoryPage">History</a></li>
+			   <li><a href="/html/orgDetailPage">My Organisation</a></li>
+			  
+			 {% else %}
+			  <li><a href="/html/myContribution">My Contributions</a></li>
+			  
+			  
+			 {% endif %}
+			
+            <li><a href="/html/userProfile">My Profile</a></li>
+            <li><a href="#" data-toggle="modal" data-target= "#feedback_modal">Feedback</a></li>
+            <li class="divider"></li>
+			<li><a href="/html/viewAllOrg">View All Organisations</a></li>
+            <li><a href="/html/referOrganisation">Refer an Organisation</a></li>
+            <li><a href="/html/referFriend">Refer a Friend</a></li>
+            <li class="divider"></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+			
+			 
+          </ul>
+        </li>
+		  
+
+            {% else %}
+		  <!-- <li><p class="navbar-text"></p></li> -->
+            <li><a href="" data-target="#login_modal" data-toggle="modal"><b>Already have an account? Login</b></a></li>
+		       <li class="dropdown">
+
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
+							 <ul class="dropdown-menu" role="menu">
+								<li><a href="/html/viewAllOrg">View All Organisations</a></li>
+								<li><a href="/html/referOrganisation">Refer an Organisation</a></li>
+								<li><a href="/html/referFriend">Refer a Friend</a></li>
+								 <li class="divider"></li>
+						   <li><a href="#" data-toggle="modal" data-target= "#feedback_modal">Feedback</a></li>
+						   <li><a href="#">Terms and Conditions</a></li>
+					<li><a href="#">Help</a></li>
+					<li><a href="#">About Us</a></li>
+ 					<li class="divider"></li></ul>	
+
+<!--
+      <ul id="login-dp" class="dropdown-menu">
+				<li>
+					 <div class="row">
+							<div class="col-md-12">
+								 <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login_form">
+										<div class="form-group">
+											 <label class="sr-only" for="exampleInputEmail2">Email address</label>
+											 <input type="email" class="form-control" id="username" name="username" placeholder="Email address" required>
+										</div>
+										<div class="form-group">
+											 <label class="sr-only" for="exampleInputPassword2">Password</label>
+											 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+										</div>
+										<div class="form-group">
+											 <button type="button" class="btn btn-primary btn-block" onclick="login()">Sign in</button>
+										</div>
+										<div class="checkbox">
+											 <label>
+											 <input type="checkbox"> keep me logged-in
+											 </label>
+										</div>
+                                     {% csrf_token %}
+								 </form>
+							</div>
+							<div class="bottom text-center">
+								New here ? <a href="#"><b>Join Us</b></a>
+							</div>
+					 </div>
+				</li>
+			</ul>
+-->
+            {% endif %}
+       
+		</ul>
+		
+	  </div>
+	</div>
+</nav>
+
+
+<div id="login_modal" class="modal fade" role="dialog">
+
+  <div class="modal-dialog center-block">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Login</h4>
+      </div>
+      <div class="modal-body">
+         <form role="form" action="" method="post" class="form-horizontal" id="sigin_modal">
+		    <div class="form-group required">
+				<label class="control-label col-sm-4" for="username">Email Address </label>
+					<div class="col-sm-6">
+						<input type="email" class="form-control required"  id="username" name="username" placeholder="Email Address">
+					</div>
+			</div>
+			
+			<div class="form-group required">
+				<label class="control-label col-sm-4" for="password">Password</label>
+					<div class="col-sm-6">
+						<input type="password" class="form-control required"  id="password" name="password" placeholder="Password">
+					</div>
+			</div>
+			
+			<div class="help-block text-right"><a href="/html/getEmailPage">Forgot the password ?</a></div>
+			
+			<div class="form-group">
+			 <button type="button" class="btn btn-primary center-block " onclick="loginClicked()">Sign in</button>
+			</div> 
+			
+			<!-- <div class="form-group text-center"> -->
+			
+			 <!-- <input type="checkbox" class="text-right"> &nbsp;Keep me Logged-In -->
+			<!-- </div>  -->
+			
+			<div class="form-group text-center">
+			 <a href ="/html/userRegisterPage"> New Here ? <b>Join Us </b></a>
+			</div> 
+			
+		 </form>
+      </div>
+      <!-- <div class="modal-footer"> -->
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      <!-- </div> -->
+    </div>
+
+  </div>
+</div>
+
+
+<div class="modal  fade" id="feedback_modal"  tabindex="-1" role="dialog" aria-labelledby="Feedback" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header feedback-modal-header">
+                <h4 class="modal-title" id="feedbacktitle"><span class="glyphicon glyphicon-comment" style="margin-right: 10px"></span>Give Your Feedback
+                <button type="button" class="close" data-dismiss="modal" >&times;</button></h4>
+    
+      </div>
+                <div class="modal-body">
+                    <form id="feedbackform">
+                        <div class="form-group ">
+                            <label for="feedback-text" class="form-control-label  ">Comment<span class="red_asterik"> * </span></label>
+                            <textarea required class="form-control" oninput=validFeedback() name="feedback-text" rows="5" id="feedback-text"></textarea>
+                        </div>
+						
+						<p class=" red_asterik hidden" id="feedback_error">* Enter feedback with minimum 3 characters</p>
+                    </form>
+                </div>
+                <div class="modal-footer">
+      <button type="button" class="btn btn-primary" onclick="postFeedBack()">Send</button>
+      </div>
+            </div>
+        </div>
+    </div>

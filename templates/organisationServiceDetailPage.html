@@ -1,0 +1,159 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - Organisation Service Detail</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/markServiceAttended.js"%}"></script>
+
+	<style>
+		.card {
+			margin-top: 1%;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+			transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+		}
+
+	</style>
+</head>
+
+<body id="org-service-detail">
+	<div class="container">
+		<div class="row">
+
+			<div class="card col-md-6 col-md-offset-3">
+				<div class="media padding">
+					<div class="media-left media-middle">
+						<img id="main-service-icon" class="media-object thumbnail " style="width:80px;">
+					</div>
+					<div class="media-body ">
+						<br>
+						<h3 class="media-heading text-center" id="main-service-name"></h3>
+						<table class="table table-padding table-hover table-responsive">
+							<tbody>
+								<tr>
+									<td class="col-md-3 text-center"><b>Service start date</b></td>
+									<td class=" col-md-3 text-center "><b>Service end date</b></td>
+
+								</tr>
+								<tr>
+									<td class="col-md-3 text-center" id="service-start-date"><strong></strong></td>
+									<td class=" col-md-3 text-center " id="service-end-date"><strong></strong></td>
+
+								</tr>
+							</tbody>
+						</table>
+						<table class="table table-padding table-responsive">
+							<tbody>
+								<tr>
+									<td class="col-md-3 text-center"><b>Service Timings</b></td>
+									<td class=" col-md-3 text-center" id="service-days"><b>Service Days</b></td>
+
+								</tr>
+								<tr>
+									<td class="col-md-3 text-center" id = "service-time"><strong></strong></td>
+									<td class=" col-md-3 text-center " id="service-days-value"><strong></strong></td>
+
+								</tr>
+							</tbody>
+						</table>
+						
+
+						<button type="button" class="btn btn-success center-block" data-toggle="tooltip" title="Click to close the service" id = "close-service-btn">Make Service Satisfied</button>
+					</div>
+
+				</div><br>
+
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container">
+		<h3>Servicing User Details</h3>
+		<hr>
+		<div class="row" id="service-interest-expressed-card">
+			<div class="loader"></div>
+		</div>
+
+		<div id="service_interest_pagination"></div>
+		<div class="modal fade" id="service-interest-detail-modal" role="dialog">
+			<div class="modal-dialog ">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+						<div class="container">
+							<div class="col-md-9">
+
+								<div class="media ">
+									<div class="media-heading " style="margin-left: 120px;">
+										<h4 class="text-center" style="margin-bottom: 0px;">Interested Date</h4>
+										<h5 class="text-center" id="user_interest_expressed_date"></h5>
+									</div>
+									<div class="media-left media-middle">
+										<img id="user_image" class="media-object thumbnail" style="width:100px; height: 100px;margin-right:6px">
+									</div>
+									<div class="media-body media-left ">
+										<h4 id="user_name"></h4>
+										<h5 id="user_email"></h5>
+										<h5 id="main_service"></h5>
+										<h5 id="sub_category_one"></h5>
+										<h5 id="sub_category_two"></h5>
+										<h5 id="user_mobile"></h5>
+										<h5 id="servicing_time"></h5>
+
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-success" id="attended_btn">Attended</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$("#org-service-detail").hide();
+		
+		var baseUrl = document.URL;
+		var id = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
+		var url = "/humane/serviceDetail/" + id + "/?isweb=true&callback=?"
+		
+		{%	if user.is_authenticated %}
+		if ({{user.role.user_role_id}} == REGISTERED_COORDINATOR) {
+			loadOrganisationServiceDetail(url,id);
+		} else {
+			alert("You must be logged in as a register coordinator to view this page");
+			window.location.href = "/login";
+		} {% else %}
+		alert("You must be logged in as a register coordinator to view this page");
+		window.location.href = "/login"; 
+		   {% endif %}
+		   
+		$("#close-service-btn").click(function(){
+			closeService(id);
+		});
+
+	});
+
+</script>
+
+</html>

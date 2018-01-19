@@ -1,0 +1,150 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - My Contribution</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="CSS/humane.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js">
+	</script>
+   
+    <link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<script src="{% static "assests/JS/mycontribution.js"%}"></script>
+	<script src="{% static "assests/JS/humane.js"%}"></script></head>
+	<script src="{% static "assests/JS/navigation.js"%}"></script>
+
+<body>
+
+{% include "common\navigation-bar.html" %}
+	<div class="container">
+
+		
+		<ul class="nav nav-pills nav-justified">
+			<li class="active"><a href="#promised_donation" data-toggle="tab" id="donation-anchor">Donations</a></li>
+			<li><a href="#user-service-interest-expressed-card" data-toggle="tab" id="service-interested-anchor">Interest Expressed</a></li>
+
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade in active row" id="promised_donation">
+			</div>
+			<div class="loader" id="donation-loader"></div>
+			<div class ="text-center" id="promised_donation_pagination"></div>
+			<div class="tab-pane fade row" id="user-service-interest-expressed-card">
+			</div>
+			<div class="loader hidden" id="service-interested-loader" ></div>
+			<div class ="text-center" id="service-interest-expressed-pagination"></div>
+
+		</div>
+		
+	</div>
+
+	
+
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	
+	var firstServiceLoad = true;
+	var serviceInterestedUrl = "/humane/serviceInterestedDetail/?isweb=true&callback=?";
+	var promisedDonationUrl = "/humane/donationDetail/?isweb=true&callback=?";
+	
+	
+	{% if user.is_authenticated %}
+		if( {{user.role.user_role_id}} !=REGISTERED_USER )
+		{
+			alert("You must be logged in as a registered user");
+			window.location.href = "/login";
+		}
+			
+	{% else %} 
+		alert("You must be logged in as a registered user");
+			window.location.href = "/login";
+	{% endif %}
+	
+	loadPromisedDonationDetail(promisedDonationUrl);
+
+		$("#service-interested-anchor").click(function(e) {
+			console.log("firstServiceLoad" + firstServiceLoad)
+			if (firstServiceLoad) {
+			    $('#service-interested-loader').removeClass("hidden");
+				loadServiceInterestedDetail(serviceInterestedUrl);
+				firstServiceLoad = false;
+			}
+			$('#promised_donation_pagination').hide();
+			$('#service-interest-expressed-pagination').show();
+
+		});
+
+		$("#donation-anchor").click(function(e) {
+			$('#promised_donation_pagination').show();
+			$('#service-interest-expressed-pagination').hide();
+		});
+		
+		
+		
+		
+		function loadServiceInterestedDetail(serviceInterestedUrl){
+		$("#service-interested-loader").show();
+		$.getJSON(serviceInterestedUrl, function(data) {
+
+			}).done(function(data) {
+			
+			var count = $.parseJSON(data)['count']
+					console.log("service count " + count)
+					if (parseInt(count) != 0)
+						loadUserServiceInterestedDetails(data);
+					else {
+						$("#service-interested-loader").hide();
+						document.getElementById("user-service-interest-expressed-card").innerHTML = "No Service Interested Detail(s) found";
+					}
+					if (count > 10)
+						createPagination(count, serviceInterestedUrl, "service-interest-expressed-pagination", "#user-service-interest-expressed-card", 9);
+				
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("User Interest Expressed services Loaded");
+			});
+
+}
+			
+	function loadPromisedDonationDetail(promisedDonationUrl){
+	$('#donation-loader').show();
+		$.getJSON(promisedDonationUrl, function(data) {
+
+			}).done(function(data) {
+			
+			var count = $.parseJSON(data)['count']
+					console.log("service count " + count)
+					if (parseInt(count) != 0){
+						getPromisedDonationDetails(data);
+						
+						}
+					else {
+						$('#donation-loader').hide();
+						document.getElementById("promised_donation").innerHTML = "No Donation(s) made";
+					}
+					if (count > 10)
+						createPagination(count, promisedDonationUrl, "promised_donation_pagination", "#promised_donation", 8);
+				
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("donation Details Loaded");
+			});
+			}
+	});
+
+</script>
+
+</html>

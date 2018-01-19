@@ -1,0 +1,153 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Organisation Detail</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBbO3DfmK-pb6JNbsq8oegXgE2giEbcPQo"></script>
+
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/navigation.js"%}"></script>
+	<script src="{% static "assests/JS/viewAllOrg.js"%}"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	
+	
+	<body >
+	{% include "common\navigation-bar.html" %}
+		<div class="container">		
+			
+				<ul class="nav nav-tabs nav-justified">
+			<li class="active"><a href="#org_map" data-toggle="tab" id="org_card_map">Map View</a></li>
+			<li ><a href="#org_card" data-toggle="tab" id="org_card_list">List View</a></li>
+			
+
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="org_map">
+								<div class="loader" ></div>
+				<div id="map_canvas" style="min-width: 1000px;
+min-height: 1000px;width: 100%;
+height: 100%;"></div>
+
+			</div>
+			<div class="tab-pane fade" id="org_card">
+							<div class="loader" ></div>
+			</div>
+
+		</div>
+	</div>
+
+	
+		<script type="text/javascript">
+			
+			function initialise(data){
+		        // map options
+                var options = {
+                    zoom: 14,
+                    center: new google.maps.LatLng(13.0654178,80.2209937), // centered Chennai
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    mapTypeControl: false
+                };
+
+                // init map
+                var map = new google.maps.Map(document.getElementById('map_canvas'), options);
+
+				         for (var i = 0; i < data.length; i++) {
+				  var lat = data[i].latitude;
+				  var lon = data[i].longitude;
+				  <!-- console.log(lat+' '+lon); -->
+				  <!-- console.log("org data"+i+" "+data[i].org_name); -->
+                    // init markers
+					 var infowindow = new google.maps.InfoWindow();
+				  if(lat!=null & lon !=null){
+				  
+				  
+			
+		
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(lat,lon),
+                        map: map,
+                        title: data[i].org_name
+                    });
+				 google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+        return function() {
+          infowindow.setContent(data[i].org_name+", "+data[i].city);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+	  
+	  google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+         var link = "/html/orgDetailPage";
+					console.log("on click marker in map", data[i].org_id);
+
+					link += "?id=" +data[i].org_id;
+					console.log("url", link);
+					window.location.href = link;
+        }
+      })(marker, i));
+					
+					
+					
+
+    // process multiple info windows
+                 
+                }
+				
+		
+				
+				
+			  }
+
+   // addmarker(latlng);
+                
+				//console.log("city list size",data.length)
+                // set multiple marker
+      
+			}
+		$(document).ready(function() {
+			
+           //initialise();
+		
+			var orgListUrl = "/humane/organisationListDetails/?isweb=true&callback=?"
+			
+			function loadOrganisationList(data){
+					var t = $.parseJSON(data)
+					$('.loader').hide();
+					$.each(t, function(key, value) {
+						console.log(value)
+						createOrgCard(value);
+						//setMarker(value);
+						
+						
+
+			});
+				initialise(t);
+				
+			}
+			
+			$.getJSON(orgListUrl, function(data) {})
+				.done(function(data) {
+				console.log(data)
+					loadOrganisationList(data);
+					
+
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("View all Organisation Details");
+				});
+			
+				
+		});
+
+		</script>
+	</body>

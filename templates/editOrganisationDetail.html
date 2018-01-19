@@ -1,0 +1,598 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Edit Organisation and Bank Details</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
+	<!-- Dependencies: JQuery and GMaps API should be loaded first -->
+	<!-- <script src="{% static "assests/JS/jquery-2.1.1.min.js"%}"></script> -->
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBbO3DfmK-pb6JNbsq8oegXgE2giEbcPQo"></script>
+
+	<!-- CSS and JS for our code -->
+	<link rel="stylesheet" type="text/css" href="{% static "assests/CSS/jquery-gmaps-latlon-picker.css"%}"/>
+	<script src="{% static "assests/JS/jquery-gmaps-latlon-picker.js"%}"></script>
+
+
+	<script src="{% static "assests/JS/editOrgDetail.js"%}"></script>
+	<script src="{% static "assests/JS/orgRegistration.js"%}"></script>
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<link rel="stylesheet " href="{% static "assests/CSS/humane.css"%}">
+	<style>
+		.form-group.required .control-label:after {
+			content: " *";
+			color: red;
+		}
+
+		textarea {
+			resize: none;
+		}
+
+		.panel-heading span {
+			margin-top: -26px;
+			font-size: 15px;
+			margin-right: -12px;
+		}
+
+		.clickable {
+			background: rgba(0, 0, 0, 0.15);
+			display: inline-block;
+			padding: 6px 12px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+	</style>
+</head>
+
+<body onload="initialize()">
+	<form class="form" id="editOrgForm" method="post" enctype="multipart/form-data">
+		<div class="container">
+			<div class="col-lg-9">
+				<div class="panel panel-primary">
+
+					<div class="panel-heading">
+						Edit Organisation Details
+					</div>
+
+					<div class="panel-group panel-body" id="accordion" aria-multiselectable="true">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse_contact_details">Contact Details</a>
+								</h4>
+							</div>
+
+							<div id="collapse_contact_details" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<div id="org_details_form" name="organisation-details" class="form-horizontal">
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="name">Organisation Name</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="orgName" onchange="editOrgData(this)" placeholder="Organisation Name" name="name">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="reg_no">Registration Number:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control required" id="registrationNumber" onchange="editOrgData(this)" placeholder="Registration Number" name="reg_no">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="org_type">Organisation Type:</label>
+											<div class="col-sm-8">
+												<select required="required" class="form-control required" onchange="editOrgData(this)" id="orgType">
+					
+												</select>
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="email">Email:</label>
+											<div class="col-sm-8">
+												<input type="email" onchange="editOrgData(this)" class="form-control" id="email" placeholder="Enter email" name="email">
+											</div>
+										</div>
+
+
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="mobile">Phone:</label>
+											<div class="col-sm-8">
+												<input type="tel" class="form-control" id="mobile" onchange="editOrgData(this)" placeholder="Mobile number" name="mobile">
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="description">Description:</label>
+											<div class="col-sm-8">
+												<textarea class="form-control required" onchange="editOrgData(this)" rows="4" id="description" placeholder="Description"></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="orgLogo">Organisation Logo</label>
+											<div class="col-sm-8">
+												<input type='file' required id='orgLogo' name="orgLogo" accept="image/*" data-type='image' />
+											</div>
+										</div>
+
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="count">Organisation People Count:</label>
+											<div class="col-sm-8">
+												<input type="number" class="form-control required" onchange="editOrgData(this)" id="count" placeholder="People Count">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="official_site">Official Site:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control " id="officialSite" onchange="editOrgData(this)" placeholder="Official Website address">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="facebookLink">Facebook link:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="facebookLink" onchange="editOrgData(this)" placeholder="Facebook link">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="twitter_id">Twitter id:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="twitterId" placeholder="Twitter id" onchange="editOrgData(this)">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-4" for="annual_cost">Annual Cost for Running:</label>
+											<div class="col-sm-4">
+												<input type="number" onchange="editOrgData(this)" class="form-control" id="annualCost" placeholder="Annual Cost">
+											</div>
+										</div>
+
+										<div class="form-group required">
+											<label class="control-label col-sm-4" for="location">Location</label>
+											<div class="col-sm-8">
+
+												<div class="gllpLatlonPicker">
+													<div class="col-sm-8">
+														<input type="text" class="form-control gllpSearchField" id="searchAddress" placeholder="Enter address to search" rows="3">
+													</div>
+
+													<button type="button" id="search" class=" gllpSearchButton  btn btn-info">Search</button>
+													<br/><br/>
+													<div id="map" class="gllpMap">Google Maps</div><br>
+
+													<div class="col-sm-6">
+														<textarea class="form-control required gllpLocationName" rows="5" id="address" name="address" readonly="readonly" placeholder="Selected address" rows="3"></textarea>
+
+													</div>
+													<button type="button" class="btn btn-info " id="done">Verify Your Address</button>
+													<input type="text" class="gllpLocationName hidden" id="name" size=42/>
+													<input type="text" class="gllpLatitude " id="latitude" />
+													<input type="text" class="gllpLongitude " id="longitude" />
+													<input type="text" class="gllpZoom hidden" value="3" />
+
+												</div>
+
+											</div>
+										</div>
+
+
+										<div class="" id="location">
+
+											<div class="form-group required">
+												<label class="control-label col-sm-4" for="country">Country</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control" id="country" readonly="readonly" placeholder="Country Name" name="country">
+													<!--
+												<select class="form-control" required="required" id="country" onchange="getStateList()">
+							
+														
+													
+												</select>
+-->
+												</div>
+											</div>
+
+											<div class="form-group required">
+												<label class="control-label col-sm-4" for="state">State</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control" id="state" readonly="readonly" placeholder="State Name" name="state">
+													<!--
+												<select class="form-control " required="required" disabled = "disabled" id="state" onchange="getCityList()">
+													
+													
+												</select>
+-->
+												</div>
+											</div>
+
+											<div class="form-group required">
+												<label class="control-label col-sm-4" for="city">City</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control" id="city" readonly="readonly" placeholder="City Name" name="city">
+													<!--
+												<select class="form-control" required="required" disabled = "disabled"  id="city">
+													
+													
+												</select>
+-->
+												</div>
+											</div>
+
+											<div class="form-group required">
+												<label class="control-label col-sm-4" for="street">Street</label>
+												<div class="col-sm-8">
+													<textarea class="form-control required" rows="3" id="street" name="street" placeholder="Street"></textarea>
+												</div>
+											</div>
+
+											<div class="form-group required">
+												<label class="control-label col-sm-4 " for="postalCode">Postal Code</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control required" id="postalCode" name="postalCode" placeholder="Postal Code">
+												</div>
+											</div>
+
+
+											<div class="form-group">
+												<button type="button" id="org-details-submit" class="btn btn-default pull-right continue continue-padding" data-toggle="collapse" data-parent="#accordion" value="validate" href="#collapse2">
+					Continue
+					</button>
+											</div>
+
+
+
+
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default" id="bank-detail-hidden">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Banking Details</a>
+										</h4>
+									</div>
+									<div id="collapse2" class="panel-collapse collapse in ">
+										<div class="panel-body">
+											<div id="org_bank_details_form" class="form-horizontal">
+												<div class="form-group required">
+													<label class="control-label col-sm-4" for="branch">Bank name:</label>
+													<div class="col-sm-8">
+														<input type="text" onchange="editBankData(this)" class="form-control required" id="bankName" placeholder="Bank Name">
+													</div>
+												</div>
+												<div class="form-group required">
+													<label class="control-label col-sm-4" for="count">Account No:</label>
+													<div class="col-sm-8">
+														<input type="number" class="form-control required" onchange="editBankData(this)" id="accountNumber" placeholder="Account No">
+													</div>
+												</div>
+												<div class="form-group required">
+													<label class="control-label col-sm-4" for="ifscCode">IFSC Code:</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control required" onchange="editBankData(this)" id="ifscCode" placeholder="IFSC Code">
+													</div>
+												</div>
+												<div class="form-group required">
+													<label class="control-label col-sm-4" for="branchName">Branch Name:</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control required" onchange="editBankData(this)" id="branchName" placeholder="Branch Name">
+													</div>
+												</div>
+												<div class="form-group required">
+													<label class="control-label col-sm-4" for="branchCode">Branch Code:</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control required" onchange="editBankData(this)" id="branchCode" placeholder="Branch Code">
+													</div>
+												</div>
+												<!-- <div class="form-group"> -->
+												<!-- <label class="control-label col-sm-4" for="merchantId">Merchant Id:</label> -->
+												<!-- <div class="col-sm-8"> -->
+												<!-- <input type="text" class="form-control" onchange="editBankData(this)" id="merchantId" placeholder="Merchant Id Name"> -->
+												<!-- </div> -->
+												<!-- </div> -->
+												<!-- <div class="form-group"> -->
+												<!-- <label class="control-label col-sm-4" for="salt">Salt</label> -->
+												<!-- <div class="col-sm-8"> -->
+												<!-- <input type="text" class="form-control " onchange="editBankData(this)" id="salt" placeholder="salt"> -->
+												<!-- </div> -->
+												<!-- </div> -->
+												<!-- <div class="form-group"> -->
+												<!-- <label class="control-label col-sm-4" for="key"> Key:</label> -->
+												<!-- <div class="col-sm-8"> -->
+												<!-- <input type="text" class="form-control " id="key" onchange="editBankData(this)" placeholder="Key "> -->
+												<!-- </div> -->
+												<!-- </div> -->
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+
+						<div class="panel-footer">
+
+							<div class="form-group">
+								<button type="button" id="save" class="btn btn-default pull-right continue" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+					Save
+					</button>
+							</div><br>
+						</div>
+
+					</div>
+
+				</div>
+
+				<button type="button" class="btn btn-success">Upload Images</button>
+			</div>
+		</div>
+	</form>
+</body>
+
+
+<script>
+	var orgEdited = false;
+	var bankEdited = false;
+	var isCityLoaded = false;
+	var orgDetails;
+	$.validator.addMethod('mobileValidation', function(value, element) {
+		console.log("mobile", this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value))
+		return this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value);
+	}, "enter a valid  mobile number");
+
+	var map;
+	var mapOptions;
+	var marker;
+
+
+
+
+	var orgName = $('#orgName')
+	var orgRegNo = $('#registrationNumber')
+	var orgType = $('#orgType')
+	var orgEmail = $('#email')
+	var latitude = $('#latitude')
+	var longitude = $('#longitude')
+	var street = $('#street')
+	var city = $('#city')
+	var state = $('#state')
+	var postalCode = $('#postalCode')
+	var country = $('#country')
+	var mobile = $('#mobile')
+	var orgDesc = $('#description')
+	var bankName = $('#bankName')
+	var accountNumber = $('#accountNumber')
+	var ifscCode = $('#ifscCode');
+	var branchCode = $('#branchCode')
+	var branchName = $('#branchName')
+	var merchantId = $('#merchantId')
+	var salt = $('#salt');
+	var key = $('#key');
+	var orgPeopleCount = $('#count')
+	var officialSite = $('#officialSite');
+	var facebookLink = $('#facebookLink');
+	var twitterId = $('#twitterId');
+	var annualCost = $('#annualCost');
+
+
+var currentValue;
+
+	$(document).ready(function() {
+
+
+		
+		currentValue = $("#latitude").val();
+	});
+	$("#latitude").on("change", function() {
+		alert("fhfh");
+	})
+
+
+	var selectOrgTypeId = document.getElementById("orgType");
+	$.getJSON("/humane/orgtypelookup/?isweb=true&callback=?", function(data) {
+
+		}).done(function(data) {
+			console.log("data", data);
+			console.log("select id", selectOrgTypeId);
+			var orgTypeList = JSON.parse(jsonEscape(data));
+			getDropDownList(orgTypeList, 'orgType', 'org_type_id', 'org_type', 'Select Organisation type');
+
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("Loaded org type list");
+		});
+
+
+
+	loadOrgDetails();
+
+
+	$(":file").on("change", function(e) {
+		file = this.files[0];
+		name = file.name;
+		size = file.size;
+		type = file.type;
+		console.log(this.files[0].type);
+		if ((type != "image/png") && (type != "image/jpeg") && (type != "image/jpg")) {
+			alert("Image type should be jpg,png,jpeg");
+			this.value = '';
+		}
+	});
+
+
+	var emailValidation = {
+		required: true,
+		email: true,
+	};
+
+	var mobileValidation = {
+		required: true,
+		mobileValidation: true,
+	};
+
+	$('#done').click(function() {
+		getAddress();
+
+	});
+
+	$('#save').click(function() {
+
+		var sectionValid = true;
+		$.each($("#editOrgForm").find('input, select, textarea'), function() {
+			if (!$(this).valid()) {
+				sectionValid = false;
+			}
+		});
+		console.log("section valid org", sectionValid);
+
+
+		if (sectionValid) {
+			if (orgEdited && bankEdited) {
+				alert("save clicked");
+				updateOrgDetails();
+				updateBankDetails();
+				uploadOrgLogo();
+			} else if (orgEdited) {
+				updateOrgDetails();
+				uploadOrgLogo();
+			} else if (bankEdited) {
+				updateBankDetails();
+			} else {
+				alert("No Changes are made")
+			}
+		} else {
+			alert("You have Validation error");
+		}
+	});
+
+	$("#editOrgForm").validate({
+	errorClass: "error text-warning",
+	validClass: "success text-success",
+	highlight: function(element, errorClass) {
+
+	},
+
+	rules: {
+		name: "required",
+		email: emailValidation,
+		orgName: "required",
+		registrationNumber: "required",
+		personEmail: emailValidation,
+		mobile: mobileValidation,
+		postalCode: "required",
+		orgType: "required",
+		description: "required",
+		bankName: "required",
+		accountNumber: "required",
+		ifscCode: "required",
+		branchName: "required",
+		branchCode: "required",
+		count: "required",
+		personMobile: mobileValidation,
+
+	},
+
+	});
+
+
+
+	function initialize() {
+	
+		var latitude = parseFloat(document.getElementById('latitude').value);
+		var longitude = parseFloat(document.getElementById('longitude').value);
+		var myLatlng = new google.maps.LatLng(latitude, longitude);
+		var myOptions = {
+			zoom: 10,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+		var map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+		var marker = new google.maps.Marker({
+			position: myLatlng,
+			map: map,
+			draggable: true
+		});
+		google.maps.event.addListener(
+			marker,
+			'drag',
+			function() {
+				document.getElementById('latitude').value = marker.position.lat();
+				document.getElementById('longitude').value = marker.position.lng();
+			}
+		);
+	}
+
+	//	function initialize() {
+	//		  var latitude = parseFloat(document.getElementById('latitude').value);
+	//		  var longitude = parseFloat(document.getElementById('longitude').value);
+	//        mapOptions = {
+	//          zoom: 8,
+	//          center: {lat:latitude, lng: longitude}
+	//        };
+	//        map = new google.maps.Map(document.getElementById('map'),
+	//            mapOptions);
+	//
+	//       marker = new google.maps.Marker({
+	//          position: new google.maps.LatLng(latitude, longitude),
+	//          map: map,
+	//		     draggable:true
+	//        });
+	//
+	//        // You can use a LatLng literal in place of a google.maps.LatLng object when
+	//        // creating the Marker object. Once the Marker object is instantiated, its
+	//        // position will be available as a google.maps.LatLng object. In this case,
+	//        // we retrieve the marker's position using the
+	//        // google.maps.LatLng.getPosition() method.
+	//        var infowindow = new google.maps.InfoWindow({
+	//          content: '<p>Marker Location:' + marker.getPosition() + '</p>'
+	//        });
+	//		
+	//		google.maps.event.addListener(
+	//    marker,
+	//    'drag',
+	//    function() {
+	//        document.getElementById('lat').value = marker.position.lat();
+	//        document.getElementById('lng').value = marker.position.lng();
+	//    }
+	//)
+	//
+	//        google.maps.event.addListener(marker, 'click', function() {
+	//          infowindow.open(map, marker);
+	//        });
+	//      }
+	//
+	//      google.maps.event.addDomListener(window, 'load', initialize);
+
+
+	
+
+	$('#search').click(function() {
+
+		var checkEverySeconds = 2;
+
+		var myTimer = setInterval(function() {
+
+			if ($("#latitude").val() != currentValue) {
+				initialize();
+				clearInterval(myTimer);
+			}	
+
+		}, checkEverySeconds * 1000);
+
+
+	});
+
+</script>
+
+
+</html>

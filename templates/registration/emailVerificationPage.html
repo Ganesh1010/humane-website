@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - Email Verification</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+	<style>
+		.container {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="col-md-6 col-md-offset-3">
+			<br>
+			<img src="{% static "assests/Images/verify_email.png"%}" class="img-responsive center-block" style="width:150px;"><br>
+			<h1 class="text-center">Verify your Email Address</h1>
+			<br>
+			<p class="text-center"> Thanks for giving your details. An OTP has been sent to your Email address. Please enter the 6 digit OTP below for Successful Registration</p>
+			<p></p>
+			<br>
+			<form  id="otpForm" >
+				<div class="row">
+					<div class="form-group col-md-6 col-md-offset-3 center-block">
+						
+						<input type="number" id="otp-btn" class="form-control" name="otp" oninput="otpTextChanged()" placeholder="Enter your OTP number" required="">
+						<span style="color:red;" id="invalid-otp" class="hidden">Invalid OTP</span>
+					</div>
+				</div>
+				<div>
+					<button onclick="verify()" class="btn btn-primary center-block">Verify</button>
+				</div>
+			</form>
+			<br><br>
+		</div>
+	</div>
+</body>
+<script>
+
+	$(document).ready(function() {
+		
+		$("#otpForm").submit(function() {
+			return false;
+		});
+		
+		$(".loader").hide();
+
+		validator = $("#otpForm").validate({
+
+			errorClass: "error text-warning",
+			validClass: "success text-success",
+			highlight: function(element, errorClass) {
+
+			},
+
+			rules: {
+				otp: "required"
+			},
+
+		});
+	});	
+	
+	function otpTextChanged()
+	{
+		$("#invalid-otp").addClass("hidden");
+	}
+	
+	function verify() {
+	$("#invalid-otp").addClass("hidden");
+		var uuid  = getCookie("uuid")
+        var url = getCookie("url")
+        var token = null
+		var isResetPasswordUrl = false;
+		var isEmailVerification = false;
+        
+        
+        
+        if(url!=null && url!="")
+            {
+                  console.log("here in if")
+                  if(url=="forgot password url"){
+                    url = "/otp/verify-reset-otp/totp/" + uuid +"/" +window.location.search
+					isResetPasswordUrl = true
+					}
+					if(url=="email verification url")
+					{
+					    url = '/otp/verify-otp/totp/' + uuid +"/" +window.location.search
+						isEmailVerification = true;
+					}
+            }
+        
+        else{
+            console.log("here in else")
+            url = '/otp/verify-otp/totp/' + uuid +"/" +window.location.search
+            token = getCookie("token")
+            token =  "JWT " + token;
+        }
+        
+         console.log("url to verify otp ",url)
+        
+		var header;
+		if(isEmailVerification){
+			header = {
+				"X-CSRFToken": getCookie("csrftoken")
+			}
+		}
+		else
+		{
+			header = {
+				"Authorization": token
+			}
+		}
+        console.log("token ",token)
+        
+		if ($('#otpForm').valid()) {
+			x = $('#otpForm').serialize();
+			$.ajax({
+				type: "POST",
+				beforeSend: function() {
+					$("#otp-btn").prop('disabled', true);
+					$(".loader").show();
+				},
+				headers: header,
+				url: url,
+                
+				data: x,
+				success: function(response) {
+                    if(isResetPasswordUrl){
+						console.log("here in if 2 of success")
+						window.location = "/html/forgotPasswordPage/"
+						 document.cookie = "otp" + "=" + $("#otp-btn").val() + ";path=/";
+							
+						deleteCookie("url","",-1);
+						deleteCookie("csrf","",-1);
+					
+					}
+					else if(isEmailVerification)
+					{
+					alert("here")
+					console.log("here in if 2 of success")
+						deleteCookie("uuid","",-1);
+						deleteCookie("url","",-1);
+						window.location = "/html/userProfile/"
+					}
+					else{
+					console.log("here in else of success")
+							window.location = "/login"
+							deleteCookie("token","",-1);
+							deleteCookie("uuid","",-1);
+							deleteCookie("url","",-1);
+							deleteCookie("csrf","",-1);
+						}
+				},
+				error: function(response) {
+					console.log("response while verifying otp " + response.detail)
+					
+					//$("#otp-btn").
+					
+					
+					$("#otp-btn").prop('disabled', false);
+				$('#otp-btn').val("")
+				$("#invalid-otp").removeClass("hidden");
+                
+				console.log("response whiler egistering user " + response.detail)
+				}
+			});
+		}
+	}
+
+</script>
+
+</html>

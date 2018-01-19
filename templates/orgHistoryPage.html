@@ -1,0 +1,105 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - History Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+</head>
+
+<body>
+ {% include "common\navigation-bar.html" %}
+	<div class="container">
+
+		<ul class="nav nav-tabs nav-justified">
+			<li class="active"><a href="#goods-history-card" data-toggle="tab" id="goods-history-anchor">Goods</a></li>
+			<li><a href="#service-history-card" data-toggle="tab" id="service-history-anchor">Services</a></li>
+
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="goods-history-card">
+				<div class="loader" id="goods-history-loader"></div>
+			</div>
+			<div class="tab-pane fade" id="service-history-card">
+				<div class="loader" id="service-history-loader"></div>
+			</div>
+
+		</div>
+		<div class="text-center">
+			<div id="goods-history-pagination"></div>
+			<div id="service-history-pagination"></div>
+
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			var firstServiceHistoryLoad = true;
+			var goodsHistoryURL = "/humane/goodsHistoryDetail/?isweb=True&callback=?";
+			var serviceHistoryURL = "/humane/serviceHistoryDetail/?isweb=True&callback=?";
+
+			loadGoodsHistoryDetails(goodsHistoryURL);
+
+			$("#service-history-anchor").click(function(e) {
+				$('#goods-history-pagination').hide();
+				if (firstServiceHistoryLoad) {
+					loadServiceHistoryDetail(serviceHistoryURL);
+					firstServiceHistoryLoad = false;
+				}
+				$('#service-history-pagination').show();
+				
+
+			});
+
+			$("#goods-history-anchor").click(function(e) {
+				$('#service-history-pagination').hide();
+				$('#goods-history-pagination').show();
+			});
+
+
+			function loadGoodsHistoryDetails(goodsHistoryURL) {
+				$.getJSON(goodsHistoryURL, function(data) {})
+					.done(function(data) {
+						getGoodsHistoryDetail(data);
+						var count = $.parseJSON(data)['count']
+						console.log("goods history count " + count)
+						if (count > 10)
+							createPagination(count, goodsHistoryURL, "goods-history-pagination", "#goods-history-card", 3);
+					})
+					.fail(function() {
+						console.log("error");
+					})
+					.always(function() {
+						console.log("goods history detail load complete");
+					});
+			}
+
+			function loadServiceHistoryDetail(serviceHistoryURL) {
+				$.getJSON(serviceHistoryURL, function(data) {})
+					.done(function(data) {
+						getServiceHistoryDetail(data);
+						var count = $.parseJSON(data)['count']
+						console.log("service history count " + count)
+						if (count > 10)
+							createPagination(count, serviceHistoryURL, "service-history-pagination", "#service-history-card", 4);
+					})
+					.fail(function() {
+						console.log("error");
+					})
+					.always(function() {
+						console.log("service history detail load complete");
+					});
+			}
+
+		});
+
+	</script>
+</body>
+
+</html>

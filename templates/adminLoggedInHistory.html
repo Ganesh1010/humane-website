@@ -1,0 +1,110 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - Volunteer Required Donations</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/adminLoggedHistory.js"%}"></script>
+
+	<style>
+		.container {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<div class="container-fluid ">
+
+		<div class="panel panel-default">
+			
+			<div class="col-md-2">
+			<div class="panel-heading text-center">Admin URL's</div>
+			<table class="table table-responsive table-bordered">
+						<thead>
+							<tr><td><a href="/appAdmin/orgListToVerify">Organisation Verification</a></td></tr>
+							<tr><td><a href="/appAdmin/volDonationPage">Volunteer Assignment</a></td></tr>
+							<tr><td><a href="/html/orgRegistrationPage/">Organisation Registration</a></td></tr>
+						</thead>
+						
+						</tbody>
+					</table>
+			</div>
+			<div class="col-md-10">
+			<div class="panel-heading text-center">Admin Logged-In History</div>
+			<div class="panel-body">
+				<form class="form-horizontal">
+					<div class="loader"></div>
+					<table class="table table-responsive table-bordered">
+						<thead>
+							<tr>
+								<th class="text-center">Id</th>
+								<th class="text-center">Username</th>
+								<th class="text-center">Logged-In Date</th>
+								<th class="text-center">Logged-In Device</th>
+								<th class="text-center">IP Address</th>
+							</tr>
+						</thead>
+						<tbody id="admin-logged-in-table">
+						</tbody>
+					</table>
+					<hr>
+				</form>
+			</div>
+			<br><br>
+		
+			<h4 style='display:inline'>No. of Donations Completed:  </h4><h3 id="completed_donation_count" style='display:inline'></h3> <br>
+			<h4 style='display:inline'>No. of Promised Doantions yet to be Completed : </h4><h3 id="promised_donation_count" style='display:inline'></h3><br> 
+			<h4 style='display:inline'>No. of Service Interest Expressed yet to be Satisfied : </h4><h3  id="interest_expressed_count" style='display:inline'></h3> <br>
+			<h4 style='display:inline'>No. of Voluntered Required Doantions :  </h4><h3 id="volunteer_donation_count" style='display:inline'></h3> <br>
+			<h4 style='display:inline'>No. of Organisations yet to be verified :  </h4><h3 id="org_verification_count" style='display:inline'></h3> 
+			</div>
+		</div>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	
+
+	var data = `{{extra_data|safe}}`
+	var extarData = $.parseJSON(data)
+	$("#promised_donation_count").html(extarData.donation_count)
+	$("#interest_expressed_count").html(extarData.interest_expressed_count)
+	$("#volunteer_donation_count").html(extarData.volunteer_count)
+	$("#org_verification_count").html(extarData.org_count)
+	$("#completed_donation_count").html(extarData.completed_donation_count)
+	console.log(extarData.donation_count)
+
+	{%	if user.is_authenticated %}
+		{%	if user.is_superuser %} 
+			var adminLoggedInHistoryURL = "/appAdmin/adminLoggedInHistory/?callback=?";
+			loadLoggedInHistoryDetail(adminLoggedInHistoryURL);
+		{% else %}
+			$(".loader").hide()
+			window.location.href = "/html/pageNotFound/"
+		{% endif %}
+	{% else %}
+		$(".loader").hide()
+		window.location.href = "/html/pageNotFound/"
+	{% endif %}
+        
+	});
+
+</script>
+
+</html>

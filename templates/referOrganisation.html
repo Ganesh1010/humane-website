@@ -1,0 +1,231 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Humane</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+  <script src="{% static "assests/JS/humane.js"%}"></script>
+  <script src="{% static "assests/JS/navigation.js"%}"></script>
+  <script src="{% static "assests/JS/sweetalert.min.js"%}"></script>
+  <link rel="stylesheet " href="{% static "assests/CSS/sweetalert.css"%}">
+
+	
+	  
+<style>
+
+    body{
+        background: url("{% static "assests/Images/referorg_bg.jpg"%}") no-repeat center center fixed; 
+        background-size: cover;
+}
+    
+    .modal-header {
+ 
+    background-color: #337AB7;
+ 
+    padding:16px 16px;
+ 
+    color:#FFF;
+    }
+ 
+   .glyphicon { margin-right:5px; }
+    
+    .bg {
+    /* The image used */
+    background-image: url(Images/referorg1.jpg);
+
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+    
+    .panel-default {
+        position: absolute;
+        top: 10%;
+        left: 16%;
+        bottom:0;
+        right: 16%;
+        background-size: 100% 100%;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background: none;
+        border: none;
+        box-shadow: none;
+        
+    }
+    
+     .panel-default .panel-heading{
+        background: rgba(122, 130, 136, 0.2)!important;
+    }
+
+    .panel-default .panel-body{
+        background: rgba(46, 51, 56, 0.2)!important;
+    }
+    
+   /* .panel-default >
+    .panel-heading-custom{
+         color: #fffff;
+         background-color:#00BCD4
+            
+     }*/
+
+    .btn-custom-color{
+        border-radius: 0;
+        border-color: white;
+        background-color:rgba(46, 51, 56, 0.2)!important;
+    }
+</style>
+</head>
+<body>
+    
+	 {% include "common\navigation-bar.html" %}
+  <div class="container w3-animate-top">
+
+<div class="panel panel-default " id="fade">
+    <div class="panel-heading">
+         <font color="white">
+             <h2 align="center" >Refer Organisation</h2></font>
+    </div>
+  
+    <div class="panel-body">
+      
+	<form id="referOrg">
+    <div class="form-group ">
+          <font color="white">
+              <label for="orgName" class="label-white">Organisation Name</label></font>
+      <input type="text" class="form-control center-block" id="orgName" placeholder="Enter Organisation Name" name="orgName">
+    </div>
+    
+    <div class="form-group">
+         <font color="white">
+             <label for="orgAddress">Organisation Address</label></font>
+         <textarea class="form-control" rows="3" id="orgAddress" placeholder="Enter Organisation Address" name="orgAddress"></textarea>
+     
+    </div>
+    
+    <div class="form-group">
+         <font color="white">
+             <label for="contact">Organisation Contact Number</label></font>
+      <input type="number" class="form-control" id="mobile" placeholder="Enter Organisation Contact Number" name="contact">
+    </div>
+    
+   
+    </form>
+	
+    </div>
+   
+    
+    <button type="button" id ="referBtn" class="btn btn-primary btn-lg btn-custom-color center-block " >Refer</button>
+  
+    <!-- <div class="modal fade" id="refer-organisation" role="dialog"> -->
+    <!-- <div class="modal-dialog modal-sm"> -->
+      <!-- <div class="modal-content"> -->
+        <!-- <div class="modal-header"> -->
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+          <!-- <h4 class="modal-title">Thanks!</h4> -->
+        <!-- </div> -->
+        <!-- <div class="modal-body"> -->
+          <!-- <p>Your Reference is Successful.</p> -->
+        <!-- </div> -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+    
+   
+            </div>    
+        </div>
+		
+		<script>
+			
+							
+		$.validator.addMethod('mobileValidation', function (value, element) {
+		console.log("mobile",this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value))
+			return this.optional(element) || /^(\+91-|\+91|0)?\d{10}$/.test(value);
+		},"enter a valid  mobile number");
+		
+		$(document).ready(function() {
+			
+			
+			$('#referBtn').click(function(){
+			  if($('#referOrg').valid())
+			     postReferOrgDetails();
+			});
+			
+			
+		
+			function postReferOrgDetails(){
+			  var orgName = $('#orgName').val();
+			  var orgAddress = $('#orgAddress').val();
+			  var mobile = $('#mobile').val();
+			  var personName = $('#personName').val();
+			  
+		      var referOrgDetails = {
+				refer_org_name:orgName,
+				refer_org_address:orgAddress,
+				refer_org_mobile:mobile,
+			
+			  }
+			  
+			  console.log("refer org data",JSON.stringify(referOrgDetails))
+			  
+			  $.ajax({
+		url: '/humane/referorganisation/',
+		type: 'post',
+		headers: {
+			"X-CSRFToken": getCookie("csrftoken")
+		},
+		dataType: 'json',
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+			successAlert("Thanks!","Your Reference is Successful","success","/html/homePage");
+			//alert("Success")
+			
+		},
+		
+		data: JSON.stringify(referOrgDetails)
+
+	});
+		}
+			
+			$("#referOrg").validate({
+			errorClass: "error text-warning",
+			validClass: "success text-success",
+			highlight: function(element, errorClass) {
+
+			},
+			
+			rules: {
+				personName:{
+					required:false,
+					rangelength:[2,500]
+				} ,
+				orgName:{
+					required:true,
+					rangelength:[4,250]
+				},
+			   contact:{
+				   required:true,
+				   mobileValidation:true,
+				},
+				orgAddress:{
+					required:true,
+					rangelength:[5,1000],
+			},
+				
+				}
+			
+		});
+		
+		});
+		
+		</script>
+  </body>
+</html>
+
+

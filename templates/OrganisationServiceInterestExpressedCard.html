@@ -1,0 +1,114 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - Organisation Service Interest Expressed</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/markServiceAttended.js"%}"></script>
+	<script src="{% static "assests/JS/navigation.js"%}"></script>
+
+	</head>
+	<body>
+	{% include "common\navigation-bar.html" %}
+		<div class="container">
+
+			<div class="row" id="service-interest-expressed-card">
+				<div class="loader"></div>
+			</div>
+
+			<div class="text-center" id = "service_interest_pagination"></div>
+			<div class="modal fade" id="service-interest-detail-modal" role="dialog">
+				<div class="modal-dialog ">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title"></h4>
+						</div>
+						<div class="modal-body">
+							<div class="container">
+								<div class="col-md-9">
+
+									<div class="media ">
+										<div class="media-heading " style="margin-left: 120px;">
+											<h4 class="text-center" style="margin-bottom: 0px;">Interested Date</h4>
+											<h5 class="text-center" id="user_interest_expressed_date"></h5>
+										</div>
+										<div class="media-left media-middle">
+											<img id="user_image" class="media-object thumbnail" style="width:100px; height: 100px;margin-right:6px">
+										</div>
+										<div class="media-body media-left ">
+											<h4 id="user_name"></h4>
+											<h5 id="user_email"></h5>
+											<h5 id="main_service"></h5>
+											<h5 id="sub_category_one"></h5>
+											<h5 id="sub_category_two"></h5>
+											<h5 id="user_mobile"></h5>
+											<h5 id="servicing_time"></h5>
+
+
+
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-success" id="attended_btn">Attended</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+	<script type="text/javascript">
+		var url = "/humane/serviceInterestedDetail/?is_interest_expressed_satisfied=3&isweb=true&callback=?"
+		$(document).ready(function() {
+		
+		{% if user.is_authenticated %}
+		if( {{user.role.user_role_id}} !=REGISTERED_COORDINATOR )
+		{
+			alert("You must be logged in as a registered coordinator");
+			window.location.href = "/login";
+		}
+			
+	{% else %} 
+		alert("You must be logged in as a registered coordinator");
+			window.location.href = "/login";
+	{% endif %}
+			
+			$.getJSON(url, function(data) {})
+				.done(function(data) {
+
+					var count = $.parseJSON(data)['count']
+					console.log("service count " + count)
+					if (parseInt(count) != 0)
+						loadServiceInterestExpressedDetails(data);
+					else {
+						$('.loader').hide();
+					}
+					if (count > 10)
+						createPagination(count, url, "service_interest_pagination", "#service-interest-expressed-card", 6);
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("Service interest details load complete");
+				});
+
+		});
+
+	</script>
+	
+</html>

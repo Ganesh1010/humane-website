@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Humane - User Email Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static "assests/JS/humane.js"%}"></script>
+    <script src="{% static "assests/JS/navigation.js"%}"></script>
+    <link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+
+    <style>
+        .panel {
+            margin-top: 5%;
+        }
+
+        .form-padding {
+            padding: 15px;
+        }
+
+    </style>
+</head>
+
+<body>
+    {% include "common\navigation-bar.html" %}
+    <div class="container">
+        <div class="loader"></div>
+        <div class="col-md-6 col-md-offset-3 boxStyle" style="padding-right: 0px!important;padding-left: 0px!important;">
+            <div class=" panel panel-default form-padding">
+                <form class="form-horizontal" id="email_form">
+
+                    <img src="{% static "assests/Images/forgot_password.png"%}" class="img-rounded center-block" alt="Change Password" style="width: 200px;margin-bottom: 20px">
+
+                    <h4 class="text-center">We need your registered Email Id to reset the Password</h4>
+                    <div class="form-group ">
+                        <label class="control-label col-md-4 " for="new-password">Email:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="user_email" id="user-email" placeholder="Enter your email">
+							 <h5 class="red hidden" id="email_error">Invalid Email</h5>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+
+                        <button onclick="sendOTP()" id="otp-btn" class="btn btn-success" data-toggle="tooltip" title="Click to send OTP to Email">Send OTP</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    $(document).ready(function() {
+        $(".loader").hide();
+    });
+
+    function sendOTP() {
+        x = $('#email_form').serialize();
+        console.log("user Email", JSON.stringify(x))
+        $.ajax({
+
+            type: "POST",
+            beforeSend: function() {
+                $("#otp-btn").prop('disabled', true);
+                $(".loader").show();
+            },
+            url: '/humane/checkEmailExists' + window.location.search,
+            data: x,
+            success: function(response) {
+                if (response.email_exists){
+                     generateOTP();
+					 $("#email_error").hide();
+					 }
+                else{
+				
+                    console.log("email doesnot exist")
+                    $(".loader").hide();
+					$("#email_error").removeClass("hidden");
+					$("#email_error").show();
+                }
+            },
+            error: function(response) {
+
+                console.log("response while sending otp to email " + response.error)
+                $("#otp-btn").prop('disabled', false);
+                $(".loader").hide();
+            },
+        });
+        
+        function generateOTP(email)
+        {
+        
+        $.ajax({
+            type: "POST",
+            beforeSend: function() {
+                $("#otp-btn").prop('disabled', true);
+                $(".loader").show();
+            },
+            url: '/otp/generate-reset-otp/totp/' + window.location.search,
+            data: x,
+            success: function(response) {
+
+               var uuid = response.otp_uuid
+               document.cookie = "uuid" + "=" + uuid + ";path=/";
+               document.cookie = "url" + "=" + "forgot password url" + ";path=/";
+			   document.cookie = "email" + "=" + $("#user-email").val() + ";path=/";
+                
+               window.location = "/html/emailVerificationPage"
+                
+            },
+            error: function(response) {
+
+                console.log("response while generating otp " + response)
+                $("#otp-btn").prop('disabled', false);
+                $(".loader").hide();
+            },
+        }); 
+        }
+    }
+
+</script>
+
+</html>

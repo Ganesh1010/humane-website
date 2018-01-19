@@ -1,0 +1,196 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - Notification</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="{% static "assests/JS/navigation.js"%}"></script>
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+
+	<link rel="stylesheet " href="{% static "assests/CSS/humane.css"%}">
+
+</head>
+
+<body>
+ {% include "common\navigation-bar.html" %}
+	<div class="container" style="width: 750px;
+    height: 750px;">
+	<div id="notification-card-id" >
+		<div class="loader"></div>
+	</div>
+	</div>
+	
+</body>
+
+<script type="text/javascript">
+
+function createNotificationCard(item,commonUserProfile = null) {
+
+	var doc = document.createDocumentFragment();
+
+
+	var notificationCardContainer = document.createElement("div");
+	
+	notificationCardContainer.classList.add("notification-card");
+	
+	
+	
+	
+	var notificationCardDiv = document.createElement("div");
+	notificationCardDiv.classList.add("card");
+	<!-- notificationCardDiv.classList.add("col-md-6"); -->
+	
+	<!-- notificationCardDiv.classList.add("notification-card"); -->
+	<!-- notificationCardDiv.classList.add("notification-card-padding"); -->
+	
+
+
+	var cardContentDiv = document.createElement("div");
+	cardContentDiv.classList.add("media");
+	cardContentDiv.classList.add("notification-card-padding");
+
+	var itemImageDiv = document.createElement("div");
+	itemImageDiv.classList.add("media-left");
+	itemImageDiv.classList.add("media-middle");
+	var itemImage = getImage(item.main_item_icon);
+	itemImage.classList.add("notification-card-img-padding");
+	itemImage.classList.add("media-object");
+	itemImage.classList.add("thumbnail-small-image");
+
+
+	var notificationContentDiv = document.createElement("div");
+	notificationContentDiv.classList.add("media-body");
+	notificationContentDiv.classList.add("media-middle");
+
+	
+	console.log(item);
+	var orgName = item.organisation.org_name;
+
+	var mainItem = item.main_item;
+
+	var date = getLocalDateFormat(item.actioned_time);
+
+	var notification_type = item.task_type;
+	if(commonUserProfile!=null){
+	if (notification_type == REQUEST_TYPE_DONATION) {
+		
+		if(commonUserProfile.role == REGISTERED_COORDINATOR ){
+		// if({{user.role.user_role_id}} == REGISTERED_COORDINATOR){
+			var notificationMsg = getText(item.donation_detail.donating_user.first_name + COORDINATOR_DONATION_NOTIFICATION_MSG + mainItem + " " + TO_TEXT + " " + orgName + " " + ON_TEXT + " " + date);
+			cardContentDiv.append(itemImageDiv);
+			cardContentDiv.append(notificationContentDiv);
+		}else{
+			console.log("Registered msg");
+			var notificationMsg = getText(DONATION_NOTIFICATION_MSG + " " + mainItem + " " + TO_TEXT + " " + orgName + " " + ON_TEXT + " " + date);
+			cardContentDiv.append(itemImageDiv);
+			cardContentDiv.append(notificationContentDiv);
+		}
+		
+	} else if (notification_type == REQUEST_TYPE_SERVICE) {
+		if(commonUserProfile.role == REGISTERED_COORDINATOR){
+			var notificationMsg = getText(item.service_interested_detail.service_user_detail.first_name + COORDINATOR_SERVICE_NOTIFICATION_MSG + mainItem+" "+ TO_TEXT +" "+ orgName + " " + ON_TEXT + " " + date);
+			cardContentDiv.append(itemImageDiv);
+			cardContentDiv.append(notificationContentDiv);
+			
+			
+		}else{
+			
+			var notificationMsg = getText(SERVICE_NOTIFICATION_MSG + " " + mainItem + " " + TO_TEXT + " " + orgName + " " + ON_TEXT + " " + date);
+			cardContentDiv.append(itemImageDiv);
+			cardContentDiv.append(notificationContentDiv);
+		}
+	}else if(notification_type == TASK_TYPE_DONATION_COMPLETED){
+		var notificationMsg = getText(DONATION_MSG + mainItem +" "+ TO_TEXT+" " + orgName+" "+ DONATION_RECEIVED_MSG + ON_TEXT + " " + date);
+			cardContentDiv.append(itemImageDiv);
+			cardContentDiv.append(notificationContentDiv);
+			
+
+	}else if(notification_type == TASK_TYPE_SERVICE_ATTENDED){
+		var notificationMsg = getText(SERVICE_MSG +" " + mainItem +" "+ TO_TEXT +" "+ orgName + SERVICE_ATTENDED_MSG + ON_TEXT + " " + date);
+			cardContentDiv.append(itemImageDiv);
+			cardContentDiv.append(notificationContentDiv);
+			
+	}else if(notification_type == TASK_TYPE_VOLUNTEER_ASSIGNED){
+		var notificationMsg = getText(item.volunteer_detail.first_name + VOLUNTEER_ASSIGNED_MSG +" " + ON_TEXT + " " + date);
+			cardContentDiv.append(itemImageDiv);
+			cardContentDiv.append(notificationContentDiv);
+			
+	}		else {
+		var notificationMsg = getText(THANK_YOU_NOTIFICATION_MSG + " "+FOR_TEXT+" "+ mainItem + " " + FROM_TEXT + " " + orgName + " " + ON_TEXT + " " + date);
+		cardContentDiv.append(itemImageDiv);
+		cardContentDiv.append(notificationContentDiv);
+		
+	}
+	}else{
+		console.log("No user profile")
+	}
+
+	itemImageDiv.append(itemImage);
+	notificationContentDiv.append(notificationMsg);
+
+
+	notificationCardDiv.append(cardContentDiv);
+
+	notificationCardContainer.append(notificationCardDiv);
+
+
+
+	doc.appendChild(notificationCardContainer);
+
+	document.getElementById("notification-card-id").appendChild(doc);
+
+
+}
+
+	$(document).ready(function() {
+	
+		var userProfileJson = `{{user_json|safe}}`
+		console.log(userProfileJson);
+		if (userProfileJson != "" || userProfileJson != null) {
+			try {
+				var userProfile = $.parseJSON(userProfileJson)
+				commonUserProfile = userProfile
+				
+				<!-- if(userProfile.role==REGISTERED_COORDINATOR) -->
+					<!-- $("#newGoodsServicePostfab").show(); -->
+				<!-- else -->
+					<!-- $("#newGoodsServicePostfab").hide(); -->
+
+			} catch (e){
+				console.log("error while parsing the user profile ", e.message)
+			}
+		}
+
+			function loadNotificationDetails(data,commonUserProfile) {
+			console.log("notification card in html page"+commonUserProfile)
+			var t = $.parseJSON(data)['results']
+			$('.loader').hide();
+			$.each(t, function(key, value) {
+				createNotificationCard(value,commonUserProfile);
+
+			});
+		}
+
+		$.getJSON("/humane/getNotificationDetails/?isweb=true&callback=?", function(data) {
+
+			}).done(function(data) {
+				loadNotificationDetails(data,commonUserProfile)
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("Notification details loaded");
+			});
+
+
+	});
+
+</script>
+
+</html>

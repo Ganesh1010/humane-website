@@ -1,0 +1,277 @@
+
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Organisation Detail</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/organisationGoodsDetail.js"%}"></script>
+	<script src="{% static "assests/JS/navigation.js"%}"></script>
+
+	
+	<style>
+	.ribbon {
+ font-size: 16px !important;
+ /* This ribbon is based on a 16px font side and a 24px vertical rhythm. I've used em's to position each element for scalability. If you want to use a different font size you may have to play with the position of the ribbon elements */
+
+ width: 50%;
+    
+ position: relative;
+ background: #DCEDC8;
+ color: ##424242;
+ text-align: center;
+ padding: 1em 2em; /* Adjust to suit */
+ margin: 2em auto 3em; /* Based on 24px vertical rhythm. 48px bottom margin - normally 24 but the ribbon 'graphics' take up 24px themselves so we double it. */
+}
+.ribbon:before, .ribbon:after {
+ content: "";
+ position: absolute;
+ display: block;
+ bottom: -1em;
+ border: 1.5em solid #DCEDC8;
+ z-index: -1;
+}
+.ribbon:before {
+ left: -2em;
+ border-right-width: 1.5em;
+ border-left-color: transparent;
+}
+.ribbon:after {
+ right: -2em;
+ border-left-width: 1.5em;
+ border-right-color: transparent;
+}
+.ribbon .ribbon-content:before, .ribbon .ribbon-content:after {
+ content: "";
+ position: absolute;
+ display: block;
+ border-style: solid;
+ border-color:  #DCEDC8 transparent transparent transparent;
+ bottom: -1em;
+}
+.ribbon .ribbon-content:before {
+ left: 0;
+ border-width: 1em 0 0 1em;
+}
+.ribbon .ribbon-content:after {
+ right: 0;
+ border-width: 1em 1em 0 0;
+}
+/*
+		.col-sm-4 {
+			position: relative;
+			min-height: 1px;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+*/
+
+		.padding {
+			
+			padding-left: 0px
+		}
+		.contact-item {
+            padding: 3%;
+			text-align: center;
+			background-color:#B2EBF2;
+/*			border-radius: 4px;*/
+			margin-bottom: 10px;
+		}
+
+	</style>
+
+</head>
+
+<body>
+	{% include "common\navigation-bar.html" %}
+	<div class="container">
+     <div class="loader"></div>
+	<div id="myCarousel" class="carousel slide" style="width: 100%; height: 400px">
+		<!-- <ol class="carousel-indicators"> -->
+			<!-- <li data-target="#myCarousel" data-slide-to="0" class="active"></li> -->
+			<!-- <li data-target="#myCarousel" data-slide-to="1" class=""></li> -->
+			<!-- <li data-target="#myCarousel" data-slide-to="2" class=""></li> -->
+		<!-- </ol> -->
+		<!-- <div class="carousel-inner" role="listbox" style=" width:100%; height: 100% !important;"> -->
+			<!-- <div class="item active"> -->
+
+				<!-- <img src="Images/forgot_password.png" alt="image" class="img-responsive center" > -->
+			<!-- </div> -->
+			<!-- <div class="item"> -->
+				<!-- <img src="Images/grocery.jpg" alt="image" class="img-responsive center"  > -->
+			<!-- </div> -->
+			<!-- <div class="item"> -->
+				<!-- <img src="Images/referorg1.jpg" alt="image" class="img-responsive center"> -->
+			<!-- </div> -->
+		<!-- </div> -->
+		<a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+		<a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+	</div>
+	<br>
+	<div class="col-sm-4 padding">
+		<div class="contact-item">
+			<img id="org_logo" class="img-rounded" height="=50px" width="50px" />
+			<h3 id="org_name"></h3>
+			<h5 id="org_reg_no"></h5>
+			<h5 id="people_count"></h5>
+			<h5 id="org_type"></h5>
+			<h5 id="annual_cost"></h5>
+			
+		</div>
+	</div>
+	<div class="col-sm-4 padding">
+		<div class="contact-item">
+			<img src="{% static "assests/Images/icon_email.png"%}" height="50px" width="50px" />
+		
+				<h5><a id="org_email" ></a><br></h5>
+			<h5><a id="org_site" ></a></h5>
+				<a id="org_facebook_link"><br>
+				<a id="org_twitter_id"></a>
+				<h4 id="org_mobile"></h4>
+		
+					
+		</div>
+	</div>
+	<div class="col-sm-4 padding" style="padding-right: 0px;">
+		<div class="contact-item">
+			<img src="{% static "assests/Images/icon_bank.png"%}" class="img responsive" height="=50px" width="50px" />
+
+			<div class="contact-item-value">
+			
+					<h4 id="bank_name"></h4>
+				<h5 id="branch_name"></h5>
+				<h5 id="account_number"></h5>
+				<h5 id="branch_code"></h5>
+				<h5 id="ifsc_code"></h5>
+				
+					
+				
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+	
+				<div class=""><h4>Organisation Location</h4></div>
+			
+		
+		<iframe id="map" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d9243.015681590068!2d80.27027141136399!3d13.085912915538078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1509011487163" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+	</div>
+		
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+	       $('.loader').show();
+			function getOrganisationDetails(data) {
+			
+				var organisationDetail = JSON.parse(jsonEscape(data))
+				console.log("Organisation detail", data);
+				
+				document.getElementById("org_name").innerHTML = organisationDetail.org_name;
+				document.getElementById("org_reg_no").innerHTML = organisationDetail.org_reg_no;
+				document.getElementById("people_count").innerHTML = "People Count - " + organisationDetail.people_count;
+				document.getElementById("org_type").innerHTML = organisationDetail.org_type;
+				document.getElementById("org_logo").setAttribute("src", organisationDetail.org_logo);
+				document.getElementById("annual_cost").innerHTML = organisationDetail.annual_cost_for_running;
+
+				var orgEmail = document.getElementById("org_email");
+				orgEmail.setAttribute("href",organisationDetail.org_email);
+				
+				var org_site = document.getElementById("org_site");
+				org_site.setAttribute("href",organisationDetail.org_site);
+				
+				var facebook_link = document.getElementById("org_facebook_link");
+				facebook_link.setAttribute("href",organisationDetail.facebook_link);
+				
+				var twitterId = document.getElementById("org_twitter_id");
+				twitterId.setAttribute("href",organisationDetail.twitterId);
+				
+				document.getElementById("org_mobile").innerHTML = organisationDetail.org_email;
+				
+				var orgBankDetails=[];
+				 orgBankDetails = organisationDetail.bank_details;
+				for(var i=0;i<orgBankDetails.length;i++){
+				document.getElementById("bank_name").innerHTML = "Bank Name :"+orgBankDetails[i].bank_name;
+				document.getElementById("branch_name").innerHTML = "Branch Name :"+orgBankDetails[i].branch_name;
+				document.getElementById("account_number").innerHTML = "A/c No :"+orgBankDetails[i].account_number;
+				document.getElementById("ifsc_code").innerHTML = "IFSC Code :"+orgBankDetails[i].ifsc_code;
+				document.getElementById("branch_code").innerHTML = "Branch Code :"+orgBankDetails[i].branch_code;
+				
+				}
+		
+		
+				
+					$('.loader').hide();
+
+			}
+			
+			
+			var baseUrl = document.URL;
+		var id = baseUrl.substring(baseUrl.lastIndexOf('=') + 1);
+
+		<!-- var url = "/humane/goodsDetail/" + id + "/?isweb=true&callback=?"; -->
+		
+		function initialize() {
+	
+		var latitude = parseFloat(organisationDetail.latitude);
+		var longitude = parseFloat(organisationDetail.longitude);
+		console.log("lat",latitude);
+	
+		var myLatlng = new google.maps.LatLng(latitude, longitude);
+		var myOptions = {
+			zoom: 10,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+		var map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+		var marker = new google.maps.Marker({
+			position: myLatlng,
+			map: map,
+			draggable: false
+		});
+	
+	}
+
+
+
+			$.getJSON("/humane/organisationbankdetail/"+ id +"/?isweb=true&callback=?", function(data) {
+
+				}).done(function(data) {
+					getOrganisationDetails(data)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("Loaded Organisation details");
+				});
+				
+				
+			$.getJSON("/humane/organisationImages/?isweb=true&callback=?", function(data) {
+
+				}).done(function(data) {
+				console.log("org iimages"+data)
+					loadImagesInSlider(data)
+					
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("Loaded Organisation images");
+				});
+
+		
+		});
+
+	</script>
+</body>
+
+</html>

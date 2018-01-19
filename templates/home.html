@@ -1,0 +1,225 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/navigation.js"%}"></script>
+	<script src="{% static "assests/JS/donation.js"%}"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<style>
+		.loader {
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			z-index: 9999;
+			background: url('https://loading.io/assets/img/landing/curved-bars.svg') 50% 50% no-repeat rgb(249, 249, 249);
+			opacity: .8;
+		}
+		
+			@media screen and (min-width: 1100px){
+			.fab{
+			   background: #03A9F4;
+			   width: 64px;
+			   height: 64px;
+			   border-radius: 50%;
+			   text-align:center;
+			   color: #FFF;
+			   box-shadow:0px 0px 3px rgba(0,0,0,0.5),3px 3px 3px rgba(0,0,0,0.25);
+			   position: fixed;
+			   bottom: 20px;
+			   right: 180px;
+			   font-size: 2.6667em;
+			   display: inline-block;
+			   cursor: default;
+            }
+
+		  }
+		   .fab{
+			   background: #03A9F4;
+			   width: 64px;
+			   height: 64px;
+			   border-radius: 50%;
+			   text-align:center;
+			   color: #FFF;
+			   box-shadow:0px 0px 3px rgba(0,0,0,0.5),3px 3px 3px rgba(0,0,0,0.25);
+			   position: fixed;
+			   bottom: 20px;
+			   right: 20px;
+			   
+			   font-size: 2.6667em;
+			   display: inline-block;
+			   cursor: default;
+            }
+
+		    .fab span{
+		       vertical-align:middle;
+		    } 
+
+			.fab.child{
+			   right: @fab-child-margin;
+			   width: (1 / 3 * 2 *64)px;
+			   height: (1 / 3 * 2 *64)px;
+			   display: none;
+			   opacity: 0;
+			   font-size: 2em;
+			}
+		
+
+	</style>
+</head>
+<body>
+    {% include "common\navigation-bar.html" %}
+	<div id="main">
+		<div class="container">
+		
+				<div class="col-md-12 ">
+					<div class="panel with-nav-tabs panel-info">
+						<div class="panel-heading">
+							<ul class="nav nav-tabs">
+								<li class="active col-sm-6"><a href="#goodstab" data-toggle="tab" id="goods-anchor" class="text-center">Goods</a></li>
+								<li class="col-sm-6"><a href="#servicetab" data-toggle="tab" id="service-anchor" class="text-center">Services</a></li>
+							</ul>
+						</div>
+						<div class="panel-body ">
+							<div class="tab-content ">
+
+								<div class="tab-pane fade in active" id="goodstab">
+									<div class="loader" id="goods-loader"></div>
+								</div>
+
+
+								<div class="tab-pane fade " id="servicetab">
+									<div class="loader" id="service-loader"></div>
+								</div>
+
+							</div>
+						</div>
+						<div class="panel-footer text-center">
+							<div id="goods-pagination"></div>
+							<div id="service-pagination"></div>
+
+						</div>
+						
+						 <div class="fab pull-right" id="newGoodsServicePostfab" onclick="loadNewGoodsServicePost()"><span>+</span></div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+	$("#newGoodsServicePostfab").hide();
+	console.log("home called");
+		var firstServiceLoad = true;
+		var goodsDetailURL = "/humane/goodsDetail/?isweb=True&callback=?";
+		var serviceDetailURL = "/humane/serviceDetail/?isweb=True&callback=?";
+
+		loadGoodsDetail(goodsDetailURL);
+
+		var userProfileJson = `{{user_json|safe}}`
+		if (userProfileJson != "" || userProfileJson != null) {
+			try {
+				var userProfile = $.parseJSON(userProfileJson)
+				commonUserProfile = userProfile
+				
+				if(userProfile.role==REGISTERED_COORDINATOR)
+					$("#newGoodsServicePostfab").show();
+				else
+					$("#newGoodsServicePostfab").hide();
+
+			} catch (e){
+				console.log("error while parsing the user profile ", e.message)
+			}
+		}
+
+		$("#service-anchor").click(function(e) {
+			console.log("firstServiceLoad" + firstServiceLoad)
+			if (firstServiceLoad) {
+				loadServiceDetail(serviceDetailURL);
+				firstServiceLoad = false;
+			}
+			$('#service-pagination').show();
+			$('#goods-pagination').hide();
+
+		});
+
+		$("#goods-anchor").click(function(e) {
+			$('#service-pagination').hide();
+			$('#goods-pagination').show();
+		});
+
+
+		function loadGoodsDetail(goodsDetailURL) {
+			$('#goods-loader').show();
+			$.getJSON(goodsDetailURL, function(data) {})
+				.done(function(data) {
+
+					var count = JSON.parse(jsonEscape(data))['count']
+					console.log("goods count " + parseInt(count))
+					if (parseInt(count) != 0)
+						getGoodsdetail(data, commonUserProfile);
+					else {
+						$('#goods-loader').hide();
+						document.getElementById("goodstab").innerHTML = "No Goods Found";
+					}
+					if (parseInt(count) > 10)
+						createPagination(count, goodsDetailURL, "goods-pagination", "#goodstab", 1);
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("goods detail load complete");
+				});
+		}
+
+		function VerifyInput(input) {
+			for (var x = 0; x < input.length; ++x) {
+				let c = input.charCodeAt(x);
+				if (c >= 0 && c <= 31) {
+					throw 'problematic character found at position ' + x + c;
+				}
+			}
+		}
+
+		function loadServiceDetail(serviceDetailURL) {
+			console.log("service url called");
+			$('#service-loader').show();
+			$.getJSON(serviceDetailURL, function(data) {})
+				.done(function(serviceData) {
+					//console.log(VerifyInput(serviceData));
+
+					var count = JSON.parse(jsonEscape(serviceData))['count']
+					console.log("service count " + count)
+					if (parseInt(count) != 0)
+						getServiceDetail(serviceData, commonUserProfile);
+					else {
+						$('#service-loader').hide();
+						document.getElementById("servicetab").innerHTML = "No Service Found";
+					}
+					if (count > 10)
+						createPagination(count, serviceDetailURL, "service-pagination", "#servicetab", 2);
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("service detail load complete");
+				});
+		}
+	});
+
+</script>
+
+</html>

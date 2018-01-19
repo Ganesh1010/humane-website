@@ -1,0 +1,188 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Humane - New Goods Post Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+	<link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+	<script src="{% static "assests/JS/humane.js"%}"></script>
+	<script src="{% static "assests/JS/navigation.js"%}"></script>
+	<script src="{% static "assests/JS/goodsPost.js"%}"></script>
+
+	<style>
+		.container {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+
+	</style>
+</head>
+
+<body>
+{% include "common\navigation-bar.html" %}
+	<div class="container ">
+
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">New Goods Post</div>
+			<div class="panel-body">
+				<div class="loader"></div>
+				<form class="form-horizontal" id="new-goods-form">
+
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="goods-main-item-category">Main Item Category:</label>
+						<div class="col-sm-4">
+							<select id="goods-main-item-category"  required="required" name="goods-main-item-category" class="form-control" onchange="loadSubItemDetails();">
+                              
+                            </select>
+						</div>
+					</div>
+					<hr>
+
+					<a href="#demo" class="btn btn-success hidden text-center col-sm-offset-5 " id ="add-new-item-btn" onclick="showHideAddBtn(false)"  data-toggle="collapse" style="margin-bottom: 3%; "><span data-toggle="tooltip"  title="Click to add the new goods sub item">Add New Item</span></a>
+
+					<div id="demo" class="collapse in">
+
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="goods-sub-item-one-category">Sub Item Category One:</label>
+							<div class="col-sm-4">
+								<select id="goods-sub-item-one-category" disabled required="required" name="goods-sub-item-one-category" class="form-control" onchange="loadSubItemCategoryTwoDetails();loadAllowedUnitDetails();">
+                            
+                        </select>
+							</div>
+						</div>
+
+						<div class="form-group" id="sub-item-two-div">
+							<label class="control-label col-sm-4" for="goods-sub-item-two-category">Sub Item Category Two:</label>
+							<div class="col-sm-4">
+								<select id="goods-sub-item-two-category" disabled required="required" name="goods-sub-item-two-category" class="form-control">
+                            
+                        </select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="quantity">Quantity:</label>
+							<div class="col-sm-4">
+								<input type="number" required class="form-control" id="quantity" placeholder="Enter Quantity">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="goods-unit">Unit:</label>
+							<div class="col-sm-4">
+								<select id="goods-unit" disabled required="required" name="goods-unit" class="form-control">
+                            
+                        </select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="goods-desc">Description:</label>
+							<div class="col-sm-4">
+								<textarea rows="4" cols="50" class="form-control" id="goods-desc" placeholder="Enter Your Description" ></textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-offset-6 col-sm-10 ">
+								<button type="submit" class="btn btn-success" id="add-new-item" data-toggle="tooltip" title="Click to add the item to the list" onclick="addItemsTotable()">Add</button>
+								<a href="#demo" class="btn btn-danger text-center" onclick="showHideAddBtn(true)" data-toggle="collapse"><span data-toggle="tooltip"  title="Remove the selected goods sub item">Discard</span></a>
+							</div>
+						</div>
+					</div>
+					<hr>
+
+					<table id="goods-item-table" class="table hidden table-responsive table-bordered">
+						<thead>
+							<tr>
+								<th class="text-center">Sub Category One</th>
+								<th class="text-center">Sub Category Two</th>
+								<th class="text-center">Quantity</th>
+								<th class="text-center">Remove Items</th>
+
+							</tr>
+						</thead>
+						<tbody id="goods-item-list">
+						</tbody>
+					</table>
+
+					<hr>
+
+					<div id="publish-div" class="hidden">
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="deadline-date">Required date:</label>
+						<div class="col-sm-4">
+							<div class="input-group date" data-date-format="yyyy-mm-dd" id="deadline-date">
+								<input type="text" class="form-control" id="deadline" placeholder="Pick your deadline date" />
+								<span class="input-group-addon">
+                       <span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</div>
+
+						<script type="text/javascript">
+							$(function() {
+								var todayDate = new Date();
+								var endDate = todayDate.setMonth(todayDate.getMonth()+6);
+								console.log("end date "+new Date(endDate))
+								$('#deadline-date').datepicker({
+									calendarWeeks: true,
+									todayHighlight: true,
+									autoclose: true,
+									startDate : new Date(),
+									endDate: new Date(endDate)
+								});
+							});
+
+						</script>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-5 col-sm-10 ">
+							<button type="submit" id="publish-goods-btn" onclick="publishGoods()" class="btn btn-success text-center" data-toogle="tooltip" title="Click to publish the goods.">Publish</button>
+						</div>
+					</div>
+						</div>
+
+				</form>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	
+	{% if user.is_authenticated %}
+		if( {{user.role.user_role_id}} !=REGISTERED_COORDINATOR )
+		{
+			alert("You must be logged in as a registered coordinator");
+			window.location.href = "/login";
+		}
+		
+			
+	{% else %} 
+		alert("You must be logged in as a registered coordinator");
+			window.location.href = "/login";
+	{% endif %}
+
+		$("#new-goods-form").submit(function(){
+  return false;
+});
+		var mainItemUrl = "/humane/mainItemDetails/?request=1&isweb=True&callback=?";
+		loadMianItems(mainItemUrl);
+
+	});
+
+</script>
+
+</html>

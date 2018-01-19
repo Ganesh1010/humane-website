@@ -1,0 +1,33 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Humane - Thank you page</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <script src="{% static "assests/JS/humane.js"%}"></script>
+	   <script src="{% static "assests/JS/navigation.js"%}"></script>
+	   <link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+      <style>
+        
+      </style>
+   </head>
+   <body>
+   {% include "common\navigation-bar.html" %}
+      <div class="container">
+         
+            <br>
+            <img src="{% static "assests/Images/thank_you_note.png"%}" class="img-responsive center-block"><br>
+            <h4 class="text-center">Do you want to contribute to the same kind of service in future?</h4>
+            <input type="button"  class="btn btn-primary center-block" onclick="window.location.href='/html/myContribution'" value="View My Contribution">
+			<br>
+			<input type="button" class="btn btn-primary center-block" onclick="window.location.href='/html/homePage'" value="Go to Home page" >
+              
+            <br>
+       </div>
+     
+   </body>
+</html>

@@ -1,0 +1,280 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+     <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Humane - Login</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="{% static "assests/css/form-elements.css"%}">
+	<link rel="stylesheet" href="{% static "assests/css/style.css"%}">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+
+	
+	<script src="{% static "assests/js/jquery-1.11.1.min.js"%}"></script>
+	<script src="{% static "assests/js/bootstrap.min.js"%}"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+		        <!-- Javascript -->
+      <link rel="stylesheet" href="{% static "assests/CSS/humane.css"%}">
+       
+        <script src="{% static "assests/js/humane.js"%}"></script>
+        <script src="{% static "assests/js/navigation.js"%}"></script>
+		 <script src="{% static "assests/JS/sweetalert.min.js"%}"></script>
+  <link rel="stylesheet " href="{% static "assests/CSS/sweetalert.css"%}">
+
+		
+
+    </head>
+
+    <body  style="background: rgba(0, 0, 0, 0.3);">
+
+        <!-- Top content -->
+        <div class="top-content">
+
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1> Login Form</h1>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Login to our site</h3>
+                            		<p>Enter your username and password to log on</p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-lock"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+							
+			                    <form role="form" action="" method="post" class="login-form" id="login_form">
+                                    {% csrf_token %}
+			                    	<div class="form-group">
+			                    		<label class="sr-only" for="form-username">Username</label>
+			                        	<input type="text" placeholder="Username" class="form-username required form-control"  id="username" name="username">
+			                        </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="form-password">Password</label>
+			                        	<input type="password" placeholder="Password" class="form-password required form-control" name="password" id="password">
+										<a href="/html/getEmailPage" class="pull-right" style="color: white;">Forgot your Password ?</a> 
+
+			                        </div><br>
+									<div class="text-center">
+											<button type="button" class="btn" Style="width: 150px;" onclick="logout(true)">Skip</button>
+			                        <button type="button" class="btn" Style="width: 150px;" onclick="loginClicked()">Sign in</button></div>
+									<br>
+									<div class="text-center" style="color: white">
+								<a href="/html/userRegisterPage" style="color: white">New here ? <b>Join Us</b></a>
+							</div>
+								
+			                    </form>
+		                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script>
+			 
+			$(document).ready(function() {
+
+				<!-- {% if user.is_authenticated %} -->
+					<!-- alert("You have already Logged in") -->
+				 	<!-- window.location.replace("/html/homePage") -->
+				 
+				 <!-- {% endif %} -->
+
+				
+				 
+				 $("#login_form").validate({
+			errorClass: "error text-warning",
+			validClass: "success text-success",
+			highlight: function(element, errorClass) {
+
+			},
+			
+			rules: {
+				username:{
+					required:true,
+					minlength: 3,
+            		maxlength: 150,
+					email:true,
+				} ,
+				password:{
+					required:true,
+					minlength: 8,
+            		maxlength: 50,
+				},
+			},
+					 messages:{
+				username:"Enter a Valid email(eg.example@humane.com)",
+				password:"Enter a valid password with min 8 characters ",
+				
+			},
+			
+				 
+				
+				});
+				  
+		
+				 });
+				 
+				 function login()
+
+    {
+
+		
+       var x=$('#login_form').serialize();
+		
+		console.log("login - from modal",x)
+        $.ajax({
+    type:"POST",
+    url: '/html/ajaxlogin/'+window.location.search,
+    data: x,
+    success: function(response){
+		var json = $.parseJSON(response);
+		//alert(json['result']);
+		if (json['result']=='success')
+		{
+		window.location = "/html/homePage";
+
+		}else{
+			successAlert("Error","Invalid Login Credentials","error","#");
+			$("#password").val("");
+		}
+     },
+	
+		});
+	}
+			
+				 function loginClicked(){
+					if($("#login_form").valid()){
+					  login();
+				 }
+					 else{
+						 console.log("cannot login")
+					 }
+				 
+				 }
+    
+        </script>
+     
+    </body>
+
+</html>
+<!-- <html lang="en"> -->
+
+    <!-- <head> -->
+        <!-- <meta charset="utf-8"> -->
+        <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+        <!-- <title>Humane Login</title> -->
+
+
+        <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"> -->
+        <!-- <link rel="stylesheet" href="{% static "assests/CSS/bootstrap.min.css"%}"> -->
+        <!-- <link rel="stylesheet" href="{% static "assests/css/font-awesome.min.css"%}"> -->
+		<!-- <link rel="stylesheet" href="{% static "assests/css/form-elements.css"%}"> -->
+        <!-- <link rel="stylesheet" href="{% static "assests/css/style.css"%}"> -->
+
+      
+        <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
+        <!-- <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png"> -->
+        <!-- <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png"> -->
+        <!-- <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png"> -->
+        <!-- <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png"> -->
+
+    <!-- </head> -->
+
+    <!-- <body style="background: rgba(0, 0, 0, 0.3);"> -->
+
+      
+        <!-- <div class="top-content"> -->
+
+            <!-- <div class="inner-bg"> -->
+                <!-- <div class="container"> -->
+                    <!-- <div class="row"> -->
+                        <!-- <div class="col-sm-8 col-sm-offset-2 text"> -->
+                            <!-- <h1> Login Form</h1> -->
+
+                        <!-- </div> -->
+                    <!-- </div> -->
+                    <!-- <div class="row"> -->
+                        <!-- <div class="col-sm-6 col-sm-offset-3 form-box"> -->
+                        	<!-- <div class="form-top"> -->
+                        		<!-- <div class="form-top-left"> -->
+                        			<!-- <h3>Login to our site</h3> -->
+                            		<!-- <p>Enter your username and password to log on:</p> -->
+                        		<!-- </div> -->
+                        		<!-- <div class="form-top-right"> -->
+                        			<!-- <i class="fa fa-lock"></i> -->
+                        		<!-- </div> -->
+                            <!-- </div> -->
+                            <!-- <div class="form-bottom"> -->
+			                    <!-- <form role="form" action="" method="post" class="login-form" id="form1"> -->
+                                    <!-- {% csrf_token %} -->
+			                    	<!-- <div class="form-group"> -->
+			                    		<!-- <label class="sr-only" for="form-username">Username</label> -->
+			                        	<!-- <input type="text" placeholder="Username..." class="form-username form-control"  id="username" name="username"> -->
+			                        <!-- </div> -->
+			                        <!-- <div class="form-group"> -->
+			                        	<!-- <label class="sr-only" for="form-password">Password</label> -->
+			                        	<!-- <input type="password" placeholder="Password..." class="form-password form-control" name="password" id="password"> -->
+			                        <!-- </div> -->
+			                        <!-- <button type="button" class="btn" onclick="test()">Sign in!</button> -->
+			                    <!-- </form> -->
+		                    <!-- </div> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
+
+
+      
+        <!-- <script src="{% static "assests/js/jquery-1.11.1.min.js"%}"></script> -->
+        <!-- <script src="{% static "assests/js/bootstrap.min.js"%}"></script> -->
+        <!-- <script src="{% static "assests/js/jquery.backstretch.min.js"%}"></script> -->
+        <!-- <script src="{% static "assests/js/scripts.js"%}"></script> -->
+        <!-- <script> -->
+            <!-- function test() -->
+    <!-- { -->
+        <!-- x=$('#form1').serialize(); -->
+        <!-- $.ajax({ -->
+    <!-- type:"POST", -->
+    <!-- url: '/html/ajaxlogin/'+window.location.search, -->
+    <!-- data: x, -->
+    <!-- success: function(response){ -->
+		<!-- var json = $.parseJSON(response); -->
+		<!-- alert(json['result']) -->
+		<!-- if (json['result']=='success') -->
+		<!-- { -->
+		<!-- window.location = "/html/homePage"; -->
+
+		<!-- } -->
+     <!-- } -->
+<!-- }); -->
+    <!-- } -->
+        <!-- </script> -->
+       
+    <!-- </body> -->
+
+<!-- </html> -->
